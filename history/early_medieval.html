@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Early Medieval India)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who was the founder of the Gurjara-Pratihara dynasty? / गुर्जर-प्रतिहार वंश का संस्थापक कौन था?", options:["Nagabhata I / नागभट्ट प्रथम","Harsha / हर्ष","Pulakeshin II / पुलकेशिन द्वितीय","Mahendravarman / महेंद्रवर्मन"], answer:0},
+
+{q:"Rashtrakutas were mainly based in which region? / राष्ट्रकूट मुख्य रूप से किस क्षेत्र में थे?", options:["North India / उत्तर भारत","Deccan / दक्कन","South India / दक्षिण भारत","East India / पूर्व भारत"], answer:1},
+
+{q:"Who built the Kailasa temple at Ellora? / एलोरा का कैलाश मंदिर किसने बनवाया?", options:["Dantidurga","Krishna I","Pulakeshin II","Mahipala"], answer:1},
+
+{q:"Tripartite struggle was between which dynasties? / त्रिपक्षीय संघर्ष किन वंशों के बीच था?", options:["Maurya, Gupta, Satavahana","Pratihara, Palas, Rashtrakutas","Chola, Chera, Pandya","Kushan, Saka, Huna"], answer:1},
+
+{q:"Who founded the Pala dynasty? / पाल वंश की स्थापना किसने की?", options:["Gopala","Dharmapala","Devapala","Mahipala"], answer:0},
+
+{q:"The Pala rulers were followers of: / पाल शासक किस धर्म के अनुयायी थे?", options:["Buddhism / बौद्ध धर्म","Jainism / जैन धर्म","Shaivism / शैव धर्म","Vaishnavism / वैष्णव धर्म"], answer:0},
+
+{q:"Who was the most powerful Chola ruler? / सबसे शक्तिशाली चोल शासक कौन था?", options:["Rajendra Chola","Rajaraja Chola I","Vijayalaya","Kulottunga"], answer:1},
+
+{q:"Brihadeshwara Temple was built by: / बृहदेश्वर मंदिर किसने बनवाया?", options:["Rajaraja Chola I / राजराजा चोल प्रथम","Rajendra Chola","Mahipala","Krishna III"], answer:0},
+
+{q:"Prithviraj Chauhan defeated Muhammad Ghori in which battle? / पृथ्वीराज चौहान ने मुहम्मद गोरी को किस युद्ध में हराया?", options:["First Battle of Tarain / तराइन का प्रथम युद्ध","Second Battle of Tarain / तराइन का द्वितीय युद्ध","Battle of Panipat / पानीपत का युद्ध","Battle of Khanwa / खानवा का युद्ध"], answer:0},
+
+{q:"Who defeated Prithviraj Chauhan in 1192? / 1192 में पृथ्वीराज चौहान को किसने हराया?", options:["Babur / बाबर","Muhammad Ghori / मुहम्मद गोरी","Alauddin Khilji / अलाउद्दीन खिलजी","Iltutmish / इल्तुतमिश"], answer:1},
+
+{q:"Nalanda University was revived by: / नालंदा विश्वविद्यालय को पुनर्जीवित किसने किया?", options:["Harsha / हर्ष","Ashoka / अशोक","Chandragupta Maurya / चंद्रगुप्त मौर्य","Samudragupta / समुद्रगुप्त"], answer:0},
+
+{q:"Harsha’s capital was: / हर्ष की राजधानी थी:", options:["Kannauj / कन्नौज","Pataliputra / पाटलिपुत्र","Ujjain / उज्जैन","Taxila / तक्षशिला"], answer:0},
+
+{q:"Arab invasion of Sind took place in: / सिंध पर अरब आक्रमण कब हुआ?", options:["712 CE / 712 ई.","1025 CE / 1025 ई.","1192 CE / 1192 ई.","750 CE / 750 ई."], answer:0},
+
+{q:"Who was the Chola ruler who sent naval expeditions to Southeast Asia? / दक्षिण-पूर्व एशिया में नौसेना भेजने वाला चोल शासक कौन था?", options:["Rajaraja Chola I","Rajendra Chola","Vijayalaya","Kulottunga"], answer:1},
+
+{q:"The Khajuraho temples were built by: / खजुराहो मंदिर किसने बनवाए?", options:["Chandelas / चंदेल","Pratiharas / प्रतिहार","Palas / पाल","Rashtrakutas / राष्ट्रकूट"], answer:0},
+
+{q:"Who was the founder of the Chola dynasty’s medieval phase? / चोल वंश के मध्यकालीन चरण का संस्थापक कौन था?", options:["Vijayalaya","Rajaraja Chola I","Rajendra Chola","Kulottunga"], answer:0},
+
+{q:"The capital of Rashtrakutas was: / राष्ट्रकूटों की राजधानी थी:", options:["Manyakheta / मान्यखेट","Kannauj / कन्नौज","Pataliputra / पाटलिपुत्र","Madurai / मदुरै"], answer:0},
+
+{q:"Who wrote 'Rajatarangini'? / 'राजतरंगिणी' किसने लिखी?", options:["Kalhana / कल्हण","Banabhatta / बाणभट्ट","Tulsidas / तुलसीदास","Chanakya / चाणक्य"], answer:0},
+
+{q:"The first battle of Tarain was fought in: / तराइन का प्रथम युद्ध कब हुआ?", options:["1191 CE / 1191 ई.","1192 CE / 1192 ई.","1206 CE / 1206 ई.","1025 CE / 1025 ई."], answer:0},
+
+{q:"Who established the Delhi Sultanate? / दिल्ली सल्तनत की स्थापना किसने की?", options:["Qutb-ud-din Aibak / कुतुबुद्दीन ऐबक","Babur / बाबर","Alauddin Khilji / अलाउद्दीन खिलजी","Iltutmish / इल्तुतमिश"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

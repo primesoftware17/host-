@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reproduction in Plants & Animals Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Reproduction in Plants & Animals / पादप एवं जन्तुओं में प्रजनन)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Reproduction means? / प्रजनन क्या है?", options:["Production of offspring","Digestion","Respiration","Movement"], answer:0},
+
+{q:"Asexual reproduction involves? / अलैंगिक?", options:["One parent","Two parents","No parents","Many parents"], answer:0},
+
+{q:"Sexual reproduction involves? / लैंगिक?", options:["Two parents","One parent","No parent","Cloning"], answer:0},
+
+{q:"Plant reproduction occurs by? / पादप?", options:["Seeds","Blood","Bones","Muscles"], answer:0},
+
+{q:"Flower is? / पुष्प?", options:["Reproductive organ","Root","Stem","Leaf"], answer:0},
+
+{q:"Male part of flower? / नर भाग?", options:["Stamen","Pistil","Sepal","Petal"], answer:0},
+
+{q:"Female part of flower? / मादा भाग?", options:["Pistil","Stamen","Anther","Filament"], answer:0},
+
+{q:"Pollination is transfer of? / परागण?", options:["Pollen","Water","Food","Gas"], answer:0},
+
+{q:"Fertilization means? / निषेचन?", options:["Fusion of gametes","Digestion","Breathing","Growth"], answer:0},
+
+{q:"Seed develops into? / बीज?", options:["Plant","Animal","Cell","Tissue"], answer:0},
+
+{q:"Animals reproduce by? / जन्तु?", options:["Birth or eggs","Leaves","Roots","Stem"], answer:0},
+
+{q:"Human reproduction is? / मानव?", options:["Sexual","Asexual","Budding","Fragmentation"], answer:0},
+
+{q:"Male gamete is? / शुक्राणु?", options:["Sperm","Egg","Zygote","Seed"], answer:0},
+
+{q:"Female gamete is? / अंडाणु?", options:["Egg","Sperm","Zygote","Seed"], answer:0},
+
+{q:"Zygote is formed after? / युग्मनज?", options:["Fertilization","Digestion","Respiration","Division"], answer:0},
+
+{q:"Embryo develops into? / भ्रूण?", options:["Organism","Cell","Tissue","Bone"], answer:0},
+
+{q:"Budding occurs in? / कलिका?", options:["Hydra","Human","Dog","Bird"], answer:0},
+
+{q:"Binary fission occurs in? / द्विखंडन?", options:["Amoeba","Human","Frog","Plant"], answer:0},
+
+{q:"Fragmentation is seen in? / खंडन?", options:["Spirogyra","Human","Dog","Fish"], answer:0},
+
+{q:"Vegetative propagation is in? / कायिक?", options:["Plants","Animals","Fungi only","Bacteria"], answer:0},
+
+{q:"Seed germination needs? / अंकुरण?", options:["Water, air, warmth","Only water","Only air","Only soil"], answer:0},
+
+{q:"Pollination types? / प्रकार?", options:["Self and cross","Only self","Only cross","None"], answer:0},
+
+{q:"Fertilization occurs in? / कहाँ?", options:["Ovary","Stem","Leaf","Root"], answer:0},
+
+{q:"Human male reproductive organ? / पुरुष?", options:["Testes","Ovary","Uterus","Kidney"], answer:0},
+
+{q:"Human female reproductive organ? / स्त्री?", options:["Ovary","Testes","Liver","Heart"], answer:0},
+
+{q:"Implantation occurs in? / गर्भाशय?", options:["Uterus","Stomach","Lung","Kidney"], answer:0},
+
+{q:"Placenta helps in? / अपरा?", options:["Nutrient exchange","Digestion","Breathing","Movement"], answer:0},
+
+{q:"Cloning produces? / क्लोन?", options:["Identical organisms","Different organisms","Mutated only","No life"], answer:0},
+
+{q:"Asexual reproduction produces? / संतान?", options:["Identical offspring","Different offspring","No offspring","Mutated only"], answer:0},
+
+{q:"Reproduction ensures? / महत्व?", options:["Continuity of species","Death","Extinction","Disease"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

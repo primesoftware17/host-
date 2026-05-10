@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Revolutionary Movements)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who is known as the 'Father of Indian Revolutionary Movement'? / भारतीय क्रांतिकारी आंदोलन का जनक किसे कहा जाता है?", options:["Bal Gangadhar Tilak / बाल गंगाधर तिलक","Aurobindo Ghosh / अरविंद घोष","V.D. Savarkar / वी.डी. सावरकर","Bhagat Singh / भगत सिंह"], answer:1},
+
+{q:"Who founded the Hindustan Socialist Republican Association (HSRA)? / हिंदुस्तान सोशलिस्ट रिपब्लिकन एसोसिएशन (HSRA) की स्थापना किसने की?", options:["Bhagat Singh / भगत सिंह","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Ram Prasad Bismil / राम प्रसाद बिस्मिल","All of the above / उपरोक्त सभी"], answer:3},
+
+{q:"In which year was HSRA formed? / HSRA की स्थापना किस वर्ष हुई?", options:["1920 CE / 1920 ई.","1925 CE / 1925 ई.","1930 CE / 1930 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Who was the leader of Kakori Conspiracy Case? / काकोरी कांड के नेता कौन थे?", options:["Bhagat Singh / भगत सिंह","Ram Prasad Bismil / राम प्रसाद बिस्मिल","Subhas Chandra Bose / सुभाष चंद्र बोस","Chandra Shekhar Azad / चंद्रशेखर आज़ाद"], answer:1},
+
+{q:"In which year did Kakori Conspiracy take place? / काकोरी कांड किस वर्ष हुआ था?", options:["1920 CE / 1920 ई.","1925 CE / 1925 ई.","1931 CE / 1931 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Who was the mastermind of the Lahore Conspiracy Case? / लाहौर षड्यंत्र मामले का मुख्य योजनाकार कौन था?", options:["Bhagat Singh / भगत सिंह","Rajguru / राजगुरु","Sukhdev / सुखदेव","Lala Lajpat Rai / लाला लाजपत राय"], answer:0},
+
+{q:"Which revolutionary slogan is associated with Bhagat Singh? / भगत सिंह से कौन-सा क्रांतिकारी नारा जुड़ा है?", options:["Jai Hind / जय हिंद","Inquilab Zindabad / इंकलाब जिंदाबाद","Swaraj is my birthright / स्वराज मेरा जन्मसिद्ध अधिकार है","Quit India / भारत छोड़ो"], answer:1},
+
+{q:"Who assassinated British officer Saunders in Lahore? / लाहौर में सांडर्स की हत्या किसने की?", options:["Bhagat Singh and Rajguru / भगत सिंह और राजगुरु","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Ram Prasad Bismil / राम प्रसाद बिस्मिल","Batukeshwar Dutt / बटुकेश्वर दत्त"], answer:0},
+
+{q:"Who threw bombs in the Central Legislative Assembly? / केंद्रीय विधान सभा में बम किसने फेंके?", options:["Bhagat Singh and Batukeshwar Dutt / भगत सिंह और बटुकेश्वर दत्त","Subhas Chandra Bose / सुभाष चंद्र बोस","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Ram Prasad Bismil / राम प्रसाद बिस्मिल"], answer:0},
+
+{q:"What was the aim of throwing bombs in the Assembly? / सभा में बम फेंकने का उद्देश्य क्या था?", options:["To kill British officials / ब्रिटिश अधिकारियों को मारना","To spread fear / डर फैलाना","To gain publicity for revolution / क्रांति का प्रचार करना","To destroy the building / भवन को नष्ट करना"], answer:2},
+
+{q:"Who founded the Indian Republican Army in Bengal? / बंगाल में इंडियन रिपब्लिकन आर्मी किसने बनाई?", options:["Surya Sen / सूर्य सेन","Bhagat Singh / भगत सिंह","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Rajguru / राजगुरु"], answer:0},
+
+{q:"Which event is associated with Chittagong Armoury Raid? / चटगाँव शस्त्रागार छापे से कौन-सी घटना जुड़ी है?", options:["1925 CE / 1925 ई.","1930 CE / 1930 ई.","1935 CE / 1935 ई.","1942 CE / 1942 ई."], answer:1},
+
+{q:"Who led the Chittagong Armoury Raid? / चटगाँव शस्त्रागार छापे का नेतृत्व किसने किया?", options:["Surya Sen / सूर्य सेन","Bhagat Singh / भगत सिंह","Rajguru / राजगुरु","Sukhdev / सुखदेव"], answer:0},
+
+{q:"Who is known as 'Azad'? / 'आज़ाद' के नाम से कौन प्रसिद्ध थे?", options:["Bhagat Singh / भगत सिंह","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Ram Prasad Bismil / राम प्रसाद बिस्मिल","Ashfaqulla Khan / अशफाकुल्ला खान"], answer:1},
+
+{q:"How did Chandra Shekhar Azad die? / चंद्रशेखर आज़ाद की मृत्यु कैसे हुई?", options:["Hanged / फांसी","Shot himself / स्वयं को गोली मारी","Killed in police encounter / पुलिस मुठभेड़ में मारे गए","Natural death / प्राकृतिक मृत्यु"], answer:1},
+
+{q:"Who was associated with the Ghadar Party revolutionaries? / गदर पार्टी के क्रांतिकारियों से कौन जुड़ा था?", options:["Lala Hardayal / लाला हरदयाल","Bhagat Singh / भगत सिंह","Subhas Chandra Bose / सुभाष चंद्र बोस","Tilak / तिलक"], answer:0},
+
+{q:"Who was involved in the Alipore Bomb Case? / अलीपुर बम कांड से कौन जुड़े थे?", options:["Aurobindo Ghosh / अरविंद घोष","Bhagat Singh / भगत सिंह","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Lala Lajpat Rai / लाला लाजपत राय"], answer:0},
+
+{q:"Which revolutionary died after a hunger strike in jail? / भूख हड़ताल के बाद जेल में किस क्रांतिकारी की मृत्यु हुई?", options:["Bhagat Singh / भगत सिंह","Jatin Das / जतिन दास","Rajguru / राजगुरु","Sukhdev / सुखदेव"], answer:1},
+
+{q:"Who killed British officer John Saunders' killer was avenged by police on whom? / सांडर्स की हत्या के बाद पुलिस ने किसे शहीद किया?", options:["Bhagat Singh / भगत सिंह","Rajguru / राजगुरु","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","All of them / सभी"], answer:2},
+
+{q:"Which ideology influenced Indian revolutionaries most? / भारतीय क्रांतिकारियों पर किस विचारधारा का सबसे अधिक प्रभाव था?", options:["Socialism / समाजवाद","Capitalism / पूंजीवाद","Feudalism / सामंतवाद","Imperialism / साम्राज्यवाद"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

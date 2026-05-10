@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Magnetism Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Magnetism / चुंबकत्व)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Magnet attracts? / चुंबक क्या आकर्षित करता है?", options:["Iron / लोहा","Wood / लकड़ी","Plastic / प्लास्टिक","Glass / कांच"], answer:0},
+
+{q:"Like poles of magnet? / समान ध्रुव क्या करते हैं?", options:["Repel / विकर्षित","Attract / आकर्षित","No effect","Break"], answer:0},
+
+{q:"Unlike poles? / विपरीत ध्रुव?", options:["Attract / आकर्षित","Repel","No effect","Destroy"], answer:0},
+
+{q:"Magnetic field is? / चुंबकीय क्षेत्र क्या है?", options:["Region around magnet","Air","Water","Force only"], answer:0},
+
+{q:"SI unit of magnetic field? / चुंबकीय क्षेत्र की इकाई?", options:["Tesla","Newton","Joule","Ampere"], answer:0},
+
+{q:"Earth behaves like? / पृथ्वी कैसी है?", options:["Magnet","Non-magnet","Insulator","Conductor"], answer:0},
+
+{q:"Compass is used to find? / कंपास क्या बताता है?", options:["Direction","Speed","Mass","Heat"], answer:0},
+
+{q:"Magnetic materials are? / चुंबकीय पदार्थ?", options:["Iron, Nickel","Wood, Plastic","Glass, Rubber","Water, Air"], answer:0},
+
+{q:"Temporary magnet example? / अस्थायी चुंबक?", options:["Electromagnet","Steel bar","Iron rod","Copper wire"], answer:0},
+
+{q:"Permanent magnet example? / स्थायी चुंबक?", options:["Steel magnet","Iron nail","Copper wire","Aluminium"], answer:0},
+
+{q:"Magnetic field lines start from? / रेखाएं कहाँ से शुरू?", options:["North pole","South pole","Center","None"], answer:0},
+
+{q:"Magnetic field lines end at? / कहाँ समाप्त?", options:["South pole","North pole","Center","Infinity"], answer:0},
+
+{q:"Electromagnet is made using? / विद्युतचुंबक?", options:["Electric current","Heat","Light","Water"], answer:0},
+
+{q:"Strength of electromagnet depends on? / शक्ति किस पर?", options:["Current","Color","Shape","Temperature"], answer:0},
+
+{q:"Magnet loses strength when? / चुंबक कमजोर होता है?", options:["Heated","Cooled","Painted","Stored properly"], answer:0},
+
+{q:"Magnetic force is strongest at? / सबसे मजबूत?", options:["Poles","Center","Outside","Anywhere"], answer:0},
+
+{q:"Unit of magnetic force? / चुंबकीय बल इकाई?", options:["Newton","Tesla","Volt","Ohm"], answer:0},
+
+{q:"Magnet can attract? / चुंबक आकर्षित करता है?", options:["Only iron","All metals","All materials","Only wood"], answer:0},
+
+{q:"Magnetic field is invisible but can be shown by? / कैसे दिखाते?", options:["Iron filings","Water","Smoke","Light"], answer:0},
+
+{q:"Bar magnet shape is? / छड़ चुंबक?", options:["Rectangular","Circular","Triangular","Spherical"], answer:0},
+
+{q:"Magnetic poles always exist in? / ध्रुव हमेशा?", options:["Pairs","Single","None","Random"], answer:0},
+
+{q:"Breaking a magnet gives? / तोड़ने पर?", options:["Two magnets","One piece","No magnet","Electricity"], answer:0},
+
+{q:"Earth’s magnetic pole is near? / पृथ्वी का ध्रुव?", options:["Geographic pole","Equator","Center","None"], answer:0},
+
+{q:"Compass needle points to? / सुई किसे?", options:["North-South direction","East-West","Up-Down","Random"], answer:0},
+
+{q:"Magnetic force acts at? / बल कहाँ?", options:["Distance","Only contact","No distance","Heat only"], answer:0},
+
+{q:"Magnet made of iron is called? / लोहे का चुंबक?", options:["Natural magnet","Artificial magnet","Temporary","None"], answer:1},
+
+{q:"Magnetic field unit Tesla is named after? / टेस्ला नाम?", options:["Scientist","Planet","Animal","River"], answer:0},
+
+{q:"Magnetic attraction is strongest when distance? / दूरी कम?", options:["Decreases","Increases","Same","Infinite"], answer:0},
+
+{q:"Magnetism is due to? / चुंबकत्व कारण?", options:["Moving charges","Heat","Light","Sound"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

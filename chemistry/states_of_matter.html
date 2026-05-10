@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>States of Matter Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - States of Matter / पदार्थ की अवस्थाएँ)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Matter exists in how many main states? / पदार्थ की अवस्थाएँ?", options:["3","2","4","5"], answer:0},
+
+{q:"Solid has fixed? / ठोस में क्या स्थिर?", options:["Shape and volume","Only shape","Only volume","None"], answer:0},
+
+{q:"Liquid has fixed? / द्रव में?", options:["Volume","Shape","Mass only","None"], answer:0},
+
+{q:"Gas has? / गैस में?", options:["No fixed shape or volume","Fixed shape","Fixed volume","Solid structure"], answer:0},
+
+{q:"Particles in solid are? / ठोस के कण?", options:["Closely packed","Far apart","Only gas","No particles"], answer:0},
+
+{q:"Particles in gas are? / गैस के कण?", options:["Far apart","Closely packed","Fixed","No movement"], answer:0},
+
+{q:"Intermolecular force is strongest in? / बल?", options:["Solid","Liquid","Gas","Plasma"], answer:0},
+
+{q:"Intermolecular space is maximum in? / स्थान अधिक?", options:["Gas","Solid","Liquid","Metal"], answer:0},
+
+{q:"Diffusion is fastest in? / विसरण?", options:["Gas","Solid","Liquid","Ice"], answer:0},
+
+{q:"Change of solid to liquid is? / गलन?", options:["Melting","Freezing","Boiling","Condensation"], answer:0},
+
+{q:"Liquid to gas is? / वाष्पीकरण?", options:["Boiling","Freezing","Melting","Fusion"], answer:0},
+
+{q:"Gas to liquid is? / संघनन?", options:["Condensation","Evaporation","Melting","Sublimation"], answer:0},
+
+{q:"Liquid to solid is? / जमना?", options:["Freezing","Melting","Boiling","Evaporation"], answer:0},
+
+{q:"Solid to gas directly is? / उर्ध्वपातन?", options:["Sublimation","Condensation","Melting","Freezing"], answer:0},
+
+{q:"Evaporation causes? / वाष्पीकरण?", options:["Cooling","Heating","No change","Explosion"], answer:0},
+
+{q:"Boiling occurs at? / क्वथन?", options:["Boiling point","Any temperature","Zero","Room temperature"], answer:0},
+
+{q:"Melting occurs at? / गलनांक?", options:["Melting point","Boiling point","Freezing point only","Zero"], answer:0},
+
+{q:"Plasma is? / प्लाज्मा?", options:["Ionized gas","Solid","Liquid","Metal"], answer:0},
+
+{q:"Example of plasma? / उदाहरण?", options:["Sun","Water","Iron","Ice"], answer:0},
+
+{q:"Bose-Einstein condensate is? / बीईसी?", options:["Ultra cold state","Gas","Solid","Liquid"], answer:0},
+
+{q:"Matter particles are always? / कण?", options:["Moving","Stopped","Fixed only","Dead"], answer:0},
+
+{q:"Smell spreads due to? / गंध फैलना?", options:["Diffusion","Force","Gravity","Light"], answer:0},
+
+{q:"Compression is possible in? / संपीड़न?", options:["Gas","Solid","Liquid","Metal"], answer:0},
+
+{q:"Liquids are? / द्रव?", options:["Fluid","Rigid","Hard","Gas only"], answer:0},
+
+{q:"Solids are? / ठोस?", options:["Rigid","Fluid","Gas","Plasma"], answer:0},
+
+{q:"Gas can be compressed easily? / गैस?", options:["Yes","No","Only solids","Only liquids"], answer:0},
+
+{q:"Water vapour is? / जल वाष्प?", options:["Gas","Solid","Liquid","Ice"], answer:0},
+
+{q:"Steam is? / भाप?", options:["Water vapour","Ice","Solid water","Metal gas"], answer:0},
+
+{q:"States of matter depend on? / अवस्था?", options:["Temperature & pressure","Color","Mass only","Shape only"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

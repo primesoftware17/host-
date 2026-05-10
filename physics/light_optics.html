@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Light & Optics Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Light & Optics / प्रकाश एवं प्रकाशिकी)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Light travels in which path? / प्रकाश किस पथ में चलता है?", options:["Straight line / सीधी रेखा","Curve / वक्र","Circle / वृत्त","Zigzag / टेढ़ा"], answer:0},
+
+{q:"Speed of light is? / प्रकाश की गति क्या है?", options:["3×10^8 m/s","3×10^6 m/s","300 m/s","30 m/s"], answer:0},
+
+{q:"Reflection means? / परावर्तन क्या है?", options:["Bouncing back of light / प्रकाश का वापस लौटना","Absorption / अवशोषण","Refraction / अपवर्तन","Dispersion / विक्षेपण"], answer:0},
+
+{q:"Mirror forms image by? / दर्पण छवि बनाता है?", options:["Reflection / परावर्तन","Refraction / अपवर्तन","Absorption","Emission"], answer:0},
+
+{q:"Angle of incidence equals? / आपतन कोण बराबर होता है?", options:["Angle of reflection / परावर्तन कोण","90°","180°","0°"], answer:0},
+
+{q:"Which mirror is used in vehicles? / वाहनों में कौन सा दर्पण उपयोग होता है?", options:["Convex mirror / उत्तल दर्पण","Concave mirror / अवतल दर्पण","Plane mirror","None"], answer:0},
+
+{q:"Concave mirror forms image? / अवतल दर्पण छवि बनाता है?", options:["Real and virtual / वास्तविक और आभासी","Only virtual","Only real","No image"], answer:0},
+
+{q:"Convex mirror forms image? / उत्तल दर्पण छवि बनाता है?", options:["Virtual and small / आभासी और छोटा","Real","Inverted","No image"], answer:0},
+
+{q:"Refraction means? / अपवर्तन क्या है?", options:["Bending of light / प्रकाश का मुड़ना","Reflection","Absorption","Emission"], answer:0},
+
+{q:"Lens is of how many types? / लेंस कितने प्रकार के होते हैं?", options:["2","1","3","4"], answer:0},
+
+{q:"Convex lens is also called? / उत्तल लेंस को क्या कहते हैं?", options:["Converging lens / अभिसारी लेंस","Diverging lens","Flat lens","None"], answer:0},
+
+{q:"Concave lens is also called? / अवतल लेंस को क्या कहते हैं?", options:["Diverging lens / अपसारी लेंस","Converging lens","Flat lens","None"], answer:0},
+
+{q:"Rainbow is formed due to? / इंद्रधनुष किस कारण बनता है?", options:["Dispersion / विक्षेपण","Reflection","Absorption","Conduction"], answer:0},
+
+{q:"White light consists of? / श्वेत प्रकाश में क्या होता है?", options:["7 colors / 7 रंग","1 color","2 colors","No color"], answer:0},
+
+{q:"Which color has highest wavelength? / किस रंग की तरंगदैर्ध्य अधिक है?", options:["Red / लाल","Blue / नीला","Violet / बैंगनी","Green / हरा"], answer:0},
+
+{q:"Which color has lowest wavelength? / किस रंग की तरंगदैर्ध्य कम है?", options:["Violet / बैंगनी","Red","Green","Yellow"], answer:0},
+
+{q:"Image in plane mirror is? / समतल दर्पण में छवि कैसी होती है?", options:["Erect and virtual / सीधी और आभासी","Real","Inverted","Blurred"], answer:0},
+
+{q:"Light needs medium to travel? / क्या प्रकाश को माध्यम चाहिए?", options:["No / नहीं","Yes / हाँ","Only water","Only air"], answer:0},
+
+{q:"Which is transparent material? / पारदर्शी पदार्थ कौन सा है?", options:["Glass / कांच","Wood / लकड़ी","Iron / लोहा","Stone / पत्थर"], answer:0},
+
+{q:"Which is opaque material? / अपारदर्शी पदार्थ कौन सा है?", options:["Wood / लकड़ी","Glass","Water","Air"], answer:0},
+
+{q:"Shadow is formed due to? / छाया किस कारण बनती है?", options:["Light blocking / प्रकाश का अवरोध","Reflection","Refraction","Heat"], answer:0},
+
+{q:"Lateral inversion occurs in? / पार्श्व उलटना किसमें होता है?", options:["Plane mirror / समतल दर्पण","Concave mirror","Lens","Prism"], answer:0},
+
+{q:"Optics is study of? / प्रकाशिकी क्या अध्ययन करती है?", options:["Light / प्रकाश","Sound","Heat","Force"], answer:0},
+
+{q:"Angle of reflection equals? / परावर्तन कोण बराबर होता है?", options:["Angle of incidence","90°","180°","0°"], answer:0},
+
+{q:"Which lens is used in magnifying glass? / आवर्धक लेंस में कौन सा लेंस होता है?", options:["Convex lens / उत्तल लेंस","Concave lens","Plane mirror","None"], answer:0},
+
+{q:"Light travels fastest in? / प्रकाश सबसे तेज कहाँ चलता है?", options:["Vacuum / निर्वात","Water","Glass","Air"], answer:0},
+
+{q:"Prism is used for? / प्रिज्म का उपयोग किसलिए होता है?", options:["Dispersion / विक्षेपण","Reflection","Absorption","Heating"], answer:0},
+
+{q:"Real image can be formed on? / वास्तविक छवि कहाँ बनती है?", options:["Screen / पर्दा","Eye only","Air","Mirror only"], answer:0},
+
+{q:"Virtual image cannot be formed on? / आभासी छवि कहाँ नहीं बनती?", options:["Screen / पर्दा","Eye","Mirror","Lens"], answer:0},
+
+{q:"Light is a form of? / प्रकाश क्या है?", options:["Energy / ऊर्जा","Mass","Force","Matter"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

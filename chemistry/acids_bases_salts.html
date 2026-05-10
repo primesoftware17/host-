@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Acids, Bases & Salts Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Acids, Bases & Salts / अम्ल, क्षार एवं लवण)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Acids taste? / अम्ल का स्वाद?", options:["Sour / खट्टा","Bitter","Sweet","Salty"], answer:0},
+
+{q:"Bases taste? / क्षार का स्वाद?", options:["Bitter / कड़वा","Sour","Sweet","Salty"], answer:0},
+
+{q:"Acids turn litmus? / अम्ल नीला लिटमस?", options:["Red / लाल","Blue","Green","No change"], answer:0},
+
+{q:"Bases turn litmus? / क्षार लाल लिटमस?", options:["Blue / नीला","Red","Green","No change"], answer:0},
+
+{q:"pH of acids is? / अम्ल का pH?", options:["Less than 7","More than 7","Equal to 7","Zero"], answer:0},
+
+{q:"pH of bases is? / क्षार का pH?", options:["More than 7","Less than 7","Equal to 7","Negative"], answer:0},
+
+{q:"Neutral pH is? / तटस्थ pH?", options:["7","1","14","0"], answer:0},
+
+{q:"Acids release? / अम्ल छोड़ते हैं?", options:["H+ ions","OH- ions","Na+ ions","Cl- ions"], answer:0},
+
+{q:"Bases release? / क्षार छोड़ते हैं?", options:["OH- ions","H+ ions","Na+ ions","Cl- ions"], answer:0},
+
+{q:"Salt is formed by? / लवण?", options:["Acid + Base","Acid + Acid","Base + Base","Water + Air"], answer:0},
+
+{q:"Example of acid? / अम्ल उदाहरण?", options:["HCl","NaOH","KOH","CaO"], answer:0},
+
+{q:"Example of base? / क्षार उदाहरण?", options:["NaOH","HCl","H2SO4","CO2"], answer:0},
+
+{q:"Strong acid example? / प्रबल अम्ल?", options:["H2SO4","CH3COOH","H2O","NH3"], answer:0},
+
+{q:"Weak acid example? / दुर्बल अम्ल?", options:["CH3COOH","HCl","HNO3","H2SO4"], answer:0},
+
+{q:"Indicator is used to? / सूचक?", options:["Test acid/base","Heat water","Measure mass","Light"], answer:0},
+
+{q:"Natural indicator? / प्राकृतिक सूचक?", options:["Litmus","Water","Salt","Air"], answer:0},
+
+{q:"Litmus is obtained from? / लिटमस?", options:["Lichens","Plants only","Animals","Metals"], answer:0},
+
+{q:"Acid + metal gives? / अम्ल + धातु?", options:["Hydrogen gas","Oxygen","Salt only","Water"], answer:0},
+
+{q:"Base + metal gives? / क्षार + धातु?", options:["Hydrogen gas","Carbon dioxide","Salt only","Water only"], answer:0},
+
+{q:"Neutralization reaction is? / उदासीनीकरण?", options:["Acid + Base","Metal + Metal","Gas + Gas","Water + Salt"], answer:0},
+
+{q:"Common salt formula? / नमक?", options:["NaCl","HCl","NaOH","CaCO3"], answer:0},
+
+{q:"Baking soda formula? / बेकिंग सोडा?", options:["NaHCO3","NaCl","HCl","H2SO4"], answer:0},
+
+{q:"Acid rain is caused by? / अम्ल वर्षा?", options:["SO2, NOx","O2","N2","CO only"], answer:0},
+
+{q:"Acids are? / अम्ल?", options:["Corrosive","Always safe","Neutral","Basic"], answer:0},
+
+{q:"Bases are? / क्षार?", options:["Slippery","Sour","Neutral","Gas"], answer:0},
+
+{q:"Strong base example? / प्रबल क्षार?", options:["NaOH","HCl","CH3COOH","CO2"], answer:0},
+
+{q:"pH scale ranges? / pH सीमा?", options:["0 to 14","1 to 10","5 to 15","0 to 10"], answer:0},
+
+{q:"Higher pH means? / अधिक pH?", options:["More basic","More acidic","Neutral","Gas"], answer:0},
+
+{q:"Lower pH means? / कम pH?", options:["More acidic","More basic","Neutral","Solid"], answer:0},
+
+{q:"Water is? / पानी?", options:["Neutral","Acid","Base","Salt"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

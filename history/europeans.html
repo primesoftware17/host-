@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Europeans)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who were the first Europeans to arrive in India by sea route? / समुद्री मार्ग से भारत आने वाले पहले यूरोपीय कौन थे?", options:["Portuguese / पुर्तगाली","Dutch / डच","English / अंग्रेज","French / फ्रांसीसी"], answer:0},
+
+{q:"Who discovered the sea route to India? / भारत के लिए समुद्री मार्ग की खोज किसने की?", options:["Christopher Columbus / क्रिस्टोफर कोलंबस","Vasco da Gama / वास्को द गामा","Ferdinand Magellan / फर्डिनेंड मैगलन","James Cook / जेम्स कुक"], answer:1},
+
+{q:"In which year did Vasco da Gama arrive in India? / वास्को द गामा भारत किस वर्ष पहुँचा था?", options:["1492 CE / 1492 ई.","1498 CE / 1498 ई.","1505 CE / 1505 ई.","1510 CE / 1510 ई."], answer:1},
+
+{q:"At which place did Vasco da Gama land in India? / वास्को द गामा भारत में किस स्थान पर उतरा था?", options:["Goa / गोवा","Calicut / कालीकट","Surat / सूरत","Madras / मद्रास"], answer:1},
+
+{q:"Who was the ruler of Calicut when Vasco da Gama arrived? / वास्को द गामा के आगमन के समय कालीकट का शासक कौन था?", options:["Krishnadevaraya / कृष्णदेवराय","Zamorin / ज़मोरिन","Shivaji / शिवाजी","Rana Sanga / राणा सांगा"], answer:1},
+
+{q:"Who was the first Portuguese Governor in India? / भारत में पहला पुर्तगाली गवर्नर कौन था?", options:["Alfonso de Albuquerque / अल्फोंसो डी अल्बुकर्क","Francisco de Almeida / फ्रांसिस्को डी अल्मेडा","Vasco da Gama / वास्को द गामा","Nuno da Cunha / नूनो डी कुन्हा"], answer:1},
+
+{q:"Who captured Goa for the Portuguese? / पुर्तगालियों के लिए गोवा पर किसने अधिकार किया?", options:["Francisco de Almeida / फ्रांसिस्को डी अल्मेडा","Alfonso de Albuquerque / अल्फोंसो डी अल्बुकर्क","Vasco da Gama / वास्को द गामा","Duarte Barbosa / डुआर्टे बारबोसा"], answer:1},
+
+{q:"Which European power established the first factory in Surat? / सूरत में पहली फैक्ट्री किस यूरोपीय शक्ति ने स्थापित की?", options:["Portuguese / पुर्तगाली","Dutch / डच","English / अंग्रेज","French / फ्रांसीसी"], answer:2},
+
+{q:"In which year was the English East India Company established? / अंग्रेजी ईस्ट इंडिया कंपनी की स्थापना किस वर्ष हुई?", options:["1498 CE / 1498 ई.","1600 CE / 1600 ई.","1664 CE / 1664 ई.","1700 CE / 1700 ई."], answer:1},
+
+{q:"Who granted permission to the English to trade in India? / अंग्रेजों को भारत में व्यापार की अनुमति किसने दी?", options:["Akbar / अकबर","Jahangir / जहाँगीर","Aurangzeb / औरंगजेब","Shah Jahan / शाहजहाँ"], answer:1},
+
+{q:"Which European power established the trading center at Pondicherry? / पांडिचेरी में व्यापारिक केंद्र किस यूरोपीय शक्ति ने स्थापित किया?", options:["Portuguese / पुर्तगाली","Dutch / डच","French / फ्रांसीसी","English / अंग्रेज"], answer:2},
+
+{q:"Who founded the French East India Company? / फ्रांसीसी ईस्ट इंडिया कंपनी की स्थापना किसने की?", options:["Louis XIV / लुई चौदहवें","Colbert / कोलबर्ट","Napoleon / नेपोलियन","Francis I / फ्रांसिस प्रथम"], answer:1},
+
+{q:"Which European power was defeated in the Battle of Wandiwash? / वांडीवाश के युद्ध में किस यूरोपीय शक्ति की हार हुई?", options:["Portuguese / पुर्तगाली","French / फ्रांसीसी","Dutch / डच","Danish / डेनिश"], answer:1},
+
+{q:"In which year was the Battle of Plassey fought? / प्लासी का युद्ध किस वर्ष लड़ा गया था?", options:["1757 CE / 1757 ई.","1764 CE / 1764 ई.","1748 CE / 1748 ई.","1773 CE / 1773 ई."], answer:0},
+
+{q:"Who defeated Siraj-ud-Daulah in the Battle of Plassey? / प्लासी के युद्ध में सिराजुद्दौला को किसने हराया?", options:["Robert Clive / रॉबर्ट क्लाइव","Warren Hastings / वॉरेन हेस्टिंग्स","Lord Cornwallis / लॉर्ड कॉर्नवालिस","Mir Qasim / मीर कासिम"], answer:0},
+
+{q:"Which battle established British supremacy in India? / किस युद्ध ने भारत में अंग्रेजों की सर्वोच्चता स्थापित की?", options:["Battle of Panipat / पानीपत का युद्ध","Battle of Buxar / बक्सर का युद्ध","Battle of Talikota / तालीकोटा का युद्ध","Battle of Haldighati / हल्दीघाटी का युद्ध"], answer:1},
+
+{q:"Who introduced the policy of Blue Water? / ब्लू वॉटर नीति किसने शुरू की?", options:["Vasco da Gama / वास्को द गामा","Francisco de Almeida / फ्रांसिस्को डी अल्मेडा","Albuquerque / अल्बुकर्क","Robert Clive / रॉबर्ट क्लाइव"], answer:1},
+
+{q:"Which European power was the last to come to India for trade? / व्यापार के लिए भारत आने वाली अंतिम यूरोपीय शक्ति कौन थी?", options:["Portuguese / पुर्तगाली","Dutch / डच","French / फ्रांसीसी","English / अंग्रेज"], answer:2},
+
+{q:"Who was known as the 'Founder of British Empire in India'? / 'भारत में ब्रिटिश साम्राज्य का संस्थापक' किसे कहा जाता है?", options:["Warren Hastings / वॉरेन हेस्टिंग्स","Lord Dalhousie / लॉर्ड डलहौजी","Robert Clive / रॉबर्ट क्लाइव","Lord Curzon / लॉर्ड कर्जन"], answer:2},
+
+{q:"Which Mughal emperor granted Diwani rights to the East India Company? / ईस्ट इंडिया कंपनी को दीवानी अधिकार किस मुगल सम्राट ने दिए?", options:["Bahadur Shah II / बहादुर शाह द्वितीय","Shah Alam II / शाह आलम द्वितीय","Aurangzeb / औरंगजेब","Akbar II / अकबर द्वितीय"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

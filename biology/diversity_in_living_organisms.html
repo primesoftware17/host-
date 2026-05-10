@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Diversity in Living Organisms Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Diversity in Living Organisms / जीवों की विविधता)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Diversity in living organisms means? / जैव विविधता?", options:["Variety of living things","Only plants","Only animals","Only bacteria"], answer:0},
+
+{q:"Classification helps in? / वर्गीकरण?", options:["Studying organisms","Only naming","Only killing","Only growth"], answer:0},
+
+{q:"Who proposed five kingdom classification? / पाँच जगत?", options:["Whittaker","Darwin","Newton","Hooke"], answer:0},
+
+{q:"Kingdom Monera includes? / मोनेरा?", options:["Bacteria","Fungi","Plants","Animals"], answer:0},
+
+{q:"Kingdom Protista includes? / प्रोटिस्टा?", options:["Amoeba","Mushroom","Fern","Cow"], answer:0},
+
+{q:"Fungi are? / कवक?", options:["Saprophytes","Autotrophs","Animals","Viruses"], answer:0},
+
+{q:"Plants are? / पौधे?", options:["Autotrophs","Heterotrophs","Parasites","Fungi"], answer:0},
+
+{q:"Animals are? / जानवर?", options:["Heterotrophs","Autotrophs","Producers","Fungi"], answer:0},
+
+{q:"Binomial nomenclature was given by? / नामकरण?", options:["Linnaeus","Darwin","Newton","Mendel"], answer:0},
+
+{q:"Scientific name has how many parts? / नाम?", options:["Two","One","Three","Four"], answer:0},
+
+{q:"First part of scientific name is? / पहला भाग?", options:["Genus","Species","Family","Order"], answer:0},
+
+{q:"Second part is? / दूसरा भाग?", options:["Species","Genus","Class","Phylum"], answer:0},
+
+{q:"Vertebrates have? / कशेरुकी?", options:["Backbone","No backbone","No cells","No tissues"], answer:0},
+
+{q:"Invertebrates lack? / अकशेरुकी?", options:["Backbone","Brain","Heart","Blood"], answer:0},
+
+{q:"Phylum Chordata includes? / कॉर्डेटा?", options:["Vertebrates","Fungi","Plants","Algae"], answer:0},
+
+{q:"Amoeba belongs to? / अमीबा?", options:["Protista","Monera","Plantae","Animalia"], answer:0},
+
+{q:"Mushrooms belong to? / मशरूम?", options:["Fungi","Plants","Animals","Protista"], answer:0},
+
+{q:"Algae belong to? / शैवाल?", options:["Protista","Fungi","Animals","Monera"], answer:0},
+
+{q:"Kingdom Animalia includes? / जानवर?", options:["Animals","Plants","Fungi","Bacteria"], answer:0},
+
+{q:"Bacteria are? / बैक्टीरिया?", options:["Prokaryotic","Eukaryotic","Multicellular","Plants"], answer:0},
+
+{q:"Plants are? / पौधे?", options:["Eukaryotic","Prokaryotic","Viruses","Bacteria"], answer:0},
+
+{q:"Viruses are? / वायरस?", options:["Non-living outside host","Living always","Plants","Animals"], answer:0},
+
+{q:"Taxonomy is study of? / वर्गिकी?", options:["Classification","Weather","Chemistry","Physics"], answer:0},
+
+{q:"Species is? / प्रजाति?", options:["Basic unit of classification","Group of kingdoms","Only animals","Only plants"], answer:0},
+
+{q:"Genus includes? / वंश?", options:["Closely related species","Different kingdoms","Only bacteria","Only fungi"], answer:0},
+
+{q:"Kingdom Plantae includes? / पौध जगत?", options:["Plants","Animals","Fungi","Bacteria"], answer:0},
+
+{q:"Kingdom classification helps in? / लाभ?", options:["Understanding biodiversity","Only naming","Only cutting trees","Only farming"], answer:0},
+
+{q:"Organisms are grouped based on? / आधार?", options:["Similarities","Color only","Size only","Weight only"], answer:0},
+
+{q:"Evolution explains? / विकास?", options:["Change over time","No change","Only plants","Only animals"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Atomic Structure Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Atomic Structure / परमाणु संरचना)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Atom is the smallest unit of? / परमाणु किसका सबसे छोटा भाग है?", options:["Matter / पदार्थ","Energy","Force","Light"], answer:0},
+
+{q:"Who discovered electron? / इलेक्ट्रॉन किसने खोजा?", options:["J.J. Thomson","Newton","Einstein","Bohr"], answer:0},
+
+{q:"Protons are found in? / प्रोटॉन कहाँ होते हैं?", options:["Nucleus / नाभिक","Electron shell","Outside atom","None"], answer:0},
+
+{q:"Neutrons have charge? / न्यूट्रॉन का आवेश?", options:["Neutral","Positive","Negative","Zero mass"], answer:0},
+
+{q:"Electrons revolve around? / इलेक्ट्रॉन कहाँ घूमते हैं?", options:["Nucleus","Neutron","Proton","Center only"], answer:0},
+
+{q:"Atomic number means? / परमाणु क्रमांक?", options:["Number of protons","Neutrons","Mass only","Electrons only"], answer:0},
+
+{q:"Mass number is sum of? / द्रव्यमान संख्या?", options:["Protons + Neutrons","Electrons only","Protons only","Energy"], answer:0},
+
+{q:"Bohr model explains? / बोहर मॉडल?", options:["Atom structure","Force","Heat","Sound"], answer:0},
+
+{q:"Shells are also called? / शैल को क्या कहते हैं?", options:["Energy levels","Force levels","Mass levels","Heat levels"], answer:0},
+
+{q:"First shell is called? / पहली शैल?", options:["K shell","L shell","M shell","N shell"], answer:0},
+
+{q:"Maximum electrons in K shell? / K शैल में अधिकतम?", options:["2","8","18","32"], answer:0},
+
+{q:"Maximum electrons in L shell? / L शैल?", options:["8","2","18","32"], answer:0},
+
+{q:"Valence electrons are in? / संयोजी इलेक्ट्रॉन?", options:["Outermost shell","Nucleus","Inner shell","Proton"], answer:0},
+
+{q:"Valency means? / संयोजकता?", options:["Combining capacity","Mass","Charge","Energy"], answer:0},
+
+{q:"Isotopes have same? / समस्थानिक?", options:["Protons","Neutrons","Mass","Energy"], answer:0},
+
+{q:"Isotopes differ in? / अंतर?", options:["Neutrons","Protons","Electrons","Charge"], answer:0},
+
+{q:"Electron charge is? / इलेक्ट्रॉन आवेश?", options:["Negative","Positive","Neutral","Zero mass"], answer:0},
+
+{q:"Proton charge is? / प्रोटॉन?", options:["Positive","Negative","Neutral","Zero"], answer:0},
+
+{q:"Neutron charge is? / न्यूट्रॉन?", options:["Neutral","Positive","Negative","Zero"], answer:0},
+
+{q:"Rutherford discovered? / रदरफोर्ड?", options:["Nucleus","Electron","Photon","Neutron"], answer:0},
+
+{q:"Nucleus contains? / नाभिक?", options:["Protons and neutrons","Electrons only","Light","Energy only"], answer:0},
+
+{q:"Electrons are? / इलेक्ट्रॉन?", options:["Negatively charged","Positive","Neutral","Heavy"], answer:0},
+
+{q:"Atom is mostly? / परमाणु अधिकांश?", options:["Empty space","Solid","Liquid","Dense"], answer:0},
+
+{q:"Charge of atom is? / परमाणु आवेश?", options:["Neutral","Positive","Negative","Always positive"], answer:0},
+
+{q:"Atomic mass is measured in? / परमाणु द्रव्यमान?", options:["amu","kg","gram","Newton"], answer:0},
+
+{q:"Bohr model belongs to? / बोहर मॉडल?", options:["Quantum theory","Newton law","Thermodynamics","Optics"], answer:0},
+
+{q:"Electrons occupy? / इलेक्ट्रॉन?", options:["Orbitals","Protons","Neutrons","Nucleus only"], answer:0},
+
+{q:"Outer shell stability means? / स्थिरता?", options:["Octet rule","Mass rule","Force rule","Heat rule"], answer:0},
+
+{q:"Number of protons decides? / प्रोटॉन तय करता है?", options:["Element","Mass only","Neutrons","Energy"], answer:0},
+
+{q:"Atoms combine to form? / परमाणु मिलकर?", options:["Molecules","Energy","Light","Force"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

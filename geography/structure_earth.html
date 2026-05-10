@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Latitude and Longitude)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What are the three main layers of the Earth? / पृथ्वी की तीन मुख्य परतें कौन-सी हैं?", options:["Crust, Mantle, Core / भूपर्पटी, मेंटल, क्रोड","Atmosphere, Hydrosphere, Lithosphere / वायुमंडल, जलमंडल, स्थलमंडल","Rock, Soil, Water / चट्टान, मिट्टी, पानी","Continents, Oceans, Rivers / महाद्वीप, महासागर, नदियाँ"], answer:0},
+
+{q:"Which is the outermost layer of the Earth? / पृथ्वी की सबसे बाहरी परत कौन-सी है?", options:["Core / क्रोड","Mantle / मेंटल","Crust / भूपर्पटी","Inner core / आंतरिक क्रोड"], answer:2},
+
+{q:"Which layer lies just below the crust? / भूपर्पटी के ठीक नीचे कौन-सी परत होती है?", options:["Core / क्रोड","Mantle / मेंटल","Crust / भूपर्पटी","Lithosphere / स्थलमंडल"], answer:1},
+
+{q:"What is the centre of the Earth called? / पृथ्वी के केंद्र को क्या कहते हैं?", options:["Mantle / मेंटल","Crust / भूपर्पटी","Core / क्रोड","Lithosphere / स्थलमंडल"], answer:2},
+
+{q:"Which layer of Earth is the hottest? / पृथ्वी की सबसे गर्म परत कौन-सी है?", options:["Crust / भूपर्पटी","Mantle / मेंटल","Outer core / बाह्य क्रोड","Core / क्रोड"], answer:3},
+
+{q:"What is the Earth's crust mainly made of? / पृथ्वी की भूपर्पटी मुख्य रूप से किससे बनी होती है?", options:["Water / पानी","Rocks and minerals / चट्टान और खनिज","Gas / गैस","Ice / बर्फ"], answer:1},
+
+{q:"Which layer is semi-solid and allows movement of tectonic plates? / कौन-सी परत अर्ध-ठोस होती है और प्लेटों की गति संभव बनाती है?", options:["Core / क्रोड","Mantle / मेंटल","Crust / भूपर्पटी","Atmosphere / वायुमंडल"], answer:1},
+
+{q:"What causes earthquakes mainly? / भूकंप मुख्य रूप से किस कारण होते हैं?", options:["Wind movement / हवा की गति","Plate movement / प्लेटों की गति","Rainfall / वर्षा","Ocean waves / समुद्री लहरें"], answer:1},
+
+{q:"Which layer is divided into outer core and inner core? / कौन-सी परत बाह्य और आंतरिक क्रोड में विभाजित है?", options:["Crust / भूपर्पटी","Mantle / मेंटल","Core / क्रोड","Lithosphere / स्थलमंडल"], answer:2},
+
+{q:"What is the state of outer core? / बाह्य क्रोड की अवस्था कैसी होती है?", options:["Solid / ठोस","Liquid / द्रव","Gas / गैस","Plasma / प्लाज्मा"], answer:1},
+
+{q:"What is the state of inner core? / आंतरिक क्रोड की अवस्था कैसी होती है?", options:["Liquid / द्रव","Gas / गैस","Solid / ठोस","Semi-solid / अर्ध-ठोस"], answer:2},
+
+{q:"Which layer is the thickest? / सबसे मोटी परत कौन-सी है?", options:["Crust / भूपर्पटी","Mantle / मेंटल","Core / क्रोड","Lithosphere / स्थलमंडल"], answer:1},
+
+{q:"What is the approximate composition of Earth's core? / पृथ्वी का क्रोड मुख्य रूप से किससे बना होता है?", options:["Silicon and oxygen / सिलिकॉन और ऑक्सीजन","Iron and nickel / लोहा और निकेल","Carbon and hydrogen / कार्बन और हाइड्रोजन","Calcium and magnesium / कैल्शियम और मैग्नीशियम"], answer:1},
+
+{q:"Which layer supports life on Earth? / पृथ्वी पर जीवन किस परत में पाया जाता है?", options:["Core / क्रोड","Mantle / मेंटल","Crust / भूपर्पटी","Inner core / आंतरिक क्रोड"], answer:2},
+
+{q:"What is lithosphere made of? / स्थलमंडल किससे बना होता है?", options:["Only water / केवल पानी","Crust and upper mantle / भूपर्पटी और ऊपरी मेंटल","Only rocks / केवल चट्टान","Only soil / केवल मिट्टी"], answer:1},
+
+{q:"Which process forms mountains on Earth? / पृथ्वी पर पर्वत किस प्रक्रिया से बनते हैं?", options:["Volcanic eruption / ज्वालामुखी विस्फोट","Plate tectonics / प्लेट विवर्तनिकी","Rainfall / वर्षा","Erosion / अपरदन"], answer:1},
+
+{q:"What is the main cause of volcanoes? / ज्वालामुखी का मुख्य कारण क्या है?", options:["Wind pressure / वायु दबाव","Magma movement / मैग्मा की गति","Rainwater / वर्षा जल","Ocean tides / समुद्री ज्वार"], answer:1},
+
+{q:"Which layer is responsible for Earth's magnetic field? / पृथ्वी का चुंबकीय क्षेत्र किस परत से बनता है?", options:["Crust / भूपर्पटी","Mantle / मेंटल","Core / क्रोड","Atmosphere / वायुमंडल"], answer:2},
+
+{q:"What is magma? / मैग्मा क्या है?", options:["Solid rock / ठोस चट्टान","Molten rock inside Earth / पृथ्वी के अंदर पिघली हुई चट्टान","Water vapour / जल वाष्प","Ice crystals / बर्फ के कण"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

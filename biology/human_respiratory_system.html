@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Human Respiratory System Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Human Respiratory System / मानव श्वसन तंत्र)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Respiration means? / श्वसन क्या है?", options:["Energy release","Food making","Digestion","Growth"], answer:0},
+
+{q:"Respiratory system helps in? / कार्य?", options:["Gas exchange","Digestion","Movement","Excretion"], answer:0},
+
+{q:"Air enters through? / हवा?", options:["Nose","Ear","Skin","Stomach"], answer:0},
+
+{q:"Nasal cavity filters? / नाक?", options:["Air","Food","Blood","Water"], answer:0},
+
+{q:"Windpipe is called? / श्वासनली?", options:["Trachea","Esophagus","Bronchi","Alveoli"], answer:0},
+
+{q:"Lungs are located in? / फेफड़े?", options:["Chest","Head","Stomach","Hand"], answer:0},
+
+{q:"Alveoli are for? / वायुकोष?", options:["Gas exchange","Digestion","Blood formation","Storage"], answer:0},
+
+{q:"Oxygen is absorbed in? / ऑक्सीजन?", options:["Alveoli","Trachea","Nose","Mouth"], answer:0},
+
+{q:"Carbon dioxide is removed through? / CO2?", options:["Lungs","Liver","Kidney","Heart"], answer:0},
+
+{q:"Breathing involves? / श्वसन क्रिया?", options:["Inhalation & exhalation","Digestion","Circulation","Excretion"], answer:0},
+
+{q:"Inhalation means? / श्वास लेना?", options:["Taking in air","Removing air","Digestion","Blood flow"], answer:0},
+
+{q:"Exhalation means? / श्वास छोड़ना?", options:["Releasing air","Taking air","Eating","Sleeping"], answer:0},
+
+{q:"Diaphragm helps in? / डायाफ्राम?", options:["Breathing","Digestion","Movement","Circulation"], answer:0},
+
+{q:"Respiration produces? / ऊर्जा?", options:["Energy","Food","Water","Oxygen"], answer:0},
+
+{q:"Cellular respiration occurs in? / कोशिका?", options:["Mitochondria","Nucleus","Cell wall","Ribosome"], answer:0},
+
+{q:"Aerobic respiration needs? / ऑक्सीजन?", options:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"], answer:0},
+
+{q:"Anaerobic respiration occurs without? / बिना?", options:["Oxygen","Food","Water","Blood"], answer:0},
+
+{q:"Breathing rate increases during? / बढ़ना?", options:["Exercise","Sleeping","Rest","Sitting"], answer:0},
+
+{q:"Bronchi divide into? / शाखाएँ?", options:["Bronchioles","Alveoli","Trachea","Nose"], answer:0},
+
+{q:"Respiration is? / प्रक्रिया?", options:["Exothermic","Endothermic only","No energy","Physical only"], answer:0},
+
+{q:"Air is mixture of? / हवा?", options:["Gases","Liquids","Solids","Metals"], answer:0},
+
+{q:"Main gas used in respiration? / गैस?", options:["Oxygen","Nitrogen","Carbon dioxide","Helium"], answer:0},
+
+{q:"Carbon dioxide is? / CO2?", options:["Waste gas","Food","Fuel","Water"], answer:0},
+
+{q:"Respiratory pigment in humans? / रंगद्रव्य?", options:["Haemoglobin","Chlorophyll","Melanin","Keratin"], answer:0},
+
+{q:"Haemoglobin is found in? / रक्त?", options:["Red blood cells","White blood cells","Plasma","Platelets"], answer:0},
+
+{q:"Voice box is called? / स्वरयंत्र?", options:["Larynx","Pharynx","Trachea","Bronchi"], answer:0},
+
+{q:"Coughing helps to? / खाँसी?", options:["Clear airways","Digest food","Increase blood","Stop breathing"], answer:0},
+
+{q:"Respiratory system is connected with? / संबंध?", options:["Circulatory system","Digestive only","Excretory only","Nervous only"], answer:0},
+
+{q:"Energy from respiration is used for? / उपयोग?", options:["All body activities","Only breathing","Only eating","Only sleeping"], answer:0},
+
+{q:"Healthy lungs require? / स्वास्थ्य?", options:["Clean air","Smoke","Dust","Pollution"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

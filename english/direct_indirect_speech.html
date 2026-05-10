@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Direct & Indirect Speech Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Direct & Indirect Speech)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Change into Indirect Speech: He said, 'I am happy.'", options:["He said that he was happy","He said that he is happy","He said that I was happy","He said that he will be happy"], answer:0},
+
+{q:"Change into Direct Speech: She said that she was reading a book.", options:["She said, 'I read a book.'","She said, 'I am reading a book.'","She said, 'I was reading a book.'","She said, 'I have read a book.'"], answer:1},
+
+{q:"Identify correct Indirect Speech: 'He said, I will go home.'", options:["He said that he will go home","He said that he would go home","He said that he goes home","He said that he going home"], answer:1},
+
+{q:"Change into Indirect Speech: She said, 'I have finished my work.'", options:["She said that she had finished her work","She said that she has finished her work","She said that she will finish her work","She said that she is finishing her work"], answer:0},
+
+{q:"Change into Direct Speech: He said that he was tired.", options:["He said, 'I am tired.'","He said, 'I was tired.'","He said, 'I will be tired.'","He said, 'I have tired.'"], answer:0},
+
+{q:"Which is correct Indirect Speech? Ram said, 'I am busy.'", options:["Ram said that he was busy","Ram said that he is busy","Ram said that I am busy","Ram said that he will be busy"], answer:0},
+
+{q:"Change into Indirect Speech: She said, 'I can swim.'", options:["She said that she can swim","She said that she could swim","She said that she will swim","She said that she swims"], answer:1},
+
+{q:"Change into Direct Speech: They said that they were playing.", options:["They said, 'We are playing.'","They said, 'We were playing.'","They said, 'We played.'","They said, 'We have played.'"], answer:1},
+
+{q:"Identify correct Indirect Speech: 'He said, I am writing a letter.'", options:["He said that he is writing a letter","He said that he was writing a letter","He said that he writes a letter","He said that he will write a letter"], answer:1},
+
+{q:"Change into Indirect Speech: She said, 'I will help you.'", options:["She said that she will help me","She said that she would help me","She said that she helps me","She said that she has helped me"], answer:1},
+
+{q:"Change into Direct Speech: He said that he had eaten food.", options:["He said, 'I eat food.'","He said, 'I have eaten food.'","He said, 'I had eaten food.'","He said, 'I will eat food.'"], answer:2},
+
+{q:"Which is correct Indirect Speech? She said, 'I am going to school.'", options:["She said that she goes to school","She said that she was going to school","She said that she is going to school","She said that she will go to school"], answer:1},
+
+{q:"Change into Indirect Speech: He said, 'I saw a movie.'", options:["He said that he sees a movie","He said that he had seen a movie","He said that he will see a movie","He said that he is seeing a movie"], answer:1},
+
+{q:"Change into Direct Speech: She said that she could dance.", options:["She said, 'I can dance.'","She said, 'I could dance.'","She said, 'I will dance.'","She said, 'I am dancing.'"], answer:0},
+
+{q:"Identify correct Indirect Speech: 'They said, We are ready.'", options:["They said that they are ready","They said that they were ready","They said that they will be ready","They said that they have been ready"], answer:1},
+
+{q:"Change into Indirect Speech: He said, 'I must go.'", options:["He said that he must go","He said that he had to go","He said that he will go","Both A and B"], answer:3},
+
+{q:"Change into Direct Speech: She said that she was happy.", options:["She said, 'I am happy.'","She said, 'I was happy.'","She said, 'I will be happy.'","She said, 'I have been happy.'"], answer:1},
+
+{q:"Which is correct Indirect Speech? He said, 'I have a car.'", options:["He said that he has a car","He said that he had a car","He said that he will have a car","He said that he is having a car"], answer:1},
+
+{q:"Change into Indirect Speech: She said, 'I am writing.'", options:["She said that she writes","She said that she was writing","She said that she will write","She said that she has written"], answer:1},
+
+{q:"Change into Direct Speech: He said that he would come.", options:["He said, 'I will come.'","He said, 'I would come.'","He said, 'I come.'","He said, 'I came.'"], answer:0},
+
+{q:"Identify correct Indirect Speech: 'She said, I am tired.'", options:["She said that she is tired","She said that she was tired","She said that she will be tired","She said that she has been tired"], answer:1},
+
+{q:"Change into Indirect Speech: He said, 'I play cricket.'", options:["He said that he plays cricket","He said that he played cricket","He said that he will play cricket","He said that he is playing cricket"], answer:0},
+
+{q:"Change into Direct Speech: They said that they had finished work.", options:["They said, 'We finish work.'","They said, 'We have finished work.'","They said, 'We had finished work.'","They said, 'We will finish work.'"], answer:2},
+
+{q:"Which is correct Indirect Speech? She said, 'I will go.'", options:["She said that she will go","She said that she would go","She said that she goes","She said that she going"], answer:1},
+
+{q:"Change into Indirect Speech: He said, 'I am a student.'", options:["He said that he is a student","He said that he was a student","He said that he will be a student","He said that he has been a student"], answer:1},
+
+{q:"Change into Direct Speech: She said that she had completed her homework.", options:["She said, 'I complete my homework.'","She said, 'I have completed my homework.'","She said, 'I had completed my homework.'","She said, 'I will complete my homework.'"], answer:2},
+
+{q:"Identify correct Indirect Speech: 'He said, I can help you.'", options:["He said that he can help me","He said that he could help me","He said that he will help me","He said that he helps me"], answer:1},
+
+{q:"Change into Indirect Speech: She said, 'I will study.'", options:["She said that she will study","She said that she would study","She said that she studies","She said that she studied"], answer:1},
+
+{q:"Change into Direct Speech: He said that he was going home.", options:["He said, 'I go home.'","He said, 'I am going home.'","He said, 'I was going home.'","He said, 'I will go home.'"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

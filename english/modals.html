@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modals Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Modals)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which modal is used for ability? / क्षमता के लिए कौन-सा modal प्रयोग होता है?", options:["can","must","should","may"], answer:0},
+
+{q:"Choose correct modal: You ___ obey your parents.", options:["can","must","may","might"], answer:1},
+
+{q:"Which modal shows possibility? / संभावना के लिए कौन-सा modal है?", options:["must","can","may","should"], answer:2},
+
+{q:"Fill in the blank: He ___ swim when he was five.", options:["can","could","must","may"], answer:1},
+
+{q:"Which modal is used for advice? / सलाह के लिए कौन-सा modal है?", options:["must","should","can","may"], answer:1},
+
+{q:"Choose correct modal: It ___ rain today.", options:["must","can","may","should"], answer:2},
+
+{q:"Which modal shows necessity? / आवश्यकता के लिए कौन-सा modal है?", options:["may","can","must","could"], answer:2},
+
+{q:"Fill in the blank: You ___ not smoke here.", options:["must","should","may","can"], answer:0},
+
+{q:"Which modal expresses permission? / अनुमति के लिए कौन-सा modal है?", options:["must","can","may","should"], answer:2},
+
+{q:"Choose correct modal: ___ I come in?", options:["Must","May","Should","Can"], answer:1},
+
+{q:"Which modal shows strong obligation? / कड़ी बाध्यता के लिए कौन-सा modal है?", options:["may","can","must","could"], answer:2},
+
+{q:"Fill in the blank: You ___ take an umbrella; it might rain.", options:["must","should","can","may"], answer:1},
+
+{q:"Which modal is used for past ability? / भूतकाल की क्षमता के लिए?", options:["can","could","must","may"], answer:1},
+
+{q:"Choose correct modal: He ___ be at home; I saw him outside.", options:["must","can","may","should"], answer:2},
+
+{q:"Which modal expresses certainty? / निश्चितता के लिए कौन-सा modal है?", options:["may","must","can","could"], answer:1},
+
+{q:"Fill in the blank: You ___ finish your homework before going out.", options:["must","can","may","could"], answer:0},
+
+{q:"Which modal shows polite request? / विनम्र अनुरोध?", options:["must","will","would","can"], answer:2},
+
+{q:"Choose correct modal: ___ you help me, please?", options:["Can","Must","Should","May"], answer:0},
+
+{q:"Which modal is used for suggestion? / सुझाव के लिए?", options:["should","must","may","can"], answer:0},
+
+{q:"Fill in the blank: You ___ not park here.", options:["must","may","can","could"], answer:0},
+
+{q:"Which modal expresses future possibility? / भविष्य की संभावना?", options:["might","must","should","can"], answer:0},
+
+{q:"Choose correct modal: She ___ speak English fluently.", options:["can","must","may","should"], answer:0},
+
+{q:"Which modal shows obligation? / दायित्व?", options:["must","may","can","might"], answer:0},
+
+{q:"Fill in the blank: Students ___ be punctual.", options:["must","may","can","could"], answer:0},
+
+{q:"Which modal is used for prohibition? / निषेध?", options:["must not","may","can","could"], answer:0},
+
+{q:"Choose correct modal: He ___ be the new manager.", options:["must","can","may","should"], answer:0},
+
+{q:"Which modal expresses less possibility? / कम संभावना?", options:["may","might","must","can"], answer:1},
+
+{q:"Fill in the blank: You ___ try harder to succeed.", options:["must","should","can","may"], answer:1},
+
+{q:"Which modal is used for strong advice? / मजबूत सलाह?", options:["should","must","can","may"], answer:1},
+
+{q:"Choose correct modal: They ___ come tomorrow.", options:["might","must","should","can"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

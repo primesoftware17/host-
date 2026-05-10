@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Latitude and Longitude)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is the equator? / भूमध्य रेखा क्या है?", options:["0° latitude line / 0° अक्षांश रेखा","0° longitude line / 0° देशांतर रेखा","Tropic of Cancer / कर्क रेखा","Prime Meridian / प्रधान मध्यान्ह रेखा"], answer:0},
+
+{q:"Which line is called 0° longitude? / 0° देशांतर रेखा किसे कहते हैं?", options:["Equator / भूमध्य रेखा","Prime Meridian / प्रधान मध्यान्ह रेखा","Tropic of Capricorn / मकर रेखा","Arctic Circle / आर्कटिक वृत्त"], answer:1},
+
+{q:"Which circle divides Earth into Northern and Southern Hemispheres? / पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में कौन विभाजित करता है?", options:["Prime Meridian / प्रधान मध्यान्ह रेखा","Equator / भूमध्य रेखा","International Date Line / अंतर्राष्ट्रीय तिथि रेखा","Tropic of Cancer / कर्क रेखा"], answer:1},
+
+{q:"Latitude lines are also called what? / अक्षांश रेखाओं को और क्या कहा जाता है?", options:["Meridians / देशांतर","Parallels / समानांतर रेखाएँ","Arcs / चाप","Zones / क्षेत्र"], answer:1},
+
+{q:"Longitude lines are also called what? / देशांतर रेखाओं को और क्या कहा जाता है?", options:["Parallels / समानांतर रेखाएँ","Meridians / मध्याह्न रेखाएँ","Circles / वृत्त","Bands / पट्टियाँ"], answer:1},
+
+{q:"How many degrees are there in total longitude? / कुल देशांतर कितने अंश होते हैं?", options:["180°","360°","90°","270°"], answer:1},
+
+{q:"How many degrees are there in total latitude? / कुल अक्षांश कितने अंश होते हैं?", options:["90°","180°","360°","45°"], answer:0},
+
+{q:"Which line is used to measure time globally? / वैश्विक समय मापने के लिए कौन-सी रेखा प्रयोग होती है?", options:["Equator / भूमध्य रेखा","Prime Meridian / प्रधान मध्यान्ह रेखा","Tropic of Cancer / कर्क रेखा","Antarctic Circle / अंटार्कटिक वृत्त"], answer:1},
+
+{q:"Which imaginary line is known as 180° longitude? / 180° देशांतर रेखा को क्या कहते हैं?", options:["Equator / भूमध्य रेखा","International Date Line / अंतर्राष्ट्रीय तिथि रेखा","Prime Meridian / प्रधान मध्यान्ह रेखा","Tropic of Capricorn / मकर रेखा"], answer:1},
+
+{q:"Latitude values range between? / अक्षांश मान किसके बीच होते हैं?", options:["0° to 180°","0° to 90°","0° to 360°","90° to 180°"], answer:1},
+
+{q:"Longitude values range between? / देशांतर मान किसके बीच होते हैं?", options:["0° to 90°","0° to 180°","0° to 360°","90° to 270°"], answer:1},
+
+{q:"Which direction do latitude lines run? / अक्षांश रेखाएँ किस दिशा में चलती हैं?", options:["North-South / उत्तर-दक्षिण","East-West / पूर्व-पश्चिम","Diagonal / तिरछी","Circular / गोलाकार"], answer:1},
+
+{q:"Which direction do longitude lines run? / देशांतर रेखाएँ किस दिशा में चलती हैं?", options:["East-West / पूर्व-पश्चिम","North-South / उत्तर-दक्षिण","Circular / गोलाकार","Horizontal only / केवल क्षैतिज"], answer:1},
+
+{q:"What is the shape of latitude lines? / अक्षांश रेखाओं का आकार कैसा होता है?", options:["Circles / वृत्त","Straight lines / सीधी रेखाएँ","Triangles / त्रिभुज","Squares / वर्ग"], answer:0},
+
+{q:"Which is the longest latitude line? / सबसे लंबी अक्षांश रेखा कौन सी है?", options:["Tropic of Cancer / कर्क रेखा","Equator / भूमध्य रेखा","Tropic of Capricorn / मकर रेखा","Arctic Circle / आर्कटिक वृत्त"], answer:1},
+
+{q:"What is used to locate a place on Earth accurately? / पृथ्वी पर किसी स्थान को सही ढंग से खोजने के लिए क्या उपयोग होता है?", options:["Scale / पैमाना","Latitude and Longitude / अक्षांश और देशांतर","Map legend / मानचित्र कुंजी","Compass / दिशा सूचक"], answer:1},
+
+{q:"Which line is fixed at 0° latitude? / 0° अक्षांश पर कौन-सी रेखा स्थित है?", options:["Prime Meridian / प्रधान मध्यान्ह रेखा","Equator / भूमध्य रेखा","International Date Line / अंतर्राष्ट्रीय तिथि रेखा","Tropic of Cancer / कर्क रेखा"], answer:1},
+
+{q:"Which imaginary lines form a grid on Earth? / पृथ्वी पर जाल जैसा ढांचा कौन-सी रेखाएँ बनाती हैं?", options:["Latitude and Longitude / अक्षांश और देशांतर","Rivers and Mountains / नदियाँ और पर्वत","Continents and Oceans / महाद्वीप और महासागर","Roads and Cities / सड़कें और शहर"], answer:0},
+
+{q:"Longitude is measured in which direction from Prime Meridian? / देशांतर प्रधान मध्यान्ह रेखा से किस दिशा में मापा जाता है?", options:["East and West / पूर्व और पश्चिम","North and South / उत्तर और दक्षिण","Up and Down / ऊपर और नीचे","Only East / केवल पूर्व"], answer:0},
+
+{q:"Which tool helps in finding latitude and longitude on a map? / मानचित्र पर अक्षांश और देशांतर खोजने में कौन-सा उपकरण मदद करता है?", options:["Thermometer / थर्मामीटर","Compass / कंपास","Protractor / प्रोट्रैक्टर","Barometer / बैरोमीटर"], answer:2}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

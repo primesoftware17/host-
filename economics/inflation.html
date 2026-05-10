@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Inflation - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600&display=swap');
+  :root{--bg:#fff8f0;--card:#fff;--accent:#d62828;--accent2:#f77f00;--text:#212121;--sub:#777;--correct:#43aa8b;--wrong:#d62828;--border:#ffe0cc;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{max-width:780px;margin:0 auto 40px;display:flex;align-items:center;gap:24px;padding:32px;background:var(--accent);border-radius:16px;color:#fff;position:relative;overflow:hidden;}
+  .hero-icon{font-size:80px;opacity:.2;position:absolute;right:20px;top:10px;}
+  .tag{display:inline-block;background:#fff3;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:10px;}
+  h1{font-family:'Anton',sans-serif;font-size:clamp(32px,6vw,56px);letter-spacing:2px;line-height:1;}
+  .sub{opacity:.85;font-size:14px;margin-top:8px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;box-shadow:0 2px 8px #0000000a;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#fff8f5;border:1.5px solid var(--border);color:var(--text);padding:11px 16px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Barlow',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent2);background:#fff3e0;}
+  .opt.correct{background:#e8f5ee;border-color:var(--correct);color:var(--correct);font-weight:600;}
+  .opt.wrong{background:#fdecea;border-color:var(--wrong);color:var(--wrong);}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:var(--accent);color:#fff;font-weight:700;font-size:18px;padding:14px 50px;border:none;border-radius:8px;cursor:pointer;font-family:'Anton',sans-serif;letter-spacing:3px;transition:all .2s;}
+  .submit-btn:hover{background:var(--accent2);transform:scale(1.03);}
+  .score-box{display:none;background:var(--accent);border-radius:12px;padding:30px;text-align:center;margin-top:20px;color:#fff;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Anton',sans-serif;font-size:72px;letter-spacing:4px;}
+  .score-label{opacity:.85;margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div>
+    <div class="tag">Chapter 7</div>
+    <h1>INFLATION</h1>
+    <p class="sub">30 Multiple Choice Questions — Price Rise, Causes & Effects</p>
+  </div>
+  <div class="hero-icon">📈</div>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">SUBMIT</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"Inflation means / मुद्रास्फीति का अर्थ है:",opts:["Decrease in price level / मूल्य स्तर में कमी","Sustained rise in general price level / सामान्य मूल्य स्तर में निरंतर वृद्धि","Rise in production / उत्पादन में वृद्धि","Fall in imports / आयात में कमी"],ans:1},
+  {q:"Deflation means / अपस्फीति का अर्थ है:",opts:["Rise in prices / कीमतें बढ़ना","Fall in general price level / सामान्य मूल्य स्तर में गिरावट","Increase in income / आय में वृद्धि","More money supply / अधिक मुद्रा आपूर्ति"],ans:1},
+  {q:"Demand-pull inflation is caused by / माँग-खिंचाव मुद्रास्फीति का कारण है:",opts:["Excess demand over supply / आपूर्ति से अधिक माँग","Fall in aggregate demand / समग्र माँग में कमी","Rise in production / उत्पादन में वृद्धि","Lower money supply / कम मुद्रा आपूर्ति"],ans:0},
+  {q:"Cost-push inflation is caused by / लागत-दबाव मुद्रास्फीति का कारण है:",opts:["Fall in prices / कीमतों में गिरावट","Rise in production costs / उत्पादन लागत में वृद्धि","Excess money supply / अत्यधिक मुद्रा आपूर्ति","Trade surplus / व्यापार अधिशेष"],ans:1},
+  {q:"Which index is used to measure inflation in India? / भारत में मुद्रास्फीति मापने के लिए कौन सा सूचकांक प्रयुक्त होता है?",opts:["WPI and CPI / थोक मूल्य सूचकांक और उपभोक्ता मूल्य सूचकांक","GDP deflator only / केवल GDP deflator","HDI only / केवल HDI","BSE Sensex only / केवल BSE Sensex"],ans:0},
+  {q:"WPI stands for / WPI का अर्थ है:",opts:["Wholesale Price Index / थोक मूल्य सूचकांक","World Price Indicator","Wealth Production Index","Worker Pay Index"],ans:0},
+  {q:"CPI stands for / CPI का अर्थ है:",opts:["Consumer Price Index / उपभोक्ता मूल्य सूचकांक","Capital Price Indicator","Country Product Index","Currency Policy Index"],ans:0},
+  {q:"Hyperinflation means / अतिमुद्रास्फीति का अर्थ है:",opts:["Low inflation / कम मुद्रास्फीति","Moderate price rise / मध्यम कीमत वृद्धि","Extremely rapid price increase / अत्यंत तेज कीमत वृद्धि","Stable prices / स्थिर कीमतें"],ans:2},
+  {q:"Creeping inflation is / रेंगती मुद्रास्फीति है:",opts:["Very high inflation / बहुत अधिक मुद्रास्फीति","Slow mild price rise (1-3%) / धीमी कीमत वृद्धि (1-3%)","Negative inflation / ऋणात्मक मुद्रास्फीति","Zero inflation / शून्य मुद्रास्फीति"],ans:1},
+  {q:"Stagflation is / स्टैगफ्लेशन है:",opts:["High growth + low inflation / उच्च वृद्धि + कम मुद्रास्फीति","Stagnation + inflation simultaneously / आर्थिक ठहराव और मुद्रास्फीति एक साथ","Deflation + growth / अपस्फीति + वृद्धि","Zero growth + zero inflation / शून्य वृद्धि + शून्य मुद्रास्फीति"],ans:1},
+  {q:"Inflation benefits / मुद्रास्फीति से लाभ होता है:",opts:["Fixed income earners / निश्चित आय वालों को","Debtors (borrowers) / ऋणियों (उधारकर्ताओं) को","Savers / बचतकर्ताओं को","Creditors / लेनदारों को"],ans:1},
+  {q:"Inflation hurts / मुद्रास्फीति से नुकसान होता है:",opts:["Debtors / ऋणियों को","Speculators / सट्टेबाजों को","Fixed income earners like pensioners / पेंशनधारियों जैसे निश्चित आय वालों को","Exporters / निर्यातकों को"],ans:2},
+  {q:"To control demand-pull inflation, RBI should / माँग-खिंचाव मुद्रास्फीति नियंत्रण के लिए RBI को:",opts:["Increase money supply / मुद्रा आपूर्ति बढ़ानी चाहिए","Decrease interest rates / ब्याज दर घटानी चाहिए","Increase repo rate / रेपो दर बढ़ानी चाहिए","Print more money / अधिक मुद्रा छापनी चाहिए"],ans:2},
+  {q:"Fiscal measures to control inflation include / मुद्रास्फीति नियंत्रण के राजकोषीय उपाय हैं:",opts:["Increasing government spending / सरकारी खर्च बढ़ाना","Reducing taxes to boost spending / खर्च बढ़ाने के लिए कर घटाना","Cutting government expenditure and raising taxes / सरकारी खर्च घटाना और कर बढ़ाना","Printing more notes / अधिक नोट छापना"],ans:2},
+  {q:"Inflation rate formula is / मुद्रास्फीति दर का सूत्र है:",opts:["(Current CPI - Base CPI) / Base CPI × 100 / (वर्तमान CPI - आधार CPI) / आधार CPI × 100","GDP / Population","Income - Expenditure","Trade surplus / GDP"],ans:0},
+  {q:"Food inflation means / खाद्य मुद्रास्फीति का अर्थ है:",opts:["Rise in food prices / खाद्य कीमतों में वृद्धि","Fall in food production / खाद्य उत्पादन में कमी","Rise in food imports / खाद्य आयात में वृद्धि","Government subsidies on food / खाद्य पर सरकारी सब्सिडी"],ans:0},
+  {q:"Core inflation excludes / मुख्य मुद्रास्फीति में शामिल नहीं है:",opts:["Manufactured goods / विनिर्मित वस्तुएँ","Food and fuel prices / खाद्य और ईंधन कीमतें","Services / सेवाएँ","Housing costs / आवास लागत"],ans:1},
+  {q:"Money supply increase leads to / मुद्रा आपूर्ति में वृद्धि से:",opts:["Lower prices / कम कीमतें","Inflation / मुद्रास्फीति","Deflation / अपस्फीति","Stable prices / स्थिर कीमतें"],ans:1},
+  {q:"Phillips Curve shows relationship between / फिलिप्स वक्र दर्शाता है:",opts:["Inflation and unemployment / मुद्रास्फीति और बेरोजगारी","GDP and trade / GDP और व्यापार","Population and income / जनसंख्या और आय","Savings and investment / बचत और निवेश"],ans:0},
+  {q:"Disinflation means / मुद्रास्फीति में कमी का अर्थ है:",opts:["Rising inflation / बढ़ती मुद्रास्फीति","Falling rate of inflation / मुद्रास्फीति की दर में कमी","Negative inflation / ऋणात्मक मुद्रास्फीति","Price stability / मूल्य स्थिरता"],ans:1},
+  {q:"Which of the following causes cost-push inflation? / निम्न में से क्या लागत-दबाव मुद्रास्फीति का कारण है?",opts:["Higher income / अधिक आय","Rise in oil prices / तेल कीमतों में वृद्धि","Increase in savings / बचत में वृद्धि","Tax cuts / कर कटौती"],ans:1},
+  {q:"Inflation is measured over a / मुद्रास्फीति मापी जाती है:",opts:["Daily period / दैनिक अवधि","Weekly period / साप्ताहिक अवधि","Base year comparison / आधार वर्ष से तुलना","Hourly basis / घंटे के आधार पर"],ans:2},
+  {q:"Imported inflation means / आयातित मुद्रास्फीति का अर्थ है:",opts:["Inflation caused by higher import prices / आयात कीमतों में वृद्धि से मुद्रास्फीति","Fall in exports / निर्यात में गिरावट","Government budget deficit / सरकारी बजट घाटा","Higher domestic demand / अधिक घरेलू माँग"],ans:0},
+  {q:"Reflation means / पुनर्स्फीति का अर्थ है:",opts:["Reduction of inflation / मुद्रास्फीति में कमी","Deliberate increase in money supply to revive economy / अर्थव्यवस्था पुनर्जीवित करने के लिए मुद्रा आपूर्ति में जानबूझकर वृद्धि","Zero inflation / शून्य मुद्रास्फीति","Trade surplus / व्यापार अधिशेष"],ans:1},
+  {q:"Inflation target in India is set by / भारत में मुद्रास्फीति लक्ष्य निर्धारित करता है:",opts:["Finance Ministry alone / केवल वित्त मंत्रालय","RBI in consultation with government / सरकार से परामर्श करके RBI","Parliament / संसद","SEBI"],ans:1},
+  {q:"India's inflation target (CPI) is / भारत का मुद्रास्फीति लक्ष्य (CPI) है:",opts:["2% ± 1","4% ± 2","6% ± 2","10% ± 1"],ans:1},
+  {q:"Wage-price spiral means / मजदूरी-कीमत सर्पिल का अर्थ है:",opts:["Wages rise → firms raise prices → workers demand more wages / मजदूरी बढ़ती है → फर्में कीमत बढ़ाती हैं → मजदूर अधिक मजदूरी माँगते हैं","Prices fall and wages fall / कीमतें और मजदूरी दोनों घटती हैं","Fixed wages and fixed prices / निश्चित मजदूरी और निश्चित कीमतें","Rising exports only / केवल निर्यात में वृद्धि"],ans:0},
+  {q:"Supply-side inflation can be controlled by / आपूर्ति-पक्ष मुद्रास्फीति को नियंत्रित किया जा सकता है:",opts:["Reducing production / उत्पादन घटाकर","Increasing production and productivity / उत्पादन और उत्पादकता बढ़ाकर","Raising interest rates / ब्याज दर बढ़ाकर","Increasing government spending / सरकारी खर्च बढ़ाकर"],ans:1},
+  {q:"Price index number 120 means / मूल्य सूचकांक 120 का अर्थ है:",opts:["Prices fell by 20% / कीमतें 20% गिरीं","Prices rose by 20% from base year / आधार वर्ष से कीमतें 20% बढ़ीं","Prices doubled / कीमतें दोगुनी हुईं","Price level is 12 / मूल्य स्तर 12 है"],ans:1},
+  {q:"Inflation redistributes income by / मुद्रास्फीति आय का पुनर्वितरण करती है:",opts:["Helping fixed income earners / निश्चित आयवर्ग की मदद करके","Hurting debtors / ऋणियों को नुकसान पहुँचाकर","Transferring wealth from creditors to debtors / लेनदारों से ऋणियों को धन स्थानांतरित करके","Benefiting savers / बचतकर्ताओं को लाभ पहुँचाकर"],ans:2}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

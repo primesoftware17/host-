@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Human Digestive System Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Human Digestive System / मानव पाचन तंत्र)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Digestion starts in? / पाचन कहाँ से शुरू होता है?", options:["Mouth","Stomach","Intestine","Liver"], answer:0},
+
+{q:"Teeth help in? / दांत?", options:["Chewing","Digestion only","Respiration","Absorption"], answer:0},
+
+{q:"Saliva contains? / लार में?", options:["Amylase","Pepsin","Bile","Insulin"], answer:0},
+
+{q:"Food pipe is called? / भोजन नली?", options:["Oesophagus","Trachea","Intestine","Vein"], answer:0},
+
+{q:"Stomach produces? / आमाशय?", options:["HCl","Oxygen","Glucose","Bile only"], answer:0},
+
+{q:"Pepsin digests? / पाचक एंजाइम?", options:["Proteins","Fats","Carbs","Vitamins"], answer:0},
+
+{q:"Small intestine absorbs? / अवशोषण?", options:["Nutrients","Only water","Only gas","Only salts"], answer:0},
+
+{q:"Large intestine absorbs? / बड़ी आंत?", options:["Water","Protein","Fat","Oxygen"], answer:0},
+
+{q:"Liver produces? / यकृत?", options:["Bile","Pepsin","Amylase","Insulin"], answer:0},
+
+{q:"Bile helps in? / पित्त?", options:["Fat digestion","Protein digestion","Sugar digestion","None"], answer:0},
+
+{q:"Pancreas secretes? / अग्न्याशय?", options:["Enzymes","Bile","Oxygen","Acid"], answer:0},
+
+{q:"End product of digestion? / अंत?", options:["Absorbable nutrients","Waste only","Gas only","Water only"], answer:0},
+
+{q:"Villi are found in? / विल्ली?", options:["Small intestine","Stomach","Mouth","Liver"], answer:0},
+
+{q:"Villi function is? / कार्य?", options:["Absorption","Digestion","Chewing","Storage"], answer:0},
+
+{q:"Rectum stores? / मलाशय?", options:["Faeces","Food","Enzymes","Blood"], answer:0},
+
+{q:"Saliva is secreted by? / लार?", options:["Salivary glands","Liver","Pancreas","Intestine"], answer:0},
+
+{q:"Peristalsis is? / गति?", options:["Food movement","Digestion","Absorption","Respiration"], answer:0},
+
+{q:"Protein digestion starts in? / प्रोटीन?", options:["Stomach","Mouth","Intestine","Liver"], answer:0},
+
+{q:"Carbohydrate digestion starts in? / कार्बोहाइड्रेट?", options:["Mouth","Stomach","Intestine","Liver"], answer:0},
+
+{q:"Fat digestion mainly occurs in? / वसा?", options:["Small intestine","Mouth","Stomach","Esophagus"], answer:0},
+
+{q:"Enzymes are? / एंजाइम?", options:["Biological catalysts","Acids","Bases","Salts"], answer:0},
+
+{q:"Human digestive system is? / तंत्र?", options:["Alimentary canal + glands","Only stomach","Only intestine","Only mouth"], answer:0},
+
+{q:"Food is broken into? / टूटना?", options:["Simple substances","Complex substances","Gases","Liquids only"], answer:0},
+
+{q:"Absorption means? / अवशोषण?", options:["Nutrients into blood","Breaking food","Chewing food","Storing food"], answer:0},
+
+{q:"Assimilation means? / समावेशन?", options:["Use of nutrients","Digestion","Chewing","Excretion"], answer:0},
+
+{q:"Egestion is? / उत्सर्जन?", options:["Removal of waste","Digestion","Absorption","Circulation"], answer:0},
+
+{q:"Bile is stored in? / पित्ताशय?", options:["Gall bladder","Liver","Pancreas","Stomach"], answer:0},
+
+{q:"Enzymes work best at? / ताप?", options:["Optimum temperature","Zero temperature","High pressure only","Random"], answer:0},
+
+{q:"Water is absorbed in? / जल?", options:["Large intestine","Small intestine","Stomach","Mouth"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

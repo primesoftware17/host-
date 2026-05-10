@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Periodic Table Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Periodic Table / आवर्त सारणी)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Who developed periodic table? / आवर्त सारणी किसने बनाई?", options:["Mendeleev","Newton","Bohr","Dalton"], answer:0},
+
+{q:"Periodic table is based on? / आधार?", options:["Atomic number","Mass only","Color","Shape"], answer:0},
+
+{q:"Modern periodic table has how many groups? / समूह?", options:["18","7","10","32"], answer:0},
+
+{q:"Periods in periodic table are? / आवर्त?", options:["7","18","10","5"], answer:0},
+
+{q:"Elements in same group have? / समान समूह?", options:["Same valency","Same mass","Same color","Same size"], answer:0},
+
+{q:"Noble gases are in? / नोबल गैस?", options:["Group 18","Group 1","Group 2","Group 17"], answer:0},
+
+{q:"Alkali metals are in? / क्षारीय धातु?", options:["Group 1","Group 18","Group 2","Group 17"], answer:0},
+
+{q:"Halogens are in? / हैलोजन?", options:["Group 17","Group 1","Group 18","Group 2"], answer:0},
+
+{q:"Most reactive metals are? / सबसे क्रियाशील धातु?", options:["Alkali metals","Noble gases","Halogens","Metalloids"], answer:0},
+
+{q:"Noble gases are? / नोबल गैस?", options:["Inert","Reactive","Metallic","Acidic"], answer:0},
+
+{q:"Atomic number increases from? / बढ़ता है?", options:["Left to right","Top to bottom","Bottom to top","Right to left"], answer:0},
+
+{q:"Metals are placed on? / धातु कहाँ?", options:["Left side","Right side","Middle only","Bottom only"], answer:0},
+
+{q:"Non-metals are on? / अधातु?", options:["Right side","Left side","Middle","Bottom"], answer:0},
+
+{q:"Metalloids are? / उपधातु?", options:["Between metals and non-metals","Only metals","Only gases","Only liquids"], answer:0},
+
+{q:"Group number shows? / समूह संख्या?", options:["Valence electrons","Mass","Neutrons","Size"], answer:0},
+
+{q:"Period number shows? / आवर्त संख्या?", options:["Shells","Mass","Charge","Valency"], answer:0},
+
+{q:"Modern periodic law is based on? / आधुनिक नियम?", options:["Atomic number","Mass number","Density","Volume"], answer:0},
+
+{q:"Mendeleev arranged elements by? / मेंडलीफ?", options:["Atomic mass","Atomic number","Color","State"], answer:0},
+
+{q:"Hydrogen is placed in? / हाइड्रोजन?", options:["Group 1","Group 18","Group 17","Group 2"], answer:0},
+
+{q:"Electronic configuration decides? / विन्यास?", options:["Position","Color","Mass","Shape"], answer:0},
+
+{q:"Valency depends on? / संयोजकता?", options:["Outer electrons","Inner electrons","Neutrons","Protons only"], answer:0},
+
+{q:"Periodic table helps to study? / अध्ययन?", options:["Elements","Force","Heat","Sound"], answer:0},
+
+{q:"Lanthanides are in? / लैन्थेनाइड?", options:["f-block","s-block","p-block","d-block"], answer:0},
+
+{q:"Actinides are in? / एक्टिनाइड?", options:["f-block","s-block","p-block","d-block"], answer:0},
+
+{q:"Transition elements are in? / संक्रमण तत्व?", options:["d-block","s-block","p-block","f-block"], answer:0},
+
+{q:"Group 1 elements are called? / समूह 1?", options:["Alkali metals","Halogens","Noble gases","Metalloids"], answer:0},
+
+{q:"Group 2 elements are? / समूह 2?", options:["Alkaline earth metals","Halogens","Noble gases","Non-metals"], answer:0},
+
+{q:"Electron affinity is? / इलेक्ट्रॉन अभिरुचि?", options:["Tendency to gain electron","Lose proton","Gain neutron","Lose mass"], answer:0},
+
+{q:"Electronegativity is? / विद्युतऋणात्मकता?", options:["Attract electrons","Lose electrons","Gain mass","Lose neutrons"], answer:0},
+
+{q:"Periodic table rows are called? / पंक्तियाँ?", options:["Periods","Groups","Blocks","Series"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSEB Class 10 Quiz</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    padding:20px;
+}
+
+.quiz-container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.subject-title{
+    background:#2196F3;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+    margin-top:30px;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:10px;
+    border-bottom:1px solid #ccc;
+}
+
+.option{
+    display:block;
+    padding:10px;
+    margin:5px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    cursor:pointer;
+    background:#fafafa;
+}
+
+.option:hover{
+    background:#eee;
+}
+
+.correct{
+    background:#4CAF50;
+    color:white;
+}
+
+.wrong{
+    background:#f44336;
+    color:white;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    background:#2196F3;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+#score{
+    margin-top:20px;
+    font-size:24px;
+    color:#333;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+<h1>BSEB Class 10 MCQ Quiz</h1>
+
+<div id="quiz"></div>
+
+<button onclick="showScore()">Submit Quiz</button>
+
+<h2 id="score"></h2>
+
+</div>
+
+<script>
+
+const quizData = [
+
+{
+subject:"Hindi",
+questions:[
+
+{q:"'साखी' के रचयिता कौन हैं? / लेखक?", options:["कबीरदास","तुलसीदास","सूरदास","निराला"], answer:0},
+
+{q:"'नेताजी का चश्मा' के लेखक? / लेखक?", options:["स्वयं प्रकाश","प्रेमचंद","महादेवी वर्मा","दिनकर"], answer:0},
+
+{q:"'बालगोबिन भगत' किसकी रचना है? / लेखक?", options:["रामवृक्ष बेनीपुरी","निराला","प्रेमचंद","दिनकर"], answer:0},
+
+{q:"'रामचरितमानस' के लेखक? / लेखक?", options:["तुलसीदास","कबीर","सूरदास","रहीम"], answer:0},
+
+{q:"'उत्साह' कविता किसकी है? / कवि?", options:["निराला","दिनकर","महादेवी","पंत"], answer:0}
+
+]
+},
+
+{
+subject:"English",
+questions:[
+
+{q:"Who wrote 'A Letter to God'? / लेखक?", options:["G.L. Fuentes","Robert Frost","Ruskin Bond","Whitman"], answer:0},
+
+{q:"Lencho was waiting for? / इंतजार?", options:["Rain","Money","Food","Gift"], answer:0},
+
+{q:"'Dust of Snow' poet is? / कवि?", options:["Robert Frost","Keats","Wordsworth","Whitman"], answer:0},
+
+{q:"Coorg is famous for? / प्रसिद्ध?", options:["Coffee","Tea","Rice","Cotton"], answer:0},
+
+{q:"The tiger in zoo was named? / नाम?", options:["Tiger King","Mijbil","Lencho","Custard"], answer:0}
+
+]
+},
+
+{
+subject:"Mathematics",
+questions:[
+
+{q:"Value of π is? / मान?", options:["3.14","2.14","1.14","4.14"], answer:0},
+
+{q:"Square root of 144? / वर्गमूल?", options:["12","11","10","14"], answer:0},
+
+{q:"Area of circle formula? / सूत्र?", options:["πr²","2πr","πd","r²"], answer:0},
+
+{q:"15% of 200 is? / मान?", options:["30","20","25","35"], answer:0},
+
+{q:"Zero of x² - 4? / शून्यक?", options:["2 and -2","2 only","-2 only","0"], answer:0}
+
+]
+},
+
+{
+subject:"Science",
+questions:[
+
+{q:"Organic chemistry is study of? / अध्ययन?", options:["Carbon compounds","Metals","Gases only","Water only"], answer:0},
+
+{q:"Soap is made from? / साबुन?", options:["Fat + alkali","Acid + metal","Gas + gas","Water only"], answer:0},
+
+{q:"Detergent is? / डिटर्जेंट?", options:["Cleaning agent","Metal","Gas","Acid"], answer:0},
+
+{q:"Carbon burns in oxygen gives? / जलने पर?", options:["CO2","CO","O2","H2O"], answer:0},
+
+{q:"Incomplete combustion produces? / अपूर्ण दहन?", options:["CO","CO2","O2","H2"], answer:0},
+
+{q:"Chemical formula of water? / सूत्र?", options:["H2O","CO2","NaCl","O2"], answer:0},
+
+{q:"SI unit of force? / मात्रक?", options:["Newton","Joule","Pascal","Watt"], answer:0},
+
+{q:"Plants prepare food by? / भोजन?", options:["Photosynthesis","Respiration","Digestion","Excretion"], answer:0}
+
+]
+},
+
+{
+subject:"Social Science",
+questions:[
+
+{q:"First President of India? / प्रथम राष्ट्रपति?", options:["Rajendra Prasad","Nehru","Patel","Gandhi"], answer:0},
+
+{q:"Capital of Bihar? / राजधानी?", options:["Patna","Delhi","Ranchi","Lucknow"], answer:0},
+
+{q:"India became independent in? / स्वतंत्रता?", options:["1947","1945","1950","1942"], answer:0},
+
+{q:"Largest democracy in world? / सबसे बड़ा लोकतंत्र?", options:["India","USA","Russia","China"], answer:0},
+
+{q:"Who discovered sea route to India? / समुद्री मार्ग?", options:["Vasco da Gama","Columbus","Cook","Magellan"], answer:0}
+
+]
+}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+
+quizData.forEach((subjectData)=>{
+
+    let subjectTitle = document.createElement("h2");
+    subjectTitle.classList.add("subject-title");
+    subjectTitle.innerText = subjectData.subject;
+
+    quiz.appendChild(subjectTitle);
+
+    subjectData.questions.forEach((item,index)=>{
+
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt,i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+
+                    score++;
+
+                }else{
+
+                    btn.classList.add("wrong");
+
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+});
+
+}
+
+function showScore(){
+
+document.getElementById("score").innerText =
+"Your Score: " + score;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

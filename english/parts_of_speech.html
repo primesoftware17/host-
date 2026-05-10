@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Parts of Speech Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Parts of Speech)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which part of speech is the word 'Beautiful'? / 'Beautiful' कौन-सा Parts of Speech है?", options:["Noun / संज्ञा","Verb / क्रिया","Adjective / विशेषण","Pronoun / सर्वनाम"], answer:2},
+
+{q:"Which part of speech replaces a noun? / कौन-सा Parts of Speech संज्ञा की जगह प्रयोग होता है?", options:["Verb / क्रिया","Pronoun / सर्वनाम","Adjective / विशेषण","Preposition / संबंधबोधक"], answer:1},
+
+{q:"Identify the noun in the sentence 'Ravi plays cricket.' / वाक्य में संज्ञा पहचानिए", options:["plays","cricket","Ravi","none"], answer:2},
+
+{q:"Which word is a verb? / इनमें से कौन-सा शब्द क्रिया है?", options:["Quickly","Beautiful","Run","Honest"], answer:2},
+
+{q:"Which part of speech describes a verb? / क्रिया का वर्णन कौन करता है?", options:["Adjective / विशेषण","Adverb / क्रिया विशेषण","Pronoun / सर्वनाम","Noun / संज्ञा"], answer:1},
+
+{q:"Identify the adjective in the sentence 'She has a red dress.' / विशेषण पहचानिए", options:["She","has","red","dress"], answer:2},
+
+{q:"Which word is a pronoun? / इनमें से कौन-सा सर्वनाम है?", options:["School","He","Run","Fast"], answer:1},
+
+{q:"Which part of speech joins words or sentences? / शब्दों या वाक्यों को जोड़ने वाला Parts of Speech कौन-सा है?", options:["Conjunction / समुच्चयबोधक","Verb / क्रिया","Noun / संज्ञा","Adverb / क्रिया विशेषण"], answer:0},
+
+{q:"Identify the conjunction in 'Ram and Shyam are friends.'", options:["Ram","and","friends","Shyam"], answer:1},
+
+{q:"Which part of speech expresses sudden emotion? / अचानक भावना व्यक्त करने वाला Parts of Speech कौन-सा है?", options:["Interjection / विस्मयादिबोधक","Pronoun / सर्वनाम","Noun / संज्ञा","Verb / क्रिया"], answer:0},
+
+{q:"Identify the interjection in 'Wow! What a match!'", options:["What","Wow","match","a"], answer:1},
+
+{q:"Which word is a preposition? / इनमें से कौन-सा संबंधबोधक है?", options:["Under","Happy","Run","Quickly"], answer:0},
+
+{q:"Identify the preposition in 'The book is on the table.'", options:["book","table","on","is"], answer:2},
+
+{q:"Which part of speech names a person, place or thing? / व्यक्ति, स्थान या वस्तु का नाम बताने वाला Parts of Speech कौन-सा है?", options:["Verb / क्रिया","Noun / संज्ञा","Adverb / क्रिया विशेषण","Pronoun / सर्वनाम"], answer:1},
+
+{q:"Which word is an adverb? / इनमें से कौन-सा क्रिया विशेषण है?", options:["Beautiful","Slowly","Teacher","School"], answer:1},
+
+{q:"Identify the verb in 'Birds fly in the sky.'", options:["Birds","fly","sky","in"], answer:1},
+
+{q:"Which part of speech modifies a noun? / संज्ञा का वर्णन कौन करता है?", options:["Adjective / विशेषण","Verb / क्रिया","Adverb / क्रिया विशेषण","Conjunction / समुच्चयबोधक"], answer:0},
+
+{q:"Which word is an adjective? / इनमें से कौन-सा विशेषण है?", options:["Tall","Quickly","Inside","Run"], answer:0},
+
+{q:"Identify the pronoun in 'They are going to school.'", options:["school","going","They","to"], answer:2},
+
+{q:"Which part of speech connects clauses? / उपवाक्यों को जोड़ने वाला Parts of Speech कौन-सा है?", options:["Conjunction / समुच्चयबोधक","Noun / संज्ञा","Verb / क्रिया","Adjective / विशेषण"], answer:0},
+
+{q:"Which word is a conjunction? / इनमें से कौन-सा समुच्चयबोधक है?", options:["But","Apple","Drink","Fast"], answer:0},
+
+{q:"Which word expresses emotion? / भावना व्यक्त करने वाला शब्द कौन-सा है?", options:["Hurrah!","Book","Blue","Jump"], answer:0},
+
+{q:"Identify the adverb in 'He runs fast.'", options:["He","runs","fast","none"], answer:2},
+
+{q:"Which part of speech indicates relation or position? / संबंध या स्थिति बताने वाला Parts of Speech कौन-सा है?", options:["Preposition / संबंधबोधक","Verb / क्रिया","Interjection / विस्मयादिबोधक","Noun / संज्ञा"], answer:0},
+
+{q:"Which word is a noun? / इनमें से कौन-सा संज्ञा है?", options:["Delhi","Quickly","Run","Beautiful"], answer:0},
+
+{q:"Identify the adjective in 'It is a sunny day.'", options:["sunny","day","is","It"], answer:0},
+
+{q:"Which word is a preposition? / कौन-सा शब्द संबंधबोधक है?", options:["Between","Softly","Speak","Beautiful"], answer:0},
+
+{q:"Which part of speech is the word 'Honestly'? / 'Honestly' कौन-सा Parts of Speech है?", options:["Adverb / क्रिया विशेषण","Noun / संज्ञा","Pronoun / सर्वनाम","Conjunction / समुच्चयबोधक"], answer:0},
+
+{q:"Identify the interjection in 'Alas! He is dead.'", options:["He","dead","Alas","is"], answer:2},
+
+{q:"Which part of speech is the word 'Teacher'? / 'Teacher' कौन-सा Parts of Speech है?", options:["Noun / संज्ञा","Verb / क्रिया","Adjective / विशेषण","Adverb / क्रिया विशेषण"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

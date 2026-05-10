@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geometry Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Geometry)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"How many sides does a triangle have? / त्रिभुज की कितनी भुजाएँ होती हैं?", options:["2","3","4","5"], answer:1},
+
+{q:"How many sides does a square have? / वर्ग की कितनी भुजाएँ होती हैं?", options:["3","4","5","6"], answer:1},
+
+{q:"Sum of angles in a triangle is? / त्रिभुज के कोणों का योग कितना होता है?", options:["90°","180°","270°","360°"], answer:1},
+
+{q:"A circle has how many sides? / वृत्त की कितनी भुजाएँ होती हैं?", options:["0","1","2","3"], answer:0},
+
+{q:"How many vertices does a rectangle have? / आयत के कितने शीर्ष होते हैं?", options:["2","3","4","5"], answer:2},
+
+{q:"What is a right angle? / समकोण क्या होता है?", options:["45°","60°","90°","180°"], answer:2},
+
+{q:"A triangle with all equal sides is called? / सभी बराबर भुजाओं वाला त्रिभुज?", options:["Scalene","Isosceles","Equilateral","Right"], answer:2},
+
+{q:"A square has all sides equal and all angles?", options:["45°","60°","90°","120°"], answer:2},
+
+{q:"How many sides does a pentagon have? / पंचभुज की कितनी भुजाएँ होती हैं?", options:["4","5","6","7"], answer:1},
+
+{q:"A line segment has how many endpoints? / रेखाखंड के कितने सिरों होते हैं?", options:["1","2","3","4"], answer:1},
+
+{q:"Which shape has 4 equal sides and 4 right angles?", options:["Rectangle","Square","Triangle","Circle"], answer:1},
+
+{q:"Sum of angles in a quadrilateral is?", options:["180°","270°","360°","90°"], answer:2},
+
+{q:"How many sides does a hexagon have? / षट्भुज की कितनी भुजाएँ होती हैं?", options:["5","6","7","8"], answer:1},
+
+{q:"A triangle with two equal sides is called?", options:["Scalene","Isosceles","Equilateral","Right"], answer:1},
+
+{q:"What is diameter of a circle? / वृत्त का व्यास क्या होता है?", options:["Half radius","Double radius","Quarter radius","Triple radius"], answer:1},
+
+{q:"What is radius? / त्रिज्या क्या है?", options:["Half of diameter","Full diameter","Double diameter","None"], answer:0},
+
+{q:"A shape with no sides is?", options:["Square","Triangle","Circle","Rectangle"], answer:2},
+
+{q:"How many diagonals does a square have? / वर्ग के कितने विकर्ण होते हैं?", options:["1","2","3","4"], answer:1},
+
+{q:"A triangle is a ______ shape.", options:["2-sided","3-sided","4-sided","5-sided"], answer:1},
+
+{q:"Which is a 3D shape? / त्रिआयामी आकृति कौन-सी है?", options:["Circle","Square","Cube","Triangle"], answer:2},
+
+{q:"A cube has how many faces? / घन के कितने फलक होते हैं?", options:["4","5","6","8"], answer:2},
+
+{q:"A sphere is like a?", options:["Cube","Ball","Square","Triangle"], answer:1},
+
+{q:"Which shape has 4 equal sides but no right angle?", options:["Square","Rhombus","Rectangle","Circle"], answer:1},
+
+{q:"A rectangle has how many sides? / आयत की कितनी भुजाएँ होती हैं?", options:["3","4","5","6"], answer:1},
+
+{q:"Opposite sides of a rectangle are?", options:["Unequal","Equal","Curved","None"], answer:1},
+
+{q:"A straight line has how many endpoints? / सीधी रेखा के कितने सिरे होते हैं?", options:["0","1","2","3"], answer:0},
+
+{q:"A point has?", options:["Length","Width","No size","Height"], answer:2},
+
+{q:"A line has?", options:["Length only","Width only","Area","Volume"], answer:0},
+
+{q:"A triangle has how many angles? / त्रिभुज के कितने कोण होते हैं?", options:["2","3","4","5"], answer:1},
+
+{q:"A circle has how many corners? / वृत्त के कितने कोने होते हैं?", options:["0","1","2","3"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

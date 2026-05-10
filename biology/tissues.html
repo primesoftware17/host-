@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tissues Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Tissues / ऊतक)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Tissue is a group of? / ऊतक क्या है?", options:["Similar cells","Organs","Systems","Atoms"], answer:0},
+
+{q:"Plant tissues are mainly? / पादप ऊतक?", options:["Meristematic & Permanent","Muscle & Nervous","Blood & Bone","Only xylem"], answer:0},
+
+{q:"Meristematic tissue helps in? / वृद्धि?", options:["Growth","Digestion","Respiration","Movement"], answer:0},
+
+{q:"Permanent tissue is? / स्थायी ऊतक?", options:["Non-dividing","Dividing","Growing","Dead only"], answer:0},
+
+{q:"Xylem transports? / जाइलम?", options:["Water","Food","Oxygen","Hormones"], answer:0},
+
+{q:"Phloem transports? / फ्लोएम?", options:["Food","Water","Gas","Salt"], answer:0},
+
+{q:"Animal tissues are? / पशु ऊतक?", options:["Epithelial, Muscle, Nervous, Connective","Only xylem","Only phloem","Only bone"], answer:0},
+
+{q:"Epithelial tissue covers? / उपकला?", options:["Body surfaces","Bones","Blood","Muscles"], answer:0},
+
+{q:"Muscle tissue helps in? / पेशी ऊतक?", options:["Movement","Digestion only","Respiration","Photosynthesis"], answer:0},
+
+{q:"Nervous tissue controls? / तंत्रिका?", options:["Body functions","Only digestion","Only breathing","Only growth"], answer:0},
+
+{q:"Connective tissue connects? / संयोजी?", options:["Body parts","Only cells","Only organs","Only blood"], answer:0},
+
+{q:"Blood is a type of? / रक्त?", options:["Connective tissue","Muscle","Nervous","Epithelial"], answer:0},
+
+{q:"Bone is? / अस्थि?", options:["Connective tissue","Muscle","Nervous","Epithelial"], answer:0},
+
+{q:"Cartilage is? / उपास्थि?", options:["Flexible connective tissue","Muscle","Nervous","Blood"], answer:0},
+
+{q:"Plant epidermis protects? / त्वचा?", options:["Plant surface","Nucleus","Blood","Bone"], answer:0},
+
+{q:"Stomata are for? / रंध्र?", options:["Gas exchange","Food storage","Water transport","Growth"], answer:0},
+
+{q:"Collenchyma provides? / कोलेनकाइमा?", options:["Flexibility","Transport","Digestion","Respiration"], answer:0},
+
+{q:"Sclerenchyma is? / स्क्लेरेनकाइमा?", options:["Dead supportive tissue","Living tissue","Muscle tissue","Blood tissue"], answer:0},
+
+{q:"Meristematic cells are? / मेरिस्टेम?", options:["Actively dividing","Dead","Permanent","Non-living"], answer:0},
+
+{q:"Apical meristem is found in? / शीर्ष?", options:["Tips of roots/shoots","Leaves","Stem only","Flowers"], answer:0},
+
+{q:"Lateral meristem causes? / पार्श्व?", options:["Increase in thickness","Length only","Color change","Water transport"], answer:0},
+
+{q:"Simple tissue includes? / सरल ऊतक?", options:["Parenchyma, Collenchyma, Sclerenchyma","Blood","Muscle","Nerve"], answer:0},
+
+{q:"Parenchyma stores? / पेरेंकाइमा?", options:["Food","Water only","Gas only","Hormones"], answer:0},
+
+{q:"Muscle types include? / पेशी?", options:["Smooth, skeletal, cardiac","Only smooth","Only skeletal","Only cardiac"], answer:0},
+
+{q:"Cardiac muscle is found in? / हृदय?", options:["Heart","Lungs","Brain","Liver"], answer:0},
+
+{q:"Nervous tissue unit is? / इकाई?", options:["Neuron","Cell wall","Fiber","Tendon"], answer:0},
+
+{q:"Tendon connects? / टेंडन?", options:["Muscle to bone","Bone to bone","Nerve to nerve","Blood to blood"], answer:0},
+
+{q:"Ligament connects? / लिगामेंट?", options:["Bone to bone","Muscle to bone","Nerve to muscle","Blood to bone"], answer:0},
+
+{q:"Plant tissues are classified into? / वर्गीकरण?", options:["Simple and complex","Only simple","Only complex","Only dead"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

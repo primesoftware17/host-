@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Delhi Sultanate)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who was the founder of the Slave Dynasty? / गुलाम वंश का संस्थापक कौन था?", options:["Qutb-ud-din Aibak / कुतुबुद्दीन ऐबक","Iltutmish / इल्तुतमिश","Balban / बलबन","Alauddin Khilji / अलाउद्दीन खिलजी"], answer:0},
+
+{q:"Who completed the construction of Qutub Minar? / कुतुब मीनार का निर्माण किसने पूरा किया?", options:["Qutb-ud-din Aibak / कुतुबुद्दीन ऐबक","Razia Sultan / रज़िया सुल्तान","Iltutmish / इल्तुतमिश","Balban / बलबन"], answer:2},
+
+{q:"Who was the first woman ruler of Delhi Sultanate? / दिल्ली सल्तनत की पहली महिला शासक कौन थी?", options:["Razia Sultan / रज़िया सुल्तान","Noor Jahan / नूरजहाँ","Mumtaz Mahal / मुमताज़ महल","Jahanara / जहाँआरा"], answer:0},
+
+{q:"Which ruler introduced the token currency? / सांकेतिक मुद्रा किस शासक ने शुरू की?", options:["Alauddin Khilji / अलाउद्दीन खिलजी","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Firoz Shah Tughlaq / फिरोज शाह तुगलक","Balban / बलबन"], answer:1},
+
+{q:"Who shifted the capital from Delhi to Daulatabad? / दिल्ली से दौलताबाद राजधानी किसने स्थानांतरित की?", options:["Iltutmish / इल्तुतमिश","Balban / बलबन","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Sikandar Lodi / सिकंदर लोदी"], answer:2},
+
+{q:"The market control policy was introduced by: / बाजार नियंत्रण नीति किसने शुरू की?", options:["Alauddin Khilji / अलाउद्दीन खिलजी","Ibrahim Lodi / इब्राहिम लोदी","Qutb-ud-din Aibak / कुतुबुद्दीन ऐबक","Razia Sultan / रज़िया सुल्तान"], answer:0},
+
+{q:"Who founded the Khilji dynasty? / खिलजी वंश की स्थापना किसने की?", options:["Jalaluddin Khilji / जलालुद्दीन खिलजी","Alauddin Khilji / अलाउद्दीन खिलजी","Ghiyasuddin Tughlaq / गयासुद्दीन तुगलक","Balban / बलबन"], answer:0},
+
+{q:"Who built the Alai Darwaza? / अलाई दरवाजा किसने बनवाया?", options:["Iltutmish / इल्तुतमिश","Alauddin Khilji / अलाउद्दीन खिलजी","Firoz Shah Tughlaq / फिरोज शाह तुगलक","Qutb-ud-din Aibak / कुतुबुद्दीन ऐबक"], answer:1},
+
+{q:"Who founded the Tughlaq dynasty? / तुगलक वंश की स्थापना किसने की?", options:["Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Ghiyasuddin Tughlaq / गयासुद्दीन तुगलक","Firoz Shah Tughlaq / फिरोज शाह तुगलक","Balban / बलबन"], answer:1},
+
+{q:"Which Sultan was known for his harsh military discipline? / कठोर सैन्य अनुशासन के लिए कौन सा सुल्तान प्रसिद्ध था?", options:["Balban / बलबन","Razia Sultan / रज़िया सुल्तान","Iltutmish / इल्तुतमिश","Sikandar Lodi / सिकंदर लोदी"], answer:0},
+
+{q:"Who introduced the practice of Sijda and Paibos? / सिजदा और पायबोस की प्रथा किसने शुरू की?", options:["Balban / बलबन","Alauddin Khilji / अलाउद्दीन खिलजी","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Ibrahim Lodi / इब्राहिम लोदी"], answer:0},
+
+{q:"Who was the founder of the Sayyid dynasty? / सैयद वंश का संस्थापक कौन था?", options:["Khizr Khan / खिज्र खाँ","Bahlol Lodi / बहलोल लोदी","Daulat Khan / दौलत खाँ","Ibrahim Lodi / इब्राहिम लोदी"], answer:0},
+
+{q:"Who founded the Lodi dynasty? / लोदी वंश की स्थापना किसने की?", options:["Sikandar Lodi / सिकंदर लोदी","Ibrahim Lodi / इब्राहिम लोदी","Bahlol Lodi / बहलोल लोदी","Daulat Khan / दौलत खाँ"], answer:2},
+
+{q:"Which Sultan founded the city of Agra? / आगरा शहर की स्थापना किस सुल्तान ने की?", options:["Bahlol Lodi / बहलोल लोदी","Sikandar Lodi / सिकंदर लोदी","Ibrahim Lodi / इब्राहिम लोदी","Balban / बलबन"], answer:1},
+
+{q:"Who was defeated by Babur in the First Battle of Panipat? / पानीपत के प्रथम युद्ध में बाबर ने किसे हराया?", options:["Sikandar Lodi / सिकंदर लोदी","Ibrahim Lodi / इब्राहिम लोदी","Daulat Khan / दौलत खाँ","Balban / बलबन"], answer:1},
+
+{q:"The Delhi Sultanate began in which year? / दिल्ली सल्तनत की शुरुआत किस वर्ष हुई?", options:["1206 CE / 1206 ई.","1192 CE / 1192 ई.","1526 CE / 1526 ई.","1290 CE / 1290 ई."], answer:0},
+
+{q:"Who introduced the branding of horses system? / घोड़ों को दागने की प्रथा किसने शुरू की?", options:["Balban / बलबन","Alauddin Khilji / अलाउद्दीन खिलजी","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Firoz Shah Tughlaq / फिरोज शाह तुगलक"], answer:1},
+
+{q:"Which Sultan wrote his autobiography named 'Tuzuk-i-Baburi'? / 'तुजुक-ए-बाबरी' किसने लिखी?", options:["Babur / बाबर","Alauddin Khilji / अलाउद्दीन खिलजी","Iltutmish / इल्तुतमिश","Balban / बलबन"], answer:0},
+
+{q:"Who built Firoz Shah Kotla? / फिरोज शाह कोटला किसने बनवाया?", options:["Ghiyasuddin Tughlaq / गयासुद्दीन तुगलक","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Firoz Shah Tughlaq / फिरोज शाह तुगलक","Alauddin Khilji / अलाउद्दीन खिलजी"], answer:2},
+
+{q:"Which ruler was known as the 'Mixture of Opposites'? / 'विरोधाभासों का मिश्रण' किस शासक को कहा जाता है?", options:["Balban / बलबन","Muhammad bin Tughlaq / मुहम्मद बिन तुगलक","Alauddin Khilji / अलाउद्दीन खिलजी","Iltutmish / इल्तुतमिश"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

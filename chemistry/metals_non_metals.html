@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Metals & Non-Metals Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Metals & Non-Metals / धातु एवं अधातु)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Metals are usually? / धातु कैसे होते हैं?", options:["Shiny / चमकदार","Dull","Soft always","Gas"], answer:0},
+
+{q:"Non-metals are usually? / अधातु?", options:["Dull / फीके","Shiny","Heavy metals","Liquids only"], answer:0},
+
+{q:"Metals are good? / धातु अच्छे?", options:["Conductors / चालक","Insulators","Gases","None"], answer:0},
+
+{q:"Non-metals are? / अधातु?", options:["Bad conductors","Good conductors","Metals","Plasma"], answer:0},
+
+{q:"Metals are? / धातु?", options:["Malleable / पीटने योग्य","Brittle always","Gas only","Liquid"], answer:0},
+
+{q:"Non-metals are? / अधातु?", options:["Brittle / भंगुर","Malleable","Ductile","Shiny"], answer:0},
+
+{q:"Metals can be drawn into wire? / तार?", options:["Yes / हाँ","No","Only some","Never"], answer:0},
+
+{q:"This property is called? / यह गुण?", options:["Ductility","Malleability","Density","Elasticity"], answer:0},
+
+{q:"Metals produce sound when hit? / धातु?", options:["Sonorous","Silent","Soft","Gas"], answer:0},
+
+{q:"Non-metals are? / अधातु?", options:["Non-sonorous","Sonorous","Metallic","Shiny always"], answer:0},
+
+{q:"Example of metal? / धातु उदाहरण?", options:["Iron","Sulphur","Oxygen","Carbon"], answer:0},
+
+{q:"Example of non-metal? / अधातु उदाहरण?", options:["Sulphur","Iron","Copper","Aluminium"], answer:0},
+
+{q:"Metal oxides are? / धातु ऑक्साइड?", options:["Basic","Acidic","Neutral","Gas"], answer:0},
+
+{q:"Non-metal oxides are? / अधातु ऑक्साइड?", options:["Acidic","Basic","Metallic","Neutral always"], answer:0},
+
+{q:"Metals form? / धातु बनाते हैं?", options:["Cations","Anions","Neutral atoms","Plasma"], answer:0},
+
+{q:"Non-metals form? / अधातु बनाते हैं?", options:["Anions","Cations","Metals","All"], answer:0},
+
+{q:"Metal reacts with oxygen forms? / ऑक्सीजन से?", options:["Metal oxide","Salt","Gas","Water"], answer:0},
+
+{q:"Non-metal reacts with oxygen forms? / अधातु?", options:["Non-metal oxide","Metal oxide","Salt","Base"], answer:0},
+
+{q:"Metals are generally? / धातु?", options:["Solid","Gas","Liquid always","Plasma"], answer:0},
+
+{q:"Exception metal in liquid state? / तरल धातु?", options:["Mercury","Iron","Copper","Gold"], answer:0},
+
+{q:"Metals are? / धातु?", options:["Electropositive","Electronegative","Neutral","Gas only"], answer:0},
+
+{q:"Non-metals are? / अधातु?", options:["Electronegative","Electropositive","Neutral always","Metals"], answer:0},
+
+{q:"Rusting occurs in? / जंग?", options:["Iron","Gold","Silver","Copper only"], answer:0},
+
+{q:"Rust is? / जंग?", options:["Iron oxide","Water","Salt","Gas"], answer:0},
+
+{q:"Metals lose electrons easily? / इलेक्ट्रॉन?", options:["Yes","No","Never","Sometimes"], answer:0},
+
+{q:"Non-metals gain electrons? / अधातु?", options:["Yes","No","Never","Only metals"], answer:0},
+
+{q:"Metals form bonds with? / बंध?", options:["Non-metals","Metals only","No one","Gases"], answer:0},
+
+{q:"Graphite is? / ग्रेफाइट?", options:["Non-metal but conductor","Metal","Gas","Liquid"], answer:0},
+
+{q:"Diamond is? / हीरा?", options:["Non-metal","Metal","Liquid","Gas"], answer:0},
+
+{q:"Metals are used in? / उपयोग?", options:["Construction","Only food","Only air","Only water"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

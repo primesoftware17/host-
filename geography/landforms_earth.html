@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Landforms of the Earth)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What are landforms? / स्थलरूप क्या होते हैं?", options:["Shapes of land on Earth's surface / पृथ्वी की सतह पर भूमि के आकार","Types of clouds / बादलों के प्रकार","Ocean movements / महासागरीय गति","Weather conditions / मौसम की स्थिति"], answer:0},
+
+{q:"Which is the highest landform on Earth? / पृथ्वी का सबसे ऊँचा स्थलरूप कौन सा है?", options:["Plateau / पठार","Mountain / पर्वत","Plain / मैदान","Valley / घाटी"], answer:1},
+
+{q:"Which is a flat and low-lying landform? / कौन सा स्थलरूप समतल और नीचा होता है?", options:["Mountain / पर्वत","Plateau / पठार","Plain / मैदान","Hill / पहाड़ी"], answer:2},
+
+{q:"What is a plateau? / पठार क्या होता है?", options:["Low land / नीची भूमि","Flat high land / समतल ऊँची भूमि","Deep valley / गहरी घाटी","Ocean floor / समुद्र तल"], answer:1},
+
+{q:"Which landform is formed by river erosion? / नदी अपरदन से कौन सा स्थलरूप बनता है?", options:["Plains / मैदान","Mountains / पर्वत","Canyons / घाटियाँ","Deserts / रेगिस्तान"], answer:2},
+
+{q:"What is a valley? / घाटी क्या होती है?", options:["High land between mountains / पर्वतों के बीच ऊँची भूमि","Low land between hills or mountains / पहाड़ों के बीच नीची भूमि","Flat land / समतल भूमि","Ocean area / समुद्री क्षेत्र"], answer:1},
+
+{q:"Which landform is created by wind erosion in deserts? / रेगिस्तान में हवा के अपरदन से कौन सा स्थलरूप बनता है?", options:["Dunes / बालू के टीले","Mountains / पर्वत","Plains / मैदान","Volcanoes / ज्वालामुखी"], answer:0},
+
+{q:"What is a mountain? / पर्वत क्या होता है?", options:["Low flat land / नीची समतल भूमि","Large elevated landform / बड़ा ऊँचा स्थलरूप","Water body / जल निकाय","Desert area / रेगिस्तानी क्षेत्र"], answer:1},
+
+{q:"Which type of mountain is formed by folding of Earth's crust? / पृथ्वी की परतों के मुड़ने से कौन सा पर्वत बनता है?", options:["Block mountain / ब्लॉक पर्वत","Volcanic mountain / ज्वालामुखी पर्वत","Fold mountain / वलित पर्वत","Residual mountain / अवशिष्ट पर्वत"], answer:2},
+
+{q:"Which is an example of fold mountain? / वलित पर्वत का उदाहरण कौन सा है?", options:["Himalayas / हिमालय","Satpura / सतपुड़ा","Nilgiri / नीलगिरि","Aravalli / अरावली"], answer:0},
+
+{q:"What is a block mountain? / ब्लॉक पर्वत क्या होता है?", options:["Formed by volcanic eruption / ज्वालामुखी से बना","Formed by faulting of crust / भूपर्पटी के टूटने से बना","Formed by river deposition / नदी जमाव से बना","Formed by wind / हवा से बना"], answer:1},
+
+{q:"Which landform is created by deposition of river sediments? / नदी के अवसाद जमा होने से कौन सा स्थलरूप बनता है?", options:["Plains / मैदान","Mountains / पर्वत","Plateaus / पठार","Deserts / रेगिस्तान"], answer:0},
+
+{q:"What is a desert? / रेगिस्तान क्या होता है?", options:["Wet area / आर्द्र क्षेत्र","Dry area with little rainfall / कम वर्षा वाला शुष्क क्षेत्र","Snow-covered area / बर्फीला क्षेत्र","Forest area / वन क्षेत्र"], answer:1},
+
+{q:"Which is the largest desert in the world? / विश्व का सबसे बड़ा रेगिस्तान कौन सा है?", options:["Thar Desert / थार मरुस्थल","Sahara Desert / सहारा मरुस्थल","Gobi Desert / गोबी मरुस्थल","Kalahari Desert / कालाहारी मरुस्थल"], answer:1},
+
+{q:"What is an island? / द्वीप क्या होता है?", options:["Land surrounded by water / जल से घिरी भूमि","Water surrounded by land / भूमि से घिरा जल","High mountain / ऊँचा पर्वत","Deep valley / गहरी घाटी"], answer:0},
+
+{q:"Which is the largest island in the world? / विश्व का सबसे बड़ा द्वीप कौन सा है?", options:["Madagascar / मेडागास्कर","Greenland / ग्रीनलैंड","Australia / ऑस्ट्रेलिया","Sri Lanka / श्रीलंका"], answer:1},
+
+{q:"What is a peninsula? / प्रायद्वीप क्या होता है?", options:["Land surrounded by water on all sides / चारों ओर से जल से घिरी भूमि","Land surrounded by water on three sides / तीन ओर से जल से घिरी भूमि","Island connected to land / भूमि से जुड़ा द्वीप","Ocean floor / समुद्र तल"], answer:1},
+
+{q:"Which landform is formed by volcanic activity? / ज्वालामुखीय गतिविधि से कौन सा स्थलरूप बनता है?", options:["Plains / मैदान","Volcanic mountain / ज्वालामुखी पर्वत","Valley / घाटी","Delta / डेल्टा"], answer:1},
+
+{q:"What is a canyon? / क्यानन क्या होता है?", options:["Wide river / चौड़ी नदी","Deep valley with steep sides / खड़ी दीवारों वाली गहरी घाटी","Flat land / समतल भूमि","High plateau / ऊँचा पठार"], answer:1},
+
+{q:"Which process shapes landforms? / स्थलरूपों को कौन-सी प्रक्रिया आकार देती है?", options:["Erosion and deposition / अपरदन और निक्षेपण","Evaporation / वाष्पीकरण","Condensation / संघनन","Melting / पिघलना"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

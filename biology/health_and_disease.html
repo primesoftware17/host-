@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Health & Disease Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Health & Disease / स्वास्थ्य एवं रोग)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Health means? / स्वास्थ्य क्या है?", options:["Physical, mental, social well-being","Only absence of disease","Only fitness","Only strength"], answer:0},
+
+{q:"Disease means? / रोग?", options:["Abnormal condition","Good health","Fitness","Energy"], answer:0},
+
+{q:"Communicable diseases spread by? / संक्रामक?", options:["Pathogens","Food only","Water only","Air only always"], answer:0},
+
+{q:"Non-communicable disease example? / गैर संक्रामक?", options:["Diabetes","Flu","Cold","Malaria"], answer:0},
+
+{q:"Pathogens are? / रोगजनक?", options:["Disease-causing organisms","Helpful bacteria","Food particles","Cells"], answer:0},
+
+{q:"Vaccination helps in? / टीकाकरण?", options:["Prevention","Causing disease","Spreading disease","None"], answer:0},
+
+{q:"Immunity means? / प्रतिरक्षा?", options:["Body defense","Digestion","Respiration","Growth"], answer:0},
+
+{q:"Antibodies are produced by? / एंटीबॉडी?", options:["White blood cells","Red blood cells","Platelets","Plasma only"], answer:0},
+
+{q:"Virus causes? / वायरस?", options:["Diseases","Food","Water","Oxygen"], answer:0},
+
+{q:"Bacteria cause? / बैक्टीरिया?", options:["Diseases","Only food","Only water","Only oxygen"], answer:0},
+
+{q:"Malaria is caused by? / मलेरिया?", options:["Plasmodium","Virus","Bacteria","Fungus"], answer:0},
+
+{q:"Malaria spreads by? / फैलता है?", options:["Mosquito","Air","Food","Touch"], answer:0},
+
+{q:"AIDS is caused by? / एड्स?", options:["HIV","Plasmodium","Bacteria","Fungus"], answer:0},
+
+{q:"Common cold is caused by? / सर्दी?", options:["Virus","Bacteria","Fungi","Protozoa"], answer:0},
+
+{q:"Diabetes affects? / मधुमेह?", options:["Blood sugar","Lungs","Heart only","Bones"], answer:0},
+
+{q:"Deficiency disease caused by lack of vitamin? / कमी?", options:["Scurvy","Malaria","Flu","TB"], answer:0},
+
+{q:"Scurvy is caused by lack of? / कमी?", options:["Vitamin C","Vitamin A","Vitamin D","Vitamin B"], answer:0},
+
+{q:"Rickets is caused by lack of? / रिकेट्स?", options:["Vitamin D","Vitamin C","Iron","Protein"], answer:0},
+
+{q:"Balanced diet contains? / संतुलित आहार?", options:["All nutrients","Only protein","Only fat","Only sugar"], answer:0},
+
+{q:"Carriers of disease are? / वाहक?", options:["Vectors","Vaccines","Antibodies","Cells"], answer:0},
+
+{q:"Hygiene means? / स्वच्छता?", options:["Cleanliness","Disease","Infection","Weakness"], answer:0},
+
+{q:"First line of defense is? / सुरक्षा?", options:["Skin","Heart","Brain","Liver"], answer:0},
+
+{q:"Fever is? / बुखार?", options:["Body response","Disease itself","Food reaction","Water loss"], answer:0},
+
+{q:"Antibiotics work against? / एंटीबायोटिक?", options:["Bacteria","Virus only","Fungi only","All diseases"], answer:0},
+
+{q:"WHO stands for? / WHO?", options:["World Health Organization","World Human Office","Water Health Org","None"], answer:0},
+
+{q:"Infection spreads through? / संक्रमण?", options:["Contact, air, water","Only air","Only water","Only food"], answer:0},
+
+{q:"Sterilization kills? / निष्फलन?", options:["Microbes","Plants","Animals","Cells"], answer:0},
+
+{q:"Health is affected by? / प्रभावित?", options:["Environment & lifestyle","Only food","Only air","Only water"], answer:0},
+
+{q:"Exercise helps in? / व्यायाम?", options:["Good health","Disease","Weakness","Infection"], answer:0},
+
+{q:"Disease prevention includes? / रोकथाम?", options:["Hygiene & vaccination","Only medicine","Only food","Only sleep"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

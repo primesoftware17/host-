@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Consumer Behavior - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;600&display=swap');
+  :root { --bg:#f0f4f8; --card:#ffffff; --accent:#2d6a4f; --accent2:#52b788; --text:#1b2a22; --sub:#6b7c6e; --correct:#2d6a4f; --wrong:#c62828; --border:#d0e8d8; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:30px 20px; }
+  .hero { text-align:center; margin-bottom:40px; padding:40px 20px; background:linear-gradient(135deg,#2d6a4f,#52b788); border-radius:20px; color:#fff; }
+  .chapter-tag { display:inline-block; background:#fff3; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:14px; }
+  h1 { font-family:'DM Serif Display',serif; font-size:clamp(24px,5vw,40px); margin-bottom:8px; }
+  .subtitle { opacity:.85; font-size:14px; }
+  .quiz-wrap { max-width:780px; margin:0 auto; }
+  .q-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:18px; box-shadow:0 2px 12px #0001; }
+  .q-num { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent2); text-transform:uppercase; margin-bottom:8px; }
+  .q-text { font-size:16px; font-weight:600; line-height:1.6; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:#f6faf7; border:1.5px solid var(--border); color:var(--text); padding:11px 16px; border-radius:9px; margin-bottom:8px; cursor:pointer; font-size:14px; font-family:'DM Sans',sans-serif; transition:all .2s; }
+  .opt:hover:not(:disabled) { border-color:var(--accent2); background:#e8f5ee; }
+  .opt.correct { background:#e8f5ee; border-color:var(--correct); color:var(--correct); font-weight:600; }
+  .opt.wrong { background:#fdecea; border-color:var(--wrong); color:var(--wrong); }
+  .submit-area { text-align:center; margin:30px 0; }
+  .submit-btn { background:var(--accent); color:#fff; font-weight:700; font-size:16px; padding:14px 50px; border:none; border-radius:50px; cursor:pointer; font-family:'DM Serif Display',serif; letter-spacing:1px; transition:all .2s; }
+  .submit-btn:hover { background:var(--accent2); transform:translateY(-2px); }
+  .score-box { display:none; background:linear-gradient(135deg,#2d6a4f,#52b788); border-radius:16px; padding:30px; text-align:center; margin-top:20px; color:#fff; }
+  .score-box.show { display:block; }
+  .score-big { font-family:'DM Serif Display',serif; font-size:56px; }
+  .score-label { opacity:.85; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="chapter-tag">Chapter 2</div>
+  <h1>Consumer Behavior</h1>
+  <p class="subtitle">30 Multiple Choice Questions — Utility, Demand & Consumer Theory</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions = [
+  {q:"What is utility in economics? / अर्थशास्त्र में उपयोगिता क्या है?", opts:["Physical use of a good / वस्तु का भौतिक उपयोग","Satisfaction derived from consuming a good / वस्तु उपभोग से प्राप्त संतुष्टि","Price of a good / वस्तु की कीमत","Durability of a good / वस्तु की टिकाऊपन"], ans:1},
+  {q:"What is marginal utility? / सीमांत उपयोगिता क्या है?", opts:["Total satisfaction from all units / सभी इकाइयों से कुल संतुष्टि","Utility from consuming one additional unit / एक अतिरिक्त इकाई के उपभोग से उपयोगिता","Minimum utility required / न्यूनतम आवश्यक उपयोगिता","Utility at zero consumption / शून्य उपभोग पर उपयोगिता"], ans:1},
+  {q:"The Law of Diminishing Marginal Utility states that / सीमांत उपयोगिता ह्रास नियम कहता है कि:", opts:["MU increases with consumption / उपभोग के साथ MU बढ़ती है","MU remains constant / MU स्थिर रहती है","MU falls as more units are consumed / अधिक इकाइयाँ उपभोग करने पर MU घटती है","MU equals price / MU कीमत के बराबर होती है"], ans:2},
+  {q:"Consumer equilibrium is achieved when / उपभोक्ता संतुलन कब प्राप्त होता है?", opts:["MU = Price / MU = कीमत","MU > Price / MU > कीमत","MU < Price / MU < कीमत","Total utility is zero / कुल उपयोगिता शून्य है"], ans:0},
+  {q:"What is an indifference curve? / तटस्थता वक्र क्या है?", opts:["Curve showing equal income levels / समान आय स्तर दर्शाने वाला वक्र","Curve showing combinations giving same satisfaction / समान संतुष्टि देने वाले संयोजनों का वक्र","Curve showing price changes / कीमत परिवर्तन दर्शाने वाला वक्र","Curve showing production possibilities / उत्पादन संभावनाओं का वक्र"], ans:1},
+  {q:"Indifference curves are usually / तटस्थता वक्र सामान्यतः होते हैं:", opts:["Upward sloping / ऊपर की ओर झुके हुए","Convex to origin / मूल बिंदु की ओर उत्तल","Straight lines / सीधी रेखाएँ","Concave to origin / मूल बिंदु से अवतल"], ans:1},
+  {q:"What does the demand curve show? / माँग वक्र क्या दर्शाता है?", opts:["Supply vs time / आपूर्ति बनाम समय","Relationship between price and quantity demanded / कीमत और माँग मात्रा का संबंध","Production function / उत्पादन फलन","Income vs saving / आय बनाम बचत"], ans:1},
+  {q:"Law of demand states / माँग का नियम कहता है:", opts:["Price rises, demand rises / कीमत बढ़ने पर माँग बढ़ती है","Price falls, demand falls / कीमत घटने पर माँग घटती है","Price rises, demand falls / कीमत बढ़ने पर माँग घटती है","Price and demand unrelated / कीमत और माँग असंबंधित"], ans:2},
+  {q:"Which good violates law of demand? / कौन सी वस्तु माँग के नियम का उल्लंघन करती है?", opts:["Normal goods / सामान्य वस्तु","Giffen goods / गिफेन वस्तु","Luxury goods / विलासिता वस्तु","Complementary goods / पूरक वस्तु"], ans:1},
+  {q:"What is price elasticity of demand? / माँग की कीमत लोच क्या है?", opts:["Change in supply due to price / कीमत से आपूर्ति में परिवर्तन","% change in quantity demanded / % price change / कीमत में % परिवर्तन से माँग मात्रा में % परिवर्तन","Change in income / आय में परिवर्तन","Change in consumer preferences / उपभोक्ता प्राथमिकताओं में परिवर्तन"], ans:1},
+  {q:"Elastic demand means / लोचदार माँग का अर्थ है:", opts:["Ed = 0","Ed < 1","Ed > 1","Ed = 1"], ans:2},
+  {q:"Perfectly inelastic demand means / पूरी तरह अलोचदार माँग का अर्थ है:", opts:["Ed = 1","Ed = 0","Ed > 1","Ed = ∞"], ans:1},
+  {q:"Consumer surplus is / उपभोक्ता अधिशेष है:", opts:["Price paid minus willingness to pay / भुगतान की गई कीमत घटाकर भुगतान इच्छाशक्ति","Willingness to pay minus price paid / भुगतान इच्छाशक्ति घटाकर भुगतान की गई कीमत","Total expenditure / कुल व्यय","Marginal utility only / केवल सीमांत उपयोगिता"], ans:1},
+  {q:"What shifts the demand curve to the right? / माँग वक्र को दाईं ओर क्या स्थानांतरित करता है?", opts:["Fall in income for normal goods / सामान्य वस्तुओं के लिए आय में गिरावट","Rise in price of good / वस्तु की कीमत में वृद्धि","Rise in income for normal goods / सामान्य वस्तुओं के लिए आय में वृद्धि","Rise in price of complementary good / पूरक वस्तु की कीमत में वृद्धि"], ans:2},
+  {q:"Which approach is used in indifference curve analysis? / तटस्थता वक्र विश्लेषण में कौन सा दृष्टिकोण प्रयुक्त होता है?", opts:["Cardinal approach / क्रमणांक दृष्टिकोण","Ordinal approach / क्रमिक दृष्टिकोण","Both cardinal and ordinal / दोनों","None of these / इनमें से कोई नहीं"], ans:1},
+  {q:"Budget line shows / बजट रेखा दर्शाती है:", opts:["Consumer income and prices of goods / उपभोक्ता की आय और वस्तुओं की कीमतें","Production capacity / उत्पादन क्षमता","Utility function / उपयोगिता फलन","Supply of goods / वस्तुओं की आपूर्ति"], ans:0},
+  {q:"What is a normal good? / सामान्य वस्तु क्या है?", opts:["Demand rises when income rises / आय बढ़ने पर माँग बढ़ती है","Demand falls when income rises / आय बढ़ने पर माँग घटती है","Demand unaffected by income / माँग पर आय का असर नहीं","Demand falls when price falls / कीमत घटने पर माँग घटती है"], ans:0},
+  {q:"What is an inferior good? / निम्नस्तरीय वस्तु क्या है?", opts:["Demand rises when income rises / आय बढ़ने पर माँग बढ़ती है","Demand falls when income rises / आय बढ़ने पर माँग घटती है","Luxury good only / केवल विलासिता वस्तु","Essential good only / केवल आवश्यक वस्तु"], ans:1},
+  {q:"Substitution effect means / प्रतिस्थापन प्रभाव का अर्थ है:", opts:["Buying more as income rises / आय बढ़ने पर अधिक खरीदना","Replacing expensive good with cheaper one / महँगी वस्तु को सस्ती वस्तु से बदलना","Total effect of price change / कीमत परिवर्तन का कुल प्रभाव","Rise in income effect / आय प्रभाव में वृद्धि"], ans:1},
+  {q:"Income effect means / आय प्रभाव का अर्थ है:", opts:["Change in demand due to change in real income / वास्तविक आय परिवर्तन से माँग में परिवर्तन","Change in supply due to income / आय से आपूर्ति में परिवर्तन","Change in taste / रुचि में परिवर्तन","Change in market price / बाजार कीमत में परिवर्तन"], ans:0},
+  {q:"Cardinal utility approach was given by / क्रमणांक उपयोगिता दृष्टिकोण किसने दिया?", opts:["Hicks and Allen","Alfred Marshall","Keynes","Samuelson"], ans:1},
+  {q:"Ordinal utility approach was given by / क्रमिक उपयोगिता दृष्टिकोण किसने दिया?", opts:["Alfred Marshall","Adam Smith","Hicks and Allen","Keynes"], ans:2},
+  {q:"Two indifference curves cannot intersect because / दो तटस्थता वक्र प्रतिच्छेद नहीं कर सकते क्योंकि:", opts:["It would show same price / समान कीमत दर्शाएगा","It would violate consistency of preferences / यह वरीयताओं की संगति का उल्लंघन करेगा","It is a government rule / यह सरकारी नियम है","They represent different incomes / वे अलग आय दर्शाते हैं"], ans:1},
+  {q:"MRS stands for / MRS का अर्थ है:", opts:["Marginal Rate of Substitution / सीमांत प्रतिस्थापन दर","Maximum Return on Saving / बचत पर अधिकतम वापसी","Minimum Required Supply / न्यूनतम आवश्यक आपूर्ति","Market Rate of Supply / बाजार आपूर्ति दर"], ans:0},
+  {q:"Luxury goods have demand elasticity that is / विलासिता वस्तुओं की माँग लोच होती है:", opts:["Zero / शून्य","Less than 1 / 1 से कम","Greater than 1 / 1 से अधिक","Infinite / अनंत"], ans:2},
+  {q:"Cross price elasticity for substitutes is / प्रतिस्थापन वस्तुओं के लिए क्रॉस कीमत लोच होती है:", opts:["Zero / शून्य","Negative / ऋणात्मक","Positive / धनात्मक","Infinite / अनंत"], ans:2},
+  {q:"Cross price elasticity for complements is / पूरक वस्तुओं के लिए क्रॉस कीमत लोच होती है:", opts:["Positive / धनात्मक","Negative / ऋणात्मक","Zero / शून्य","Infinite / अनंत"], ans:1},
+  {q:"Which factor does NOT shift demand curve? / कौन सा कारक माँग वक्र को स्थानांतरित नहीं करता?", opts:["Change in income / आय में परिवर्तन","Change in taste / रुचि में परिवर्तन","Change in price of the good itself / वस्तु की अपनी कीमत में परिवर्तन","Change in price of substitutes / प्रतिस्थापन वस्तुओं की कीमत में परिवर्तन"], ans:2},
+  {q:"Saturation point means / संतृप्ति बिंदु का अर्थ है:", opts:["TU is maximum / TU अधिकतम है","MU is maximum / MU अधिकतम है","TU is minimum / TU न्यूनतम है","MU = TU / MU = TU"], ans:0},
+  {q:"When MU = 0, TU is / जब MU = 0, तो TU होती है:", opts:["Falling / घट रही है","Rising / बढ़ रही है","At maximum / अधिकतम पर","At minimum / न्यूनतम पर"], ans:2}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

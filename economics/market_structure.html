@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Market Structure - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600&display=swap');
+  :root{--bg:#fef9f0;--card:#fff;--accent:#e85d04;--accent2:#f48c06;--text:#1a1a2e;--sub:#888;--correct:#2a9d8f;--wrong:#e63946;--border:#f0dcc8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{max-width:780px;margin:0 auto 40px;padding:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;color:#fff;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:#fff1;border-radius:50%;}
+  .tag{display:inline-block;background:#fff3;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,44px);}
+  .sub{opacity:.85;font-size:14px;margin-top:6px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 8px #0000000a;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#fef9f0;border:1.5px solid var(--border);color:var(--text);padding:11px 16px;border-radius:9px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#fff5ee;}
+  .opt.correct{background:#e9f7f5;border-color:var(--correct);color:var(--correct);font-weight:700;}
+  .opt.wrong{background:#fdecea;border-color:var(--wrong);color:var(--wrong);}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;font-size:17px;padding:14px 50px;border:none;border-radius:50px;cursor:pointer;font-family:'Syne',sans-serif;letter-spacing:1px;transition:all .2s;}
+  .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent)44;}
+  .score-box{display:none;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:16px;padding:30px;text-align:center;margin-top:20px;color:#fff;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Syne',sans-serif;font-size:60px;font-weight:800;}
+  .score-label{opacity:.85;margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 4</div>
+  <h1>Market Structure</h1>
+  <p class="sub">30 Multiple Choice Questions — Perfect Competition, Monopoly & More</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"In perfect competition, how many sellers are there? / पूर्ण प्रतियोगिता में कितने विक्रेता होते हैं?",opts:["One / एक","Few / कुछ","Many / अनेक","Two / दो"],ans:2},
+  {q:"In a monopoly market, there is / एकाधिकार बाजार में होता है:",opts:["Many sellers / अनेक विक्रेता","Two sellers / दो विक्रेता","One seller / एक विक्रेता","No seller / कोई विक्रेता नहीं"],ans:2},
+  {q:"In oligopoly, there are / अल्पाधिकार में होते हैं:",opts:["One seller / एक विक्रेता","Many sellers / अनेक विक्रेता","Two buyers / दो खरीदार","A few large sellers / कुछ बड़े विक्रेता"],ans:3},
+  {q:"Monopsony refers to / एकाधिकार खरीदार से तात्पर्य है:",opts:["Single seller market / एकल विक्रेता बाजार","Single buyer market / एकल खरीदार बाजार","Two sellers / दो विक्रेता","Perfect competition / पूर्ण प्रतियोगिता"],ans:1},
+  {q:"Price taker is a firm in / कीमत स्वीकार करने वाली फर्म होती है:",opts:["Monopoly / एकाधिकार","Oligopoly / अल्पाधिकार","Perfect competition / पूर्ण प्रतियोगिता","Monopsony / एकाधिकार क्रेता"],ans:2},
+  {q:"Price maker is a firm in / कीमत निर्धारक फर्म होती है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Both A and B / A और B दोनों","Neither / कोई नहीं"],ans:1},
+  {q:"In perfect competition, AR equals / पूर्ण प्रतियोगिता में AR बराबर होती है:",opts:["MC","AC","Price / कीमत","Zero / शून्य"],ans:2},
+  {q:"In perfect competition, firm earns in long run / दीर्घकाल में पूर्ण प्रतियोगिता में फर्म कमाती है:",opts:["Supernormal profit / अतिसामान्य लाभ","Losses only / केवल हानि","Normal profit only / केवल सामान्य लाभ","Zero revenue / शून्य राजस्व"],ans:2},
+  {q:"Monopoly has / एकाधिकार में होती है:",opts:["No entry barriers / कोई प्रवेश बाधा नहीं","High entry barriers / उच्च प्रवेश बाधाएँ","Many competitors / अनेक प्रतिस्पर्धी","Homogeneous products / सजातीय उत्पाद"],ans:1},
+  {q:"Demand curve of monopolist is / एकाधिकारी की माँग वक्र होती है:",opts:["Perfectly elastic / पूरी तरह लोचदार","Downward sloping / नीचे की ओर झुकी हुई","Upward sloping / ऊपर की ओर झुकी हुई","Horizontal / क्षैतिज"],ans:1},
+  {q:"Monopolistic competition features / एकाधिकारी प्रतियोगिता की विशेषता है:",opts:["Homogeneous products / सजातीय उत्पाद","Product differentiation / उत्पाद विभेद","One seller / एक विक्रेता","No advertising / कोई विज्ञापन नहीं"],ans:1},
+  {q:"Product differentiation means / उत्पाद विभेद का अर्थ है:",opts:["All products are same / सभी उत्पाद समान हैं","Products are slightly different from rivals / उत्पाद प्रतिस्पर्धियों से थोड़े भिन्न होते हैं","Products are free / उत्पाद मुफ्त होते हैं","No products available / कोई उत्पाद उपलब्ध नहीं"],ans:1},
+  {q:"In oligopoly, firms are / अल्पाधिकार में फर्में होती हैं:",opts:["Independent / स्वतंत्र","Interdependent / परस्पर निर्भर","Not aware of rivals / प्रतिस्पर्धियों से अनजान","Price takers / कीमत स्वीकार करने वाली"],ans:1},
+  {q:"Kinked demand curve is associated with / किंक्ड माँग वक्र संबंधित है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Oligopoly / अल्पाधिकार","Monopsony / एकाधिकार क्रेता"],ans:2},
+  {q:"Price discrimination is practiced by / कीमत विभेद किसके द्वारा किया जाता है?",opts:["Perfect competition firms / पूर्ण प्रतियोगिता फर्म","Monopolist / एकाधिकारी","Small firms / छोटी फर्में","Government only / केवल सरकार"],ans:1},
+  {q:"In perfect competition, MR equals / पूर्ण प्रतियोगिता में MR बराबर होती है:",opts:["AC","MC","AR = Price / AR = कीमत","Zero / शून्य"],ans:2},
+  {q:"Cartel is an example of / कार्टेल एक उदाहरण है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Oligopoly collusion / अल्पाधिकार सांठगांठ","Monopsony / एकाधिकार क्रेता"],ans:2},
+  {q:"In monopoly, profit maximization condition is / एकाधिकार में लाभ अधिकतमीकरण की शर्त है:",opts:["MR = MC","AR = AC","MR > MC","Price = MC"],ans:0},
+  {q:"Which market has homogeneous products? / किस बाजार में सजातीय उत्पाद होते हैं?",opts:["Monopoly / एकाधिकार","Monopolistic competition / एकाधिकारी प्रतियोगिता","Perfect competition / पूर्ण प्रतियोगिता","Oligopoly / अल्पाधिकार"],ans:2},
+  {q:"Non-price competition includes / गैर-कीमत प्रतियोगिता में शामिल है:",opts:["Lowering price only / केवल कीमत घटाना","Advertising and product design / विज्ञापन और उत्पाद डिजाइन","Price war / कीमत युद्ध","Tax reduction / कर कमी"],ans:1},
+  {q:"Market equilibrium occurs when / बाजार संतुलन तब होता है जब:",opts:["Supply > Demand / आपूर्ति > माँग","Demand > Supply / माँग > आपूर्ति","Demand = Supply / माँग = आपूर्ति","Price is zero / कीमत शून्य है"],ans:2},
+  {q:"Duopoly means / द्विपक्षीय बाजार का अर्थ है:",opts:["Two buyers / दो खरीदार","Two sellers / दो विक्रेता","Two products / दो उत्पाद","Two governments / दो सरकारें"],ans:1},
+  {q:"Natural monopoly arises due to / प्राकृतिक एकाधिकार उत्पन्न होता है:",opts:["Government order / सरकारी आदेश","Economies of scale reducing average cost / पैमाने की बचत से औसत लागत कम होना","Patent laws / पेटेंट कानून","Less labour / कम श्रम"],ans:1},
+  {q:"Entry is free in which market? / किस बाजार में प्रवेश स्वतंत्र है?",opts:["Monopoly / एकाधिकार","Oligopoly / अल्पाधिकार","Perfect competition / पूर्ण प्रतियोगिता","Cartel / कार्टेल"],ans:2},
+  {q:"Consumer exploitation is maximum in / उपभोक्ता शोषण अधिकतम होता है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Monopolistic competition / एकाधिकारी प्रतियोगिता","Duopoly / द्विपक्षीय"],ans:1},
+  {q:"Excess capacity problem is found in / अतिरिक्त क्षमता समस्या पाई जाती है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Monopolistic competition / एकाधिकारी प्रतियोगिता","Government firms / सरकारी फर्में"],ans:2},
+  {q:"Which market has no close substitutes? / किस बाजार में कोई निकट विकल्प नहीं होता?",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Oligopoly / अल्पाधिकार","Monopolistic competition / एकाधिकारी प्रतियोगिता"],ans:1},
+  {q:"Selling cost is a feature of / विक्रय लागत एक विशेषता है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Monopolistic competition / एकाधिकारी प्रतियोगिता","None of these / इनमें से कोई नहीं"],ans:2},
+  {q:"Price rigidity is a feature of / कीमत कठोरता एक विशेषता है:",opts:["Perfect competition / पूर्ण प्रतियोगिता","Oligopoly / अल्पाधिकार","Monopoly / एकाधिकार","Barter economy / वस्तु विनिमय अर्थव्यवस्था"],ans:1},
+  {q:"MR < AR in which market? / किस बाजार में MR < AR होती है?",opts:["Perfect competition / पूर्ण प्रतियोगिता","Monopoly / एकाधिकार","Both B and C / B और C दोनों","None / कोई नहीं"],ans:1}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

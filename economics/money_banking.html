@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Money and Banking - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;900&family=Lora:wght@700&display=swap');
+  :root{--bg:#1a0533;--card:#2d0a4e;--accent:#c77dff;--accent2:#7b2fff;--text:#e0aaff;--sub:#9d4edd;--correct:#80ed99;--wrong:#f72585;--border:#4a1f7a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Raleway',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{text-align:center;margin-bottom:40px;padding:40px 20px;border-bottom:1px solid var(--border);}
+  .tag{display:inline-block;background:var(--accent2);color:#fff;font-weight:900;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:30px;margin-bottom:16px;}
+  h1{font-family:'Lora',serif;font-size:clamp(28px,5vw,48px);color:var(--accent);text-shadow:0 0 40px var(--accent2)66;}
+  .sub{color:var(--sub);font-size:14px;margin-top:8px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;}
+  .q-num{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:16px;color:#fff;}
+  .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--border);color:var(--text);padding:11px 16px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Raleway',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent)18;}
+  .opt.correct{border-color:var(--correct);color:var(--correct);background:var(--correct)15;}
+  .opt.wrong{border-color:var(--wrong);color:var(--wrong);background:var(--wrong)15;}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-weight:900;font-size:16px;padding:14px 50px;border:none;border-radius:30px;cursor:pointer;font-family:'Raleway',sans-serif;letter-spacing:2px;transition:all .2s;}
+  .submit-btn:hover{box-shadow:0 0 40px var(--accent2)88;transform:translateY(-2px);}
+  .score-box{display:none;background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:30px;text-align:center;margin-top:20px;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Lora',serif;font-size:60px;color:var(--accent);}
+  .score-label{color:var(--sub);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 6</div>
+  <h1>Money and Banking</h1>
+  <p class="sub">30 Multiple Choice Questions — Currency, Credit & Banking System</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"What is money? / मुद्रा क्या है?",opts:["Only gold / केवल सोना","Anything generally accepted as medium of exchange / विनिमय के माध्यम के रूप में स्वीकार्य कोई भी वस्तु","Land only / केवल भूमि","Bank deposits only / केवल बैंक जमा"],ans:1},
+  {q:"What was used before money? / मुद्रा से पहले क्या प्रयोग होता था?",opts:["Gold coins / सोने के सिक्के","Barter system / वस्तु विनिमय प्रणाली","Cheques / चेक","Paper currency / कागजी मुद्रा"],ans:1},
+  {q:"Primary function of money is / मुद्रा का प्राथमिक कार्य है:",opts:["Store of value / मूल्य का भंडार","Standard of deferred payment / भविष्य भुगतान का मानक","Medium of exchange / विनिमय का माध्यम","Transfer of value / मूल्य का हस्तांतरण"],ans:2},
+  {q:"Which is a secondary function of money? / मुद्रा का गौण कार्य कौन सा है?",opts:["Medium of exchange / विनिमय का माध्यम","Measure of value / मूल्य का माप","Store of value / मूल्य का भंडार","Unit of account / लेखे की इकाई"],ans:2},
+  {q:"Central bank in India is / भारत में केंद्रीय बैंक है:",opts:["State Bank of India / भारतीय स्टेट बैंक","Reserve Bank of India / भारतीय रिजर्व बैंक","Punjab National Bank","HDFC Bank"],ans:1},
+  {q:"RBI was established in / RBI की स्थापना हुई:",opts:["1935","1947","1950","1970"],ans:0},
+  {q:"What is CRR? / CRR क्या है?",opts:["Cash Reserve Ratio / नकद आरक्षित अनुपात","Credit Reduction Rate","Central Reserve Rule","Currency Regulation Rate"],ans:0},
+  {q:"CRR is the percentage of deposits that banks / CRR वह प्रतिशत है जो बैंकों को:",opts:["Invest in shares / शेयरों में निवेश करना होता है","Keep as cash with RBI / RBI के पास नकद रखना होता है","Give as loans / ऋण देना होता है","Distribute as dividends / लाभांश बाँटना होता है"],ans:1},
+  {q:"SLR stands for / SLR का अर्थ है:",opts:["Statutory Liquidity Ratio / सांविधिक तरलता अनुपात","Standard Lending Rate","State Loan Rate","Savings Limit Ratio"],ans:0},
+  {q:"Repo rate is / रेपो दर है:",opts:["Rate at which banks borrow from RBI / बैंक जिस दर पर RBI से उधार लेते हैं","Rate at which RBI borrows from banks / RBI जिस दर पर बैंकों से उधार लेता है","Consumer lending rate / उपभोक्ता ऋण दर","Inflation rate / मुद्रास्फीति दर"],ans:0},
+  {q:"Reverse repo rate is / रिवर्स रेपो दर है:",opts:["Rate at which banks borrow from RBI / बैंक जिस दर पर RBI से उधार लेते हैं","Rate at which RBI borrows from banks / RBI जिस दर पर बैंकों से उधार लेता है","Rate of return on bonds / बॉन्ड पर वापसी दर","Interest rate on savings / बचत पर ब्याज दर"],ans:1},
+  {q:"Money supply in economy is controlled by / अर्थव्यवस्था में मुद्रा आपूर्ति नियंत्रित होती है:",opts:["Finance Ministry / वित्त मंत्रालय","Reserve Bank of India / भारतीय रिजर्व बैंक","SEBI","Planning Commission / योजना आयोग"],ans:1},
+  {q:"M1 money supply includes / M1 मुद्रा आपूर्ति में शामिल है:",opts:["Currency + demand deposits / मुद्रा + माँग जमाएँ","Currency + fixed deposits / मुद्रा + सावधि जमाएँ","Only gold reserves / केवल सोने के भंडार","Government bonds only / केवल सरकारी बॉन्ड"],ans:0},
+  {q:"Commercial banks create money through / वाणिज्यिक बैंक मुद्रा सृजित करते हैं:",opts:["Printing notes / नोट छापकर","Credit creation / ऋण सृजन द्वारा","Collecting taxes / कर संग्रह द्वारा","Buying land / भूमि खरीदकर"],ans:1},
+  {q:"Bank rate is / बैंक दर है:",opts:["Rate at which central bank lends to commercial banks / केंद्रीय बैंक जिस दर पर वाणिज्यिक बैंकों को उधार देता है","Rate of interest on FD / FD पर ब्याज दर","Rate of inflation / मुद्रास्फीति दर","Tax rate / कर दर"],ans:0},
+  {q:"Open Market Operations (OMO) means / खुले बाजार परिचालन का अर्थ है:",opts:["RBI buying/selling government securities / RBI द्वारा सरकारी प्रतिभूतियों की खरीद-बिक्री","Opening new banks / नए बैंक खोलना","Selling foreign currency / विदेशी मुद्रा बेचना","Distributing loans / ऋण वितरण"],ans:0},
+  {q:"Quantitative credit control includes / मात्रात्मक ऋण नियंत्रण में शामिल है:",opts:["Selective credit control / चयनात्मक ऋण नियंत्रण","Moral suasion / नैतिक दबाव","Bank rate, CRR, OMO / बैंक दर, CRR, OMO","Publicity campaigns / प्रचार अभियान"],ans:2},
+  {q:"Qualitative credit control includes / गुणात्मक ऋण नियंत्रण में शामिल है:",opts:["CRR changes / CRR परिवर्तन","Repo rate / रेपो दर","Selective credit control / चयनात्मक ऋण नियंत्रण","Bank rate / बैंक दर"],ans:2},
+  {q:"Which is NOT a function of central bank? / केंद्रीय बैंक का कार्य कौन सा नहीं है?",opts:["Issue of currency / मुद्रा जारी करना","Banker to government / सरकार का बैंकर","Accepting deposits from public / जनता से जमा स्वीकार करना","Lender of last resort / अंतिम उपाय का ऋणदाता"],ans:2},
+  {q:"NABARD is associated with / NABARD संबंधित है:",opts:["Industry loans / औद्योगिक ऋण","Agricultural credit / कृषि ऋण","Housing loans / आवास ऋण","Export finance / निर्यात वित्त"],ans:1},
+  {q:"What is inflation's effect on money's purchasing power? / मुद्रास्फीति का मुद्रा की क्रय शक्ति पर क्या प्रभाव पड़ता है?",opts:["Increases / बढ़ती है","Decreases / घटती है","No effect / कोई प्रभाव नहीं","Doubles / दोगुनी होती है"],ans:1},
+  {q:"Cheque is a / चेक है:",opts:["Credit instrument / साख लिखत","Legal tender / कानूनी मुद्रा","Gold reserve / सोने का भंडार","Tax document / कर दस्तावेज"],ans:0},
+  {q:"Legal tender in India is / भारत में कानूनी मुद्रा है:",opts:["Gold coins / सोने के सिक्के","Cheques only / केवल चेक","Currency notes issued by RBI / RBI द्वारा जारी करेंसी नोट","Private bank notes / निजी बैंक नोट"],ans:2},
+  {q:"Credit multiplier = ? / ऋण गुणक = ?",opts:["1 / CRR","CRR × Deposit","CRR + SLR","Deposit / Money supply"],ans:0},
+  {q:"If CRR is 20%, credit multiplier is / यदि CRR 20% है, तो ऋण गुणक है:",opts:["20","5","10","2"],ans:1},
+  {q:"Which is NOT a function of commercial bank? / वाणिज्यिक बैंक का कार्य कौन सा नहीं है?",opts:["Accepting deposits / जमा स्वीकार करना","Issuing currency / मुद्रा जारी करना","Giving loans / ऋण देना","Agency services / एजेंसी सेवाएँ"],ans:1},
+  {q:"KYC stands for / KYC का अर्थ है:",opts:["Know Your Customer / अपने ग्राहक को जानें","Keep Your Cash","Key Year Credit","Know Your Credit"],ans:0},
+  {q:"RTGS is used for / RTGS का उपयोग होता है:",opts:["Large value real-time fund transfer / बड़े मूल्य के तुरंत धन हस्तांतरण","Property registration / संपत्ति पंजीकरण","Tax collection / कर संग्रह","Crop insurance / फसल बीमा"],ans:0},
+  {q:"UPI stands for / UPI का अर्थ है:",opts:["United Payment Interface","Unified Payments Interface / एकीकृत भुगतान इंटरफेस","Universal Postal India","Unique Policy Index"],ans:1},
+  {q:"What is the main goal of monetary policy? / मौद्रिक नीति का मुख्य उद्देश्य है:",opts:["Increase government spending / सरकारी खर्च बढ़ाना","Control money supply and inflation / मुद्रा आपूर्ति और मुद्रास्फीति नियंत्रण","Build infrastructure / बुनियादी ढाँचा बनाना","Collect taxes / कर एकत्रित करना"],ans:1}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

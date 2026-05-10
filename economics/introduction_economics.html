@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Introduction to Economics - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap');
+  :root { --bg:#0f0e17; --card:#1a1828; --accent:#f4c430; --text:#fffffe; --sub:#a7a9be; --correct:#06d6a0; --wrong:#ef476f; --border:#2e2c45; }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:30px 20px; }
+  .hero { text-align:center; margin-bottom:40px; }
+  .chapter-tag { display:inline-block; background:var(--accent); color:#000; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:16px; }
+  h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,5vw,42px); line-height:1.2; margin-bottom:8px; }
+  .subtitle { color:var(--sub); font-size:15px; }
+  .quiz-wrap { max-width:780px; margin:0 auto; }
+  .q-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:20px; transition:border-color .3s; }
+  .q-card.answered { border-color:var(--accent)44; }
+  .q-num { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:10px; }
+  .q-text { font-size:16px; font-weight:600; line-height:1.6; margin-bottom:18px; }
+  .opt { display:block; width:100%; text-align:left; background:transparent; border:1px solid var(--border); color:var(--text); padding:11px 16px; border-radius:9px; margin-bottom:9px; cursor:pointer; font-size:14px; font-family:'Source Sans 3',sans-serif; transition:all .2s; }
+  .opt:hover:not(:disabled) { border-color:var(--accent); background:var(--accent)15; }
+  .opt.correct { background:var(--correct)22; border-color:var(--correct); color:var(--correct); }
+  .opt.wrong { background:var(--wrong)22; border-color:var(--wrong); color:var(--wrong); }
+  .submit-area { text-align:center; margin:30px 0; }
+  .submit-btn { background:var(--accent); color:#000; font-weight:700; font-size:17px; padding:14px 50px; border:none; border-radius:50px; cursor:pointer; font-family:'Playfair Display',serif; letter-spacing:1px; transition:transform .2s, box-shadow .2s; }
+  .submit-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px var(--accent)55; }
+  .score-box { display:none; background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; text-align:center; margin-top:20px; }
+  .score-box.show { display:block; }
+  .score-big { font-family:'Playfair Display',serif; font-size:52px; color:var(--accent); }
+  .score-label { color:var(--sub); margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="chapter-tag">Chapter 1</div>
+  <h1>Introduction to Economics</h1>
+  <p class="subtitle">30 Multiple Choice Questions — Test Your Fundamentals</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions = [
+  {q:"What is Economics? / अर्थशास्त्र क्या है?", opts:["Study of rocks / चट्टानों का अध्ययन","Study of scarce resources and their allocation / दुर्लभ संसाधनों का अध्ययन","Study of climate / जलवायु का अध्ययन","Study of stars / तारों का अध्ययन"], ans:1},
+  {q:"Who is called the Father of Economics? / अर्थशास्त्र का जनक किसे कहा जाता है?", opts:["Karl Marx","John Keynes","Adam Smith","Alfred Marshall"], ans:2},
+  {q:"What does 'scarcity' mean in economics? / अर्थशास्त्र में 'दुर्लभता' का क्या अर्थ है?", opts:["Unlimited resources / असीमित संसाधन","Limited resources relative to wants / इच्छाओं के सापेक्ष सीमित संसाधन","Wastage of goods / वस्तुओं की बर्बादी","Excess supply / अधिक आपूर्ति"], ans:1},
+  {q:"What is an economic problem? / आर्थिक समस्या क्या है?", opts:["How to earn more money / अधिक पैसे कैसे कमाएं","Problem of choice due to scarcity / दुर्लभता के कारण चुनाव की समस्या","How to avoid taxes / कर से कैसे बचें","How to import goods / सामान आयात कैसे करें"], ans:1},
+  {q:"What is opportunity cost? / अवसर लागत क्या है?", opts:["Market price of a good / वस्तु की बाजार कीमत","Next best alternative forgone / अगले सर्वोत्तम विकल्प का त्याग","Total money spent / कुल खर्च किया गया धन","Government tax on goods / वस्तुओं पर सरकारी कर"], ans:1},
+  {q:"Microeconomics deals with? / सूक्ष्म अर्थशास्त्र किससे संबंधित है?", opts:["Entire economy / सम्पूर्ण अर्थव्यवस्था","Individual units / व्यक्तिगत इकाइयाँ","National income / राष्ट्रीय आय","Foreign trade / विदेश व्यापार"], ans:1},
+  {q:"Macroeconomics deals with? / स्थूल अर्थशास्त्र किससे संबंधित है?", opts:["Individual firm / व्यक्तिगत फर्म","Single consumer / एकल उपभोक्ता","Economy as a whole / संपूर्ण अर्थव्यवस्था","Single product market / एकल उत्पाद बाज़ार"], ans:2},
+  {q:"Which of the following is a free good? / निम्न में से कौन सा मुफ्त माल है?", opts:["Gold / सोना","Air / हवा","Land / भूमि","Labour / श्रम"], ans:1},
+  {q:"What is the basic economic problem every economy faces? / प्रत्येक अर्थव्यवस्था की बुनियादी आर्थिक समस्या क्या है?", opts:["Excess population / अधिक जनसंख्या","What, how, and for whom to produce / क्या, कैसे और किसके लिए उत्पादन करें","Lack of money / धन की कमी","Low exports / कम निर्यात"], ans:1},
+  {q:"Positive economics deals with? / सकारात्मक अर्थशास्त्र किससे संबंधित है?", opts:["What should be / क्या होना चाहिए","What is / जो है","Future predictions only / केवल भविष्य की भविष्यवाणियाँ","Government policies / सरकारी नीतियाँ"], ans:1},
+  {q:"Normative economics deals with? / आदर्श अर्थशास्त्र किससे संबंधित है?", opts:["What is / जो है","Facts only / केवल तथ्य","What ought to be / क्या होना चाहिए","Past data / पिछला डेटा"], ans:2},
+  {q:"Which is a factor of production? / उत्पादन का कारक कौन सा है?", opts:["Money / धन","Profit / लाभ","Land / भूमि","Price / कीमत"], ans:2},
+  {q:"What is capital in economics? / अर्थशास्त्र में पूँजी क्या है?", opts:["Money in the bank / बैंक में पैसा","Man-made resources used in production / उत्पादन में प्रयुक्त मानव-निर्मित संसाधन","Natural resources / प्राकृतिक संसाधन","Labour only / केवल श्रम"], ans:1},
+  {q:"What is the reward for labour? / श्रम का पुरस्कार क्या है?", opts:["Rent / किराया","Interest / ब्याज","Profit / लाभ","Wages / मजदूरी"], ans:3},
+  {q:"What is the reward for capital? / पूँजी का पुरस्कार क्या है?", opts:["Wages / मजदूरी","Rent / किराया","Interest / ब्याज","Profit / लाभ"], ans:2},
+  {q:"What is the reward for land? / भूमि का पुरस्कार क्या है?", opts:["Wages / मजदूरी","Rent / किराया","Interest / ब्याज","Profit / लाभ"], ans:1},
+  {q:"What is the reward for entrepreneurship? / उद्यमिता का पुरस्कार क्या है?", opts:["Rent / किराया","Wages / मजदूरी","Interest / ब्याज","Profit / लाभ"], ans:3},
+  {q:"Which type of economy is India? / भारत किस प्रकार की अर्थव्यवस्था है?", opts:["Capitalist / पूँजीवादी","Socialist / समाजवादी","Mixed / मिश्रित","Communist / साम्यवादी"], ans:2},
+  {q:"In a free market economy, who decides production? / मुक्त बाजार अर्थव्यवस्था में उत्पादन कौन तय करता है?", opts:["Government / सरकार","Consumers and producers / उपभोक्ता और उत्पादक","Army / सेना","Court / न्यायालय"], ans:1},
+  {q:"What is meant by 'wants are unlimited'? / 'इच्छाएँ असीमित हैं' से क्या तात्पर्य है?", opts:["People always want more / लोग हमेशा अधिक चाहते हैं","Resources are unlimited / संसाधन असीमित हैं","Only rich have wants / केवल अमीरों की इच्छाएँ होती हैं","Wants can be fully satisfied / इच्छाएँ पूरी तरह पूरी हो सकती हैं"], ans:0},
+  {q:"Who wrote 'The Wealth of Nations'? / 'द वेल्थ ऑफ नेशंस' किसने लिखी?", opts:["Karl Marx","John Keynes","Alfred Marshall","Adam Smith"], ans:3},
+  {q:"What is a 'production possibility curve'? / 'उत्पादन संभावना वक्र' क्या है?", opts:["A line showing maximum combination of goods producible / उत्पादन योग्य वस्तुओं के अधिकतम संयोजन की रेखा","A curve showing consumer choices / उपभोक्ता विकल्पों का वक्र","A graph of national income / राष्ट्रीय आय का ग्राफ","A price demand curve / मूल्य माँग वक्र"], ans:0},
+  {q:"What does PPC show? / PPC क्या दर्शाता है?", opts:["Trade between countries / देशों के बीच व्यापार","Opportunity cost and scarcity / अवसर लागत और दुर्लभता","Consumer preferences / उपभोक्ता प्राथमिकताएँ","Government budget / सरकारी बजट"], ans:1},
+  {q:"Which is NOT an economic activity? / निम्न में से कौन सी आर्थिक गतिविधि नहीं है?", opts:["Farming / खेती","Teaching / शिक्षण","Sleeping / सोना","Trading / व्यापार"], ans:2},
+  {q:"What is the main aim of economic activity? / आर्थिक गतिविधि का मुख्य उद्देश्य क्या है?", opts:["Entertainment / मनोरंजन","Satisfaction of wants / इच्छाओं की संतुष्टि","Political power / राजनीतिक शक्ति","Sports / खेल"], ans:1},
+  {q:"Which branch studies price determination? / कौन सी शाखा कीमत निर्धारण का अध्ययन करती है?", opts:["Macroeconomics / स्थूल अर्थशास्त्र","Microeconomics / सूक्ष्म अर्थशास्त्र","International economics / अंतर्राष्ट्रीय अर्थशास्त्र","Development economics / विकास अर्थशास्त्र"], ans:1},
+  {q:"What is meant by 'economic efficiency'? / 'आर्थिक दक्षता' से क्या तात्पर्य है?", opts:["Maximum output with given resources / दिए गए संसाधनों से अधिकतम उत्पादन","Minimum wages / न्यूनतम मजदूरी","High inflation / उच्च मुद्रास्फीति","Low trade / कम व्यापार"], ans:0},
+  {q:"Which is a central problem of an economy? / अर्थव्यवस्था की केंद्रीय समस्या कौन सी है?", opts:["Low birth rate / कम जन्म दर","Resource allocation / संसाधन आवंटन","Military spending / सैन्य खर्च","Sports funding / खेल निधि"], ans:1},
+  {q:"In a command economy, who controls resources? / निर्देशित अर्थव्यवस्था में संसाधनों को कौन नियंत्रित करता है?", opts:["Private firms / निजी फर्में","Consumers / उपभोक्ता","Government / सरकार","Unions / संघ"], ans:2},
+  {q:"What is the scope of economics? / अर्थशास्त्र का क्षेत्र क्या है?", opts:["Only agriculture / केवल कृषि","Production, distribution, consumption / उत्पादन, वितरण, उपभोग","Only international trade / केवल अंतर्राष्ट्रीय व्यापार","Only banking / केवल बैंकिंग"], ans:1}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

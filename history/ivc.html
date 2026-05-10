@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who was the first President of India?", options:["Rajendra Prasad","Nehru","Gandhi","Patel"], answer:0},
+{q:"In which year did World War II end?", options:["1945","1939","1918","1965"], answer:0},
+{q:"Who discovered America?", options:["Columbus","Vasco da Gama","Cook","Magellan"], answer:0},
+{q:"The Taj Mahal was built by?", options:["Shah Jahan","Akbar","Babur","Aurangzeb"], answer:0},
+{q:"When did India get independence?", options:["1947","1950","1935","1942"], answer:0},
+{q:"Who was the first Prime Minister of India?", options:["Nehru","Gandhi","Patel","Bose"], answer:0},
+{q:"Which civilization built pyramids?", options:["Egyptian","Roman","Greek","Chinese"], answer:0},
+{q:"Who was Ashoka?", options:["Mauryan Emperor","Mughal King","British Officer","Poet"], answer:0},
+{q:"Where was Buddha born?", options:["Lumbini","Delhi","Patna","Kolkata"], answer:0},
+{q:"Who wrote Ramayana?", options:["Valmiki","Vyas","Kalidas","Tulsidas"], answer:0},
+
+{q:"Who was the last Mughal emperor?", options:["Bahadur Shah II","Akbar","Babur","Aurangzeb"], answer:0},
+{q:"The French Revolution started in?", options:["1789","1776","1800","1815"], answer:0},
+{q:"Who discovered sea route to India?", options:["Vasco da Gama","Columbus","Cook","Drake"], answer:0},
+{q:"Where is Red Fort?", options:["Delhi","Agra","Mumbai","Jaipur"], answer:0},
+{q:"Who founded Maurya Empire?", options:["Chandragupta Maurya","Ashoka","Bindusara","Harsha"], answer:0},
+{q:"Battle of Plassey year?", options:["1757","1857","1707","1800"], answer:0},
+{q:"Who was Akbar’s minister?", options:["Birbal","Tansen","Todarmal","All"], answer:3},
+{q:"Quit India Movement year?", options:["1942","1930","1920","1919"], answer:0},
+{q:"Who was Subhash Chandra Bose?", options:["Freedom Fighter","King","Scientist","Poet"], answer:0},
+{q:"Where is Qutub Minar?", options:["Delhi","Agra","Lucknow","Hyderabad"], answer:0},
+
+{q:"Who was Hitler?", options:["German dictator","Scientist","Artist","Teacher"], answer:0},
+{q:"World War I started in?", options:["1914","1918","1939","1945"], answer:0},
+{q:"Who was Mahatma Gandhi?", options:["Freedom fighter","King","Writer","Soldier"], answer:0},
+{q:"Jallianwala Bagh massacre year?", options:["1919","1920","1930","1942"], answer:0},
+{q:"Capital of Mughal Empire?", options:["Delhi","Agra","Lahore","All"], answer:3},
+{q:"Who wrote Mahabharata?", options:["Vyas","Valmiki","Kalidas","Panini"], answer:0},
+{q:"Who was Rani Lakshmi Bai?", options:["Queen of Jhansi","Poet","Teacher","Scientist"], answer:0},
+{q:"British came to India for?", options:["Trade","War","Tourism","Study"], answer:0},
+{q:"Who built Qutub Minar?", options:["Qutb-ud-din Aibak","Akbar","Babur","Shah Jahan"], answer:0},
+{q:"When constitution adopted?", options:["1950","1947","1942","1935"], answer:0}
+];
+
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                // show correct answer always
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

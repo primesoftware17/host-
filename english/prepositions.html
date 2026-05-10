@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prepositions Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Prepositions)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which is a preposition? / इनमें से कौन-सा संबंधबोधक है?", options:["Run","Under","Happy","Quickly"], answer:1},
+
+{q:"Fill in the blank: The book is ___ the table.", options:["in","on","at","by"], answer:1},
+
+{q:"Which preposition shows time? / समय बताने वाला preposition कौन-सा है?", options:["on","under","behind","between"], answer:0},
+
+{q:"Fill in the blank: She lives ___ Delhi.", options:["in","on","at","by"], answer:0},
+
+{q:"Choose correct preposition: He is afraid ___ dogs.", options:["from","of","at","by"], answer:1},
+
+{q:"Fill in the blank: The cat is sitting ___ the chair.", options:["under","on","at","in"], answer:0},
+
+{q:"Which is correct? / सही वाक्य चुनिए", options:["She is in school","She is at school","Both A and B","None"], answer:2},
+
+{q:"Fill in the blank: I will meet you ___ Monday.", options:["in","on","at","by"], answer:1},
+
+{q:"Choose correct preposition: The train is ___ time.", options:["on","in","at","by"], answer:0},
+
+{q:"Fill in the blank: He jumped ___ the river.", options:["into","on","at","by"], answer:0},
+
+{q:"Which preposition shows place? / स्थान बताने वाला", options:["before","on","during","since"], answer:1},
+
+{q:"Fill in the blank: The keys are ___ the drawer.", options:["in","on","at","by"], answer:0},
+
+{q:"Choose correct preposition: She is good ___ English.", options:["in","at","on","by"], answer:1},
+
+{q:"Fill in the blank: The shop is open ___ 9 AM.", options:["in","on","at","by"], answer:2},
+
+{q:"Which preposition shows direction? / दिशा?", options:["into","on","at","in"], answer:0},
+
+{q:"Fill in the blank: He is sitting ___ me.", options:["beside","on","at","in"], answer:0},
+
+{q:"Choose correct preposition: They traveled ___ bus.", options:["by","on","in","at"], answer:0},
+
+{q:"Fill in the blank: She is interested ___ music.", options:["in","on","at","by"], answer:0},
+
+{q:"Which is correct? / सही चुनिए", options:["He is on home","He is at home","He is in home","He is by home"], answer:1},
+
+{q:"Fill in the blank: The picture is hanging ___ the wall.", options:["on","in","at","by"], answer:0},
+
+{q:"Choose correct preposition: I have known him ___ 2020.", options:["since","for","on","by"], answer:0},
+
+{q:"Fill in the blank: He will come ___ evening.", options:["in","on","at","by"], answer:0},
+
+{q:"Which preposition shows duration? / अवधि?", options:["since","for","at","on"], answer:1},
+
+{q:"Fill in the blank: The dog ran ___ the road.", options:["across","on","at","in"], answer:0},
+
+{q:"Choose correct preposition: She is waiting ___ you.", options:["for","on","at","by"], answer:0},
+
+{q:"Fill in the blank: He fell ___ the stairs.", options:["down","on","at","in"], answer:0},
+
+{q:"Which is correct? / सही वाक्य", options:["He is in the car","He is on the car","Both A and B","None"], answer:0},
+
+{q:"Fill in the blank: The boy is standing ___ the tree.", options:["under","on","at","in"], answer:0},
+
+{q:"Choose correct preposition: We live ___ a small village.", options:["in","on","at","by"], answer:0},
+
+{q:"Fill in the blank: She arrived ___ the airport.", options:["at","in","on","by"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

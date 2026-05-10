@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cell Structure & Function Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Cell Structure & Function / कोशिका संरचना एवं कार्य)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Cell is basic unit of life? / कोशिका जीवन की इकाई?", options:["Yes","No","Sometimes","Never"], answer:0},
+
+{q:"Who discovered cell? / कोशिका की खोज?", options:["Robert Hooke","Newton","Darwin","Pasteur"], answer:0},
+
+{q:"Cell membrane is? / झिल्ली?", options:["Selective barrier","Rigid wall","Gas layer","Metal layer"], answer:0},
+
+{q:"Nucleus controls? / नाभिक?", options:["Cell activities","Only shape","Only size","Only color"], answer:0},
+
+{q:"Mitochondria is called? / ऊर्जा घर?", options:["Powerhouse","Brain","Heart","Skin"], answer:0},
+
+{q:"Ribosomes make? / प्रोटीन?", options:["Proteins","Fats","Carbohydrates","DNA"], answer:0},
+
+{q:"Cell wall is found in? / कोशिका भित्ति?", options:["Plant cell","Animal cell","Both","None"], answer:0},
+
+{q:"Chloroplast is for? / क्लोरोप्लास्ट?", options:["Photosynthesis","Respiration","Digestion","Movement"], answer:0},
+
+{q:"Cytoplasm is? / साइटोप्लाज्म?", options:["Fluid inside cell","Outside cell","Wall","Nucleus"], answer:0},
+
+{q:"Cell membrane is made of? / झिल्ली?", options:["Lipids & proteins","Metal","Gas","Salt"], answer:0},
+
+{q:"DNA contains? / DNA?", options:["Genetic information","Energy","Water","Protein only"], answer:0},
+
+{q:"Prokaryotic cells have? / प्रोकैरियोटिक?", options:["No nucleus","True nucleus","Many nuclei","Chloroplast only"], answer:0},
+
+{q:"Eukaryotic cells have? / यूकैरियोटिक?", options:["True nucleus","No nucleus","Only wall","No membrane"], answer:0},
+
+{q:"Vacuole stores? / रसधानी?", options:["Water & waste","Protein","DNA","Fat only"], answer:0},
+
+{q:"Lysosomes are? / लाइसोसोम?", options:["Digestive sacs","Powerhouse","Wall","Nucleus"], answer:0},
+
+{q:"Cell division is called? / विभाजन?", options:["Mitosis","Photosynthesis","Respiration","Diffusion"], answer:0},
+
+{q:"Chromosomes are in? / गुणसूत्र?", options:["Nucleus","Cytoplasm","Membrane","Wall"], answer:0},
+
+{q:"Plant cells have? / पादप कोशिका?", options:["Cell wall","No nucleus","No membrane","No cytoplasm"], answer:0},
+
+{q:"Animal cells lack? / पशु कोशिका?", options:["Cell wall","Nucleus","Mitochondria","Cytoplasm"], answer:0},
+
+{q:"Endoplasmic reticulum helps in? / ईआर?", options:["Transport","Digestion","Photosynthesis","Movement"], answer:0},
+
+{q:"Golgi apparatus functions in? / गोल्जी?", options:["Packaging","Respiration","Digestion","Energy"], answer:0},
+
+{q:"Cell theory states? / सिद्धांत?", options:["All living are made of cells","Only plants have cells","Cells are non-living","Cells are gases"], answer:0},
+
+{q:"Smallest living unit is? / सबसे छोटी इकाई?", options:["Cell","Tissue","Organ","System"], answer:0},
+
+{q:"Tissue is group of? / ऊतक?", options:["Cells","Organs","Systems","Atoms"], answer:0},
+
+{q:"Organ is group of? / अंग?", options:["Tissues","Cells","Atoms","Molecules"], answer:0},
+
+{q:"Cell respiration occurs in? / श्वसन?", options:["Mitochondria","Nucleus","Wall","Chloroplast"], answer:0},
+
+{q:"Photosynthesis occurs in? / प्रकाश संश्लेषण?", options:["Chloroplast","Mitochondria","Nucleus","Wall"], answer:0},
+
+{q:"Cell shape is maintained by? / आकार?", options:["Cytoskeleton","Nucleus","DNA","RNA"], answer:0},
+
+{q:"Cell transport includes? / परिवहन?", options:["Diffusion & osmosis","Only diffusion","Only osmosis","None"], answer:0},
+
+{q:"Osmosis is movement of? / परासरण?", options:["Water","Protein","DNA","Gas"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

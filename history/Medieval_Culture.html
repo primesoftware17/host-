@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Medieval Culture)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who started the Bhakti Movement in South India? / दक्षिण भारत में भक्ति आंदोलन की शुरुआत किसने की?", options:["Alvars and Nayanars / आलवार और नयनार","Kabir / कबीर","Guru Nanak / गुरु नानक","Tulsidas / तुलसीदास"], answer:0},
+
+{q:"Who was the founder of Sikhism? / सिख धर्म के संस्थापक कौन थे?", options:["Guru Gobind Singh / गुरु गोबिंद सिंह","Guru Nanak / गुरु नानक","Guru Arjan Dev / गुरु अर्जुन देव","Guru Teg Bahadur / गुरु तेग बहादुर"], answer:1},
+
+{q:"Which saint preached the message of Hindu-Muslim unity? / किस संत ने हिन्दू-मुस्लिम एकता का संदेश दिया?", options:["Kabir / कबीर","Surdas / सूरदास","Mirabai / मीराबाई","Chaitanya Mahaprabhu / चैतन्य महाप्रभु"], answer:0},
+
+{q:"Who composed the Ramcharitmanas? / रामचरितमानस की रचना किसने की?", options:["Kabir / कबीर","Surdas / सूरदास","Tulsidas / तुलसीदास","Mirabai / मीराबाई"], answer:2},
+
+{q:"Who was known as the disciple of Ramananda? / रामानंद के शिष्य के रूप में कौन प्रसिद्ध थे?", options:["Kabir / कबीर","Guru Nanak / गुरु नानक","Chaitanya / चैतन्य","Namdev / नामदेव"], answer:0},
+
+{q:"Which Sufi saint was associated with the Chishti order? / चिश्ती संप्रदाय से कौन-से सूफी संत जुड़े थे?", options:["Nizamuddin Auliya / निजामुद्दीन औलिया","Sheikh Ahmad Sirhindi / शेख अहमद सरहिंदी","Baba Farid / बाबा फरीद","Moinuddin Chishti / मोइनुद्दीन चिश्ती"], answer:3},
+
+{q:"Where is the dargah of Khwaja Moinuddin Chishti located? / ख्वाजा मोइनुद्दीन चिश्ती की दरगाह कहाँ स्थित है?", options:["Delhi / दिल्ली","Ajmer / अजमेर","Lahore / लाहौर","Agra / आगरा"], answer:1},
+
+{q:"Who introduced the Persian festival 'Navroz' in the Mughal court? / मुगल दरबार में फ़ारसी त्योहार 'नवरोज़' किसने शुरू किया?", options:["Babur / बाबर","Humayun / हुमायूँ","Akbar / अकबर","Jahangir / जहाँगीर"], answer:2},
+
+{q:"Which language developed from the interaction of Persian and local languages during medieval India? / मध्यकालीन भारत में फ़ारसी और स्थानीय भाषाओं के मेल से कौन-सी भाषा विकसित हुई?", options:["Hindi / हिंदी","Urdu / उर्दू","Punjabi / पंजाबी","Bengali / बंगाली"], answer:1},
+
+{q:"Who wrote the famous work 'Padmavat'? / प्रसिद्ध कृति 'पद्मावत' किसने लिखी?", options:["Malik Muhammad Jayasi / मलिक मुहम्मद जायसी","Amir Khusrau / अमीर खुसरो","Kabir / कबीर","Tulsidas / तुलसीदास"], answer:0},
+
+{q:"Who was known as the 'Parrot of India'? / 'भारत का तोता' किसे कहा जाता था?", options:["Kabir / कबीर","Amir Khusrau / अमीर खुसरो","Surdas / सूरदास","Abul Fazl / अबुल फज़ल"], answer:1},
+
+{q:"Which Mughal emperor promoted painting and fine arts the most? / किस मुगल सम्राट ने चित्रकला और ललित कला को सबसे अधिक बढ़ावा दिया?", options:["Aurangzeb / औरंगजेब","Akbar / अकबर","Jahangir / जहाँगीर","Babur / बाबर"], answer:2},
+
+{q:"Who was the famous female devotee of Lord Krishna? / भगवान कृष्ण की प्रसिद्ध महिला भक्त कौन थीं?", options:["Mirabai / मीराबाई","Razia Sultan / रज़िया सुल्तान","Noor Jahan / नूरजहाँ","Jahanara / जहाँआरा"], answer:0},
+
+{q:"Which saint founded the Langar system in Sikhism? / सिख धर्म में लंगर प्रथा की शुरुआत किस संत ने की?", options:["Guru Nanak / गुरु नानक","Guru Angad / गुरु अंगद","Guru Amar Das / गुरु अमर दास","Guru Gobind Singh / गुरु गोबिंद सिंह"], answer:0},
+
+{q:"Who compiled the Adi Granth? / आदि ग्रंथ का संकलन किसने किया?", options:["Guru Nanak / गुरु नानक","Guru Gobind Singh / गुरु गोबिंद सिंह","Guru Arjan Dev / गुरु अर्जुन देव","Guru Teg Bahadur / गुरु तेग बहादुर"], answer:2},
+
+{q:"Which saint was known for his devotion through songs and dance in Bengal? / बंगाल में गीत और नृत्य के माध्यम से भक्ति के लिए कौन प्रसिद्ध थे?", options:["Namdev / नामदेव","Chaitanya Mahaprabhu / चैतन्य महाप्रभु","Kabir / कबीर","Ramananda / रामानंद"], answer:1},
+
+{q:"Who wrote the poems compiled in 'Bijak'? / 'बीजक' में संकलित पदों की रचना किसने की?", options:["Kabir / कबीर","Surdas / सूरदास","Tulsidas / तुलसीदास","Jayasi / जायसी"], answer:0},
+
+{q:"Which medieval saint emphasized equality and opposed caste discrimination? / किस मध्यकालीन संत ने समानता पर जोर दिया और जाति भेद का विरोध किया?", options:["Kabir / कबीर","Mirabai / मीराबाई","Surdas / सूरदास","Jayadeva / जयदेव"], answer:0},
+
+{q:"Who was the court musician of Akbar known as one of the Navaratnas? / अकबर के दरबार के प्रसिद्ध संगीतज्ञ और नवरत्नों में से एक कौन थे?", options:["Baiju Bawra / बैजू बावरा","Tansen / तानसेन","Amir Khusrau / अमीर खुसरो","Haridas / हरिदास"], answer:1},
+
+{q:"Which architectural style developed during the medieval period by combining Indian and Persian styles? / मध्यकाल में भारतीय और फ़ारसी शैली के मिश्रण से कौन-सी स्थापत्य शैली विकसित हुई?", options:["Dravidian Style / द्रविड़ शैली","Nagara Style / नागर शैली","Indo-Islamic Style / इंडो-इस्लामिक शैली","Vesara Style / वेसर शैली"], answer:2}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

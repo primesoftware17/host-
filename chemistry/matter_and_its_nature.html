@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Matter & Its Nature Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Matter & Its Nature / पदार्थ एवं उसका स्वरूप)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Matter is anything that has? / पदार्थ क्या है?", options:["Mass and volume","Only mass","Only volume","No mass"], answer:0},
+
+{q:"Matter is made of? / पदार्थ किससे बना है?", options:["Particles","Force","Energy","Light"], answer:0},
+
+{q:"Particles of matter are? / कण कैसे होते हैं?", options:["Very small","Very big","Invisible always","Solid only"], answer:0},
+
+{q:"States of matter are? / पदार्थ की अवस्थाएँ?", options:["Solid, Liquid, Gas","Heat, Light, Sound","Force, Energy, Mass","None"], answer:0},
+
+{q:"Solid has? / ठोस में क्या होता है?", options:["Fixed shape","No shape","Only gas","Only liquid"], answer:0},
+
+{q:"Liquid has? / द्रव में क्या होता है?", options:["Fixed volume","Fixed shape","No volume","No mass"], answer:0},
+
+{q:"Gas has? / गैस में क्या होता है?", options:["No fixed shape & volume","Fixed shape","Fixed volume","Only mass"], answer:0},
+
+{q:"Particles in matter are always? / कण हमेशा?", options:["Moving","Stopped","Frozen","Dead"], answer:0},
+
+{q:"Diffusion is fastest in? / विसरण सबसे तेज कहाँ?", options:["Gas","Solid","Liquid","Metal"], answer:0},
+
+{q:"Intermolecular space is maximum in? / अंतराण्विक स्थान अधिक?", options:["Gas","Solid","Liquid","Wood"], answer:0},
+
+{q:"Intermolecular force is strongest in? / बल सबसे अधिक?", options:["Solid","Liquid","Gas","Plasma"], answer:0},
+
+{q:"Change of state is due to? / अवस्था परिवर्तन?", options:["Heat","Force","Mass","Light"], answer:0},
+
+{q:"Melting is change from? / गलन?", options:["Solid to liquid","Liquid to gas","Gas to solid","Liquid to solid"], answer:0},
+
+{q:"Boiling is change from? / क्वथन?", options:["Liquid to gas","Solid to liquid","Gas to solid","Solid to gas"], answer:0},
+
+{q:"Freezing is change from? / जमना?", options:["Liquid to solid","Solid to gas","Gas to liquid","Gas to solid"], answer:0},
+
+{q:"Evaporation happens at? / वाष्पीकरण?", options:["Surface","Whole liquid","Solid only","Gas only"], answer:0},
+
+{q:"Evaporation causes? / वाष्पीकरण से?", options:["Cooling","Heating","No change","Explosion"], answer:0},
+
+{q:"Matter cannot be created or destroyed is? / नियम?", options:["Law of conservation of matter","Newton law","Ohm law","Bohr law"], answer:0},
+
+{q:"Plasma is found in? / प्लाज्मा कहाँ?", options:["Stars","Water","Earth core","Wood"], answer:0},
+
+{q:"Bose-Einstein condensate is? / बीईसी?", options:["Ultra cold state","Gas","Liquid","Solid"], answer:0},
+
+{q:"Matter particles have? / कणों में?", options:["Space between them","No space","Only force","No motion"], answer:0},
+
+{q:"Smell spreads due to? / गंध फैलती है?", options:["Diffusion","Force","Heat","Light"], answer:0},
+
+{q:"Matter can be classified as? / वर्गीकरण?", options:["Pure and mixture","Hot and cold","Big and small","Light and heavy"], answer:0},
+
+{q:"Pure substance includes? / शुद्ध पदार्थ?", options:["Elements and compounds","Mixtures only","Liquids only","Solids only"], answer:0},
+
+{q:"Element is made of? / तत्व?", options:["One type of atom","Many atoms","Mixture","Compound only"], answer:0},
+
+{q:"Compound is made of? / यौगिक?", options:["Two or more elements","One atom","Only gas","Only metal"], answer:0},
+
+{q:"Mixture is? / मिश्रण?", options:["Physical combination","Chemical bond","Single element","Pure only"], answer:0},
+
+{q:"Separation of mixtures is? / अलग करना?", options:["Physical process","Chemical only","Impossible","Heat only"], answer:0},
+
+{q:"Matter exists in how many states? / अवस्थाएँ?", options:["3","2","4","5"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

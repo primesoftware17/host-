@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mensuration Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Mensuration)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Area of a square is? / वर्ग का क्षेत्रफल क्या होता है?", options:["side + side","side × side","2 × side","side ÷ 2"], answer:1},
+
+{q:"Perimeter of a square is? / वर्ग का परिमाप?", options:["4 × side","side²","2 × side","side ÷ 4"], answer:0},
+
+{q:"Area of rectangle is? / आयत का क्षेत्रफल?", options:["length + width","length × width","2(length + width)","length ÷ width"], answer:1},
+
+{q:"Perimeter of rectangle is? / आयत का परिमाप?", options:["2(length + width)","length × width","length - width","length ÷ width"], answer:0},
+
+{q:"Area of triangle is? / त्रिभुज का क्षेत्रफल?", options:["base × height","½ × base × height","2 × base × height","base + height"], answer:1},
+
+{q:"Perimeter means? / परिमाप का अर्थ?", options:["Area","Volume","Boundary length","Height"], answer:2},
+
+{q:"Area of circle is? / वृत्त का क्षेत्रफल?", options:["2πr","πr²","πd","2πd"], answer:1},
+
+{q:"Circumference of circle is? / वृत्त की परिधि?", options:["πr²","2πr","πr","r²"], answer:1},
+
+{q:"Volume of cube is? / घन का आयतन?", options:["side × side","side³","2 × side","side²"], answer:1},
+
+{q:"Surface area of cube is? / घन का पृष्ठीय क्षेत्रफल?", options:["6a²","4a²","a³","2a²"], answer:0},
+
+{q:"1 m = ? cm", options:["10","100","1000","10000"], answer:1},
+
+{q:"1 km = ? m", options:["100","1000","10000","100000"], answer:1},
+
+{q:"Area is measured in?", options:["meter","kg","square units","litre"], answer:2},
+
+{q:"Volume is measured in?", options:["square units","cubic units","meter","kg"], answer:1},
+
+{q:"A cube has how many faces?", options:["4","5","6","8"], answer:2},
+
+{q:"A cuboid has how many faces?", options:["4","5","6","7"], answer:2},
+
+{q:"Volume of cuboid is?", options:["l × b × h","2(l + b + h)","l + b + h","l ÷ b ÷ h"], answer:0},
+
+{q:"Area of triangle depends on?", options:["side","height and base","radius","diameter"], answer:1},
+
+{q:"π is approximately equal to?", options:["2.14","3.14","4.13","5.14"], answer:1},
+
+{q:"Diameter = ?", options:["radius × 2","radius ÷ 2","πr","r²"], answer:0},
+
+{q:"Radius is half of?", options:["area","diameter","volume","perimeter"], answer:1},
+
+{q:"Area of parallelogram is?", options:["base × height","½ base × height","side × side","2πr"], answer:0},
+
+{q:"Perimeter of triangle is?", options:["sum of all sides","area × height","base × height","side²"], answer:0},
+
+{q:"A 3D shape has?", options:["length only","breadth only","length, breadth, height","area only"], answer:2},
+
+{q:"Volume means?", options:["surface space","total space inside","boundary length","height only"], answer:1},
+
+{q:"Unit of area?", options:["meter","cm","square meter","kg"], answer:2},
+
+{q:"Unit of volume?", options:["cubic meter","square meter","meter","cm"], answer:0},
+
+{q:"Area of circle depends on?", options:["radius","height","length","width"], answer:0},
+
+{q:"A rectangle has how many sides?", options:["3","4","5","6"], answer:1},
+
+{q:"A cube has how many edges?", options:["8","10","12","14"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Soils)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is soil? / मिट्टी क्या है?", options:["Solid rock only / केवल ठोस चट्टान","Top layer of Earth containing minerals and organic matter / पृथ्वी की ऊपरी परत जिसमें खनिज और जैविक पदार्थ होते हैं","Water under Earth / पृथ्वी के नीचे का जल","Air around Earth / पृथ्वी के चारों ओर की हवा"], answer:1},
+
+{q:"Soil is formed by the breakdown of what? / मिट्टी किसके टूटने से बनती है?", options:["Water / पानी","Rocks / चट्टानें","Air / हवा","Sunlight / सूर्य प्रकाश"], answer:1},
+
+{q:"What is the process of soil formation called? / मिट्टी बनने की प्रक्रिया क्या कहलाती है?", options:["Condensation / संघनन","Weathering / अपक्षय","Evaporation / वाष्पीकरण","Precipitation / वर्षण"], answer:1},
+
+{q:"Which is NOT a component of soil? / इनमें से कौन मिट्टी का घटक नहीं है?", options:["Minerals / खनिज","Organic matter / जैविक पदार्थ","Water / पानी","Electricity / बिजली"], answer:3},
+
+{q:"Which layer is topmost fertile layer of soil? / मिट्टी की सबसे उपजाऊ ऊपरी परत कौन सी है?", options:["Bedrock / आधार शिला","Subsoil / उपमृदा","Topsoil / ऊपरी मृदा","Parent rock / मूल चट्टान"], answer:2},
+
+{q:"Which soil is best for growing crops? / फसलों की खेती के लिए कौन सी मिट्टी सबसे अच्छी है?", options:["Clay soil / चिकनी मिट्टी","Sandy soil / रेतीली मिट्टी","Loamy soil / दोमट मिट्टी","Rocky soil / पथरीली मिट्टी"], answer:2},
+
+{q:"What is humus? / ह्यूमस क्या होता है?", options:["Sand particles / रेत के कण","Decomposed organic matter / सड़ी-गली जैविक सामग्री","Rock fragments / चट्टान के टुकड़े","Water in soil / मिट्टी में पानी"], answer:1},
+
+{q:"Which soil type drains water very quickly? / कौन सी मिट्टी पानी को जल्दी निकाल देती है?", options:["Clay soil / चिकनी मिट्टी","Sandy soil / रेतीली मिट्टी","Loamy soil / दोमट मिट्टी","Black soil / काली मिट्टी"], answer:1},
+
+{q:"Which soil holds water the most? / कौन सी मिट्टी सबसे अधिक पानी रोकती है?", options:["Sandy soil / रेतीली मिट्टी","Clay soil / चिकनी मिट्टी","Gravel soil / बजरी मिट्टी","Silt soil / गाद मिट्टी"], answer:1},
+
+{q:"What is soil erosion? / मृदा अपरदन क्या है?", options:["Soil formation / मिट्टी का निर्माण","Removal of topsoil by wind or water / हवा या पानी द्वारा ऊपरी मिट्टी का हटना","Soil fertilization / मिट्टी का उर्वरीकरण","Soil mixing / मिट्टी का मिश्रण"], answer:1},
+
+{q:"Which agent causes maximum soil erosion? / सबसे अधिक मृदा अपरदन किससे होता है?", options:["Rocks / चट्टानें","Wind and water / हवा और पानी","Plants / पौधे","Animals / जानवर"], answer:1},
+
+{q:"What helps prevent soil erosion? / मृदा अपरदन को रोकने में क्या मदद करता है?", options:["Deforestation / वनों की कटाई","Plantation / वृक्षारोपण","Mining / खनन","Overgrazing / अत्यधिक चराई"], answer:1},
+
+{q:"Which soil is rich in iron and good for cotton? / कौन सी मिट्टी लोहे से भरपूर होती है और कपास के लिए अच्छी है?", options:["Alluvial soil / जलोढ़ मिट्टी","Black soil / काली मिट्टी","Desert soil / मरुस्थलीय मिट्टी","Mountain soil / पर्वतीय मिट्टी"], answer:1},
+
+{q:"Which soil is found in river plains? / नदियों के मैदानों में कौन सी मिट्टी पाई जाती है?", options:["Black soil / काली मिट्टी","Alluvial soil / जलोढ़ मिट्टी","Laterite soil / लेटराइट मिट्टी","Sandy soil / रेतीली मिट्टी"], answer:1},
+
+{q:"What is parent rock? / मूल चट्टान क्या होती है?", options:["Top layer of soil / मिट्टी की ऊपरी परत","Rock from which soil is formed / चट्टान जिससे मिट्टी बनती है","Water source / जल स्रोत","Air layer / वायु परत"], answer:1},
+
+{q:"Which soil is best for cactus plants? / कैक्टस पौधों के लिए कौन सी मिट्टी उपयुक्त है?", options:["Clay soil / चिकनी मिट्टी","Sandy soil / रेतीली मिट्टी","Alluvial soil / जलोढ़ मिट्टी","Peaty soil / पीट मिट्टी"], answer:1},
+
+{q:"What is the main function of soil for plants? / पौधों के लिए मिट्टी का मुख्य कार्य क्या है?", options:["Provide shelter / आश्रय देना","Provide nutrients and support / पोषक तत्व और सहारा देना","Produce sunlight / सूर्य प्रकाश देना","Create rain / वर्षा बनाना"], answer:1},
+
+{q:"Which soil is dark in color and rich in humus? / कौन सी मिट्टी गहरे रंग की और ह्यूमस से भरपूर होती है?", options:["Desert soil / मरुस्थलीय मिट्टी","Forest soil / वन मिट्टी","Sandy soil / रेतीली मिट्टी","Rocky soil / पथरीली मिट्टी"], answer:1},
+
+{q:"Which factor does NOT affect soil formation? / इनमें से कौन मिट्टी निर्माण को प्रभावित नहीं करता?", options:["Climate / जलवायु","Time / समय","Rocks / चट्टानें","Electricity / बिजली"], answer:3},
+
+{q:"What is soil conservation? / मृदा संरक्षण क्या है?", options:["Destroying soil / मिट्टी को नष्ट करना","Protecting soil from erosion / मृदा को अपरदन से बचाना","Mixing soil types / मिट्टी के प्रकार मिलाना","Heating soil / मिट्टी को गर्म करना"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Producer Behavior - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;600&display=swap');
+  :root{--bg:#1c1c1e;--card:#2c2c2e;--accent:#ff9f0a;--text:#f2f2f7;--sub:#8e8e93;--correct:#30d158;--wrong:#ff453a;--border:#3a3a3c;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{text-align:center;margin-bottom:40px;}
+  .tag{display:inline-block;background:var(--accent);color:#000;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:4px;margin-bottom:16px;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,7vw,64px);letter-spacing:3px;color:var(--accent);}
+  .sub{color:var(--sub);font-size:14px;margin-top:6px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:22px;margin-bottom:18px;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:600;line-height:1.6;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--border);color:var(--text);padding:11px 16px;border-radius:6px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'IBM Plex Sans',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent)18;}
+  .opt.correct{background:var(--correct)22;border-color:var(--correct);color:var(--correct);}
+  .opt.wrong{background:var(--wrong)22;border-color:var(--wrong);color:var(--wrong);}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:var(--accent);color:#000;font-weight:700;font-size:16px;padding:14px 50px;border:none;border-radius:6px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;transition:all .2s;}
+  .submit-btn:hover{box-shadow:0 0 30px var(--accent)66;}
+  .score-box{display:none;background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:30px;text-align:center;margin-top:20px;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--accent);letter-spacing:4px;}
+  .score-label{color:var(--sub);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 3</div>
+  <h1>Producer Behavior</h1>
+  <p class="sub">30 Multiple Choice Questions — Production, Cost & Supply Theory</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">SUBMIT QUIZ</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"What is a production function? / उत्पादन फलन क्या है?",opts:["Relationship between inputs and outputs / इनपुट और आउटपुट का संबंध","Relationship between price and demand / कीमत और माँग का संबंध","Relationship between income and consumption / आय और उपभोग का संबंध","Relationship between savings and investment / बचत और निवेश का संबंध"],ans:0},
+  {q:"What is total product (TP)? / कुल उत्पाद (TP) क्या है?",opts:["Output from one unit of input / एक इनपुट इकाई से आउटपुट","Total output from all units of input / सभी इनपुट इकाइयों से कुल आउटपुट","Output from last unit of input / अंतिम इनपुट इकाई से आउटपुट","Average of all outputs / सभी आउटपुट का औसत"],ans:1},
+  {q:"Marginal Product (MP) is / सीमांत उत्पाद (MP) है:",opts:["Total output / कुल आउटपुट","Average output / औसत आउटपुट","Change in TP when one more unit of input is added / एक अतिरिक्त इनपुट जोड़ने पर TP में परिवर्तन","Minimum output required / न्यूनतम आवश्यक आउटपुट"],ans:2},
+  {q:"Law of Variable Proportions states that / परिवर्तनशील अनुपात का नियम कहता है:",opts:["MP always rises / MP हमेशा बढ़ता है","MP first rises then falls / MP पहले बढ़ता है फिर घटता है","MP is always constant / MP हमेशा स्थिर रहता है","MP equals AP always / MP हमेशा AP के बराबर रहता है"],ans:1},
+  {q:"Average Product (AP) = ? / औसत उत्पाद (AP) = ?",opts:["TP / number of inputs / TP / इनपुट की संख्या","MP × inputs / MP × इनपुट","TP × inputs / TP × इनपुट","TP + MP / TP + MP"],ans:0},
+  {q:"When AP is maximum, MP equals / जब AP अधिकतम हो, तो MP:",opts:["Equals zero / शून्य होता है","Greater than AP / AP से अधिक होता है","Equals AP / AP के बराबर होता है","Less than AP / AP से कम होता है"],ans:2},
+  {q:"Fixed cost means / स्थिर लागत का अर्थ है:",opts:["Cost that changes with output / उत्पादन के साथ बदलने वाली लागत","Cost that stays same regardless of output / उत्पादन से स्वतंत्र लागत","Cost of raw materials only / केवल कच्चे माल की लागत","Labour cost only / केवल श्रम लागत"],ans:1},
+  {q:"Variable cost means / परिवर्तनशील लागत का अर्थ है:",opts:["Cost that does not change / न बदलने वाली लागत","Cost that changes with output / उत्पादन के साथ बदलने वाली लागत","Fixed capital cost / स्थिर पूँजी लागत","Government tax / सरकारी कर"],ans:1},
+  {q:"Total Cost = ? / कुल लागत = ?",opts:["FC + VC","FC - VC","FC × VC","FC / VC"],ans:0},
+  {q:"Marginal Cost is / सीमांत लागत है:",opts:["Total cost / total units / कुल लागत / कुल इकाइयाँ","Change in TC when one more unit is produced / एक और इकाई उत्पादन पर TC में परिवर्तन","Fixed cost per unit / प्रति इकाई स्थिर लागत","Average variable cost / औसत परिवर्तनशील लागत"],ans:1},
+  {q:"Short run is defined as / अल्पकाल को परिभाषित किया जाता है:",opts:["Period when all inputs are variable / जब सभी इनपुट परिवर्तनशील हों","Period when at least one input is fixed / जब कम से कम एक इनपुट स्थिर हो","One financial year / एक वित्त वर्ष","Any period less than 1 year / 1 वर्ष से कम कोई भी अवधि"],ans:1},
+  {q:"Long run is defined as / दीर्घकाल को परिभाषित किया जाता है:",opts:["Period when all inputs can vary / जब सभी इनपुट बदल सकते हैं","Period when one input is fixed / जब एक इनपुट स्थिर हो","One year only / केवल एक वर्ष","Ten years / दस वर्ष"],ans:0},
+  {q:"Returns to scale in long run means / दीर्घकाल में पैमाने के प्रतिफल का अर्थ है:",opts:["Change in output when only labour changes / केवल श्रम बदलने पर आउटपुट में परिवर्तन","Change in output when all inputs change proportionally / सभी इनपुट समानुपातिक रूप से बदलने पर आउटपुट में परिवर्तन","Change in price when output changes / आउटपुट बदलने पर कीमत में परिवर्तन","Change in fixed cost / स्थिर लागत में परिवर्तन"],ans:1},
+  {q:"Constant returns to scale means / स्थिर पैमाने के प्रतिफल का अर्थ है:",opts:["Output doubles when inputs doubled / इनपुट दोगुना होने पर आउटपुट दोगुना","Output more than doubles / आउटपुट दोगुने से अधिक","Output less than doubles / आउटपुट दोगुने से कम","Output remains same / आउटपुट वही रहता है"],ans:0},
+  {q:"Increasing returns to scale means / बढ़ते पैमाने के प्रतिफल का अर्थ है:",opts:["Output doubles when inputs doubled / इनपुट दोगुना होने पर आउटपुट दोगुना","Output more than doubles when inputs doubled / इनपुट दोगुना होने पर आउटपुट दोगुने से अधिक","Output less than doubles / आउटपुट दोगुने से कम","Output falls / आउटपुट घटता है"],ans:1},
+  {q:"Supply curve slopes / आपूर्ति वक्र होता है:",opts:["Downward / नीचे की ओर","Vertical / ऊर्ध्वाधर","Horizontal / क्षैतिज","Upward / ऊपर की ओर"],ans:3},
+  {q:"Law of supply states / आपूर्ति का नियम कहता है:",opts:["Higher price, less supplied / अधिक कीमत, कम आपूर्ति","Higher price, more supplied / अधिक कीमत, अधिक आपूर्ति","Price and supply unrelated / कीमत और आपूर्ति असंबंधित","Lower price, more supplied / कम कीमत, अधिक आपूर्ति"],ans:1},
+  {q:"What shifts supply curve to the right? / आपूर्ति वक्र को दाईं ओर क्या स्थानांतरित करता है?",opts:["Rise in production cost / उत्पादन लागत में वृद्धि","Fall in technology / तकनीक में गिरावट","Improvement in technology / तकनीक में सुधार","Higher taxes / अधिक कर"],ans:2},
+  {q:"Price elasticity of supply measures / आपूर्ति की कीमत लोच मापती है:",opts:["% change in demand / माँग में % परिवर्तन","% change in quantity supplied / % price change / कीमत में % परिवर्तन से आपूर्ति मात्रा में % परिवर्तन","Change in income / आय में परिवर्तन","Change in profit / लाभ में परिवर्तन"],ans:1},
+  {q:"Isoquant curve shows / समोत्पाद वक्र दर्शाता है:",opts:["Combinations of inputs giving same output / समान आउटपुट देने वाले इनपुट संयोजन","Consumer indifference / उपभोक्ता तटस्थता","Price and demand relationship / कीमत और माँग संबंध","Total revenue curve / कुल राजस्व वक्र"],ans:0},
+  {q:"Isocost line shows / समलागत रेखा दर्शाती है:",opts:["All input combinations with same cost / समान लागत वाले सभी इनपुट संयोजन","All output levels / सभी आउटपुट स्तर","Consumer budget / उपभोक्ता बजट","National income levels / राष्ट्रीय आय स्तर"],ans:0},
+  {q:"Producer equilibrium in input choice means / इनपुट चुनाव में उत्पादक संतुलन का अर्थ है:",opts:["Maximum cost / अधिकतम लागत","Isoquant tangent to isocost line / समोत्पाद वक्र का समलागत रेखा से स्पर्श","Minimum output / न्यूनतम आउटपुट","Zero profit / शून्य लाभ"],ans:1},
+  {q:"Normal profit is / सामान्य लाभ है:",opts:["Extra profit above average / औसत से ऊपर अतिरिक्त लाभ","Minimum return to stay in business / व्यापार में बने रहने के लिए न्यूनतम लाभ","Loss in business / व्यापार में हानि","Government given profit / सरकार द्वारा दिया लाभ"],ans:1},
+  {q:"Supernormal profit is / अतिसामान्य लाभ है:",opts:["Profit less than normal / सामान्य से कम लाभ","Profit equal to normal / सामान्य के बराबर लाभ","Profit above normal profit / सामान्य लाभ से अधिक लाभ","Zero profit / शून्य लाभ"],ans:2},
+  {q:"Average Fixed Cost (AFC) curve shape is / औसत स्थिर लागत (AFC) वक्र का आकार है:",opts:["U-shaped / U-आकार","Rectangular hyperbola / आयताकार अतिपरवलय","Straight line / सीधी रेखा","Vertical / ऊर्ध्वाधर"],ans:1},
+  {q:"AC curve is / AC वक्र है:",opts:["Always falling / हमेशा गिरता हुआ","U-shaped / U-आकार","Always rising / हमेशा बढ़ता हुआ","Horizontal / क्षैतिज"],ans:1},
+  {q:"MC cuts AC at / MC, AC को काटता है:",opts:["Minimum point of AC / AC के न्यूनतम बिंदु पर","Maximum point of AC / AC के अधिकतम बिंदु पर","Zero point / शून्य बिंदु पर","Any point / किसी भी बिंदु पर"],ans:0},
+  {q:"Sunk cost is / डूबी हुई लागत है:",opts:["Future cost / भविष्य की लागत","Cost already incurred and cannot be recovered / पहले से हुई और वसूल न होने वाली लागत","Variable cost / परिवर्तनशील लागत","Opportunity cost / अवसर लागत"],ans:1},
+  {q:"Economies of scale refer to / पैमाने की बचत का अर्थ है:",opts:["Cost increases as output grows / आउटपुट बढ़ने पर लागत बढ़ती है","Cost per unit falls as output expands / आउटपुट बढ़ने पर प्रति इकाई लागत घटती है","Constant costs / स्थिर लागतें","No profit zone / शून्य लाभ क्षेत्र"],ans:1},
+  {q:"MRTS stands for / MRTS का अर्थ है:",opts:["Marginal Rate of Technical Substitution / सीमांत तकनीकी प्रतिस्थापन दर","Maximum Return on Total Sales / कुल बिक्री पर अधिकतम रिटर्न","Market Rate of Tax and Supply / बाजार कर और आपूर्ति दर","Minimum Revenue Total Scale / न्यूनतम राजस्व कुल पैमाना"],ans:0}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

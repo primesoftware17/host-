@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Vedic Period)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who composed the Rig Veda?", options:["Rishis","Kings","Traders","Farmers"], answer:0},
+{q:"Vedic people were mainly:", options:["Pastoral nomads","Urban traders","Artisans","Sailors"], answer:0},
+{q:"Sabha and Samiti were:", options:["Political assemblies","Taxes","Temples","Armies"], answer:0},
+{q:"Indra was the god of:", options:["Rain and war","Fire","Earth","Wind"], answer:0},
+{q:"Agni was the god of:", options:["Fire","Water","Sky","Wealth"], answer:0},
+{q:"Soma was:", options:["Ritual drink","Weapon","Book","City"], answer:0},
+{q:"Vedic Age is also called:", options:["Iron Age","Stone Age","Copper Age","Modern Age"], answer:0},
+{q:"Varna system initially had:", options:["Four varnas","Two varnas","Five varnas","No varnas"], answer:0},
+{q:"Ashvamedha was:", options:["Horse sacrifice ritual","Dance form","Battle strategy","Tax system"], answer:0},
+{q:"Rig Vedic society was:", options:["Tribal society","Industrial society","Feudal monarchy","Democratic republic"], answer:0},
+
+{q:"Vedic people originally came from:", options:["Central Asia","Africa","Australia","America"], answer:0},
+{q:"Main occupation of early Vedic people:", options:["Trade","Fishing","Mining","Cattle rearing"], answer:3},
+{q:"Rig Veda contains how many hymns?", options:["500","1028","2000","100"], answer:1},
+{q:"Which Veda is related to music?", options:["Yajur Veda","Rig Veda","Sama Veda","Atharva Veda"], answer:2},
+{q:"Yajur Veda is related to:", options:["Music","Medicine","Rituals","War"], answer:2},
+{q:"Atharva Veda is related to:", options:["Trade","Magic and medicine","Law","Architecture"], answer:1},
+{q:"Vedic language was:", options:["Prakrit","Tamil","Sanskrit","Pali"], answer:2},
+{q:"Women in early Vedic period were:", options:["Slaves","Ignored","Respected","Warriors only"], answer:2},
+{q:"Cows were considered:", options:["Sacred books","Weapons","Useless","Wealth"], answer:3},
+{q:"Chief was called:", options:["Senapati","Governor","Rajan","King emperor"], answer:2},
+
+{q:"Vedic economy was mainly:", options:["Mining","Industrial","Maritime","Pastoral"], answer:3},
+{q:"Aryans worshipped:", options:["Idols only","Natural forces","Humans","Animals only"], answer:1},
+{q:"Important river in Vedic period:", options:["Yamuna","Nile","Amazon","Ganga only"], answer:0},
+{q:"Iron was used in:", options:["Only abroad","Later Vedic period","Early Vedic only","Not used"], answer:1},
+{q:"Caste system became rigid in:", options:["Early Vedic period","Modern period","Harappan period","Later Vedic period"], answer:3},
+{q:"Vedic texts are called:", options:["Epics","Shrutis","Novels","Scripts"], answer:1},
+{q:"Upanishads belong to:", options:["Modern age","Gupta period","Later Vedic period","Early Vedic period"], answer:2},
+{q:"Which god was most important in Rig Veda?", options:["Shiva","Brahma","Indra","Vishnu"], answer:2},
+{q:"Vedic people lived in:", options:["Cities","Villages","Ports","Skyscrapers"], answer:1},
+{q:"Yagna means:", options:["War","Trade","Dance","Sacrifice ritual"], answer:3}
+];
+
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

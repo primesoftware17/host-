@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sentence Structure Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Sentence Structure)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"What is the basic structure of a sentence? / वाक्य की मूल संरचना क्या है?", options:["Verb + Subject","Subject + Verb","Object + Subject","Adverb + Verb"], answer:1},
+
+{q:"Identify the correct sentence structure: 'Ram eats apples.'", options:["Object + Subject + Verb","Subject + Verb + Object","Verb + Object + Subject","Subject + Object + Verb"], answer:1},
+
+{q:"Which is a complete sentence? / पूर्ण वाक्य कौन-सा है?", options:["Eating food","Ram is playing","Very beautiful","In the park"], answer:1},
+
+{q:"Find Subject: 'The boy is running.'", options:["is running","boy","The","running"], answer:1},
+
+{q:"Find Verb: 'She sings a song.'", options:["She","sings","song","a"], answer:1},
+
+{q:"Identify Object: 'He reads a book.'", options:["He","reads","a","book"], answer:3},
+
+{q:"Which sentence is correct? / सही वाक्य चुनिए", options:["Goes Ram school","Ram goes to school","School Ram goes","To school Ram goes"], answer:1},
+
+{q:"What is Sentence Structure called? / वाक्य संरचना को क्या कहते हैं?", options:["Syntax","Phonetics","Morphology","Tense"], answer:0},
+
+{q:"Identify correct structure: 'They are playing cricket.'", options:["Subject + Verb + Object","Verb + Subject + Object","Object + Verb + Subject","Subject + Object + Verb"], answer:0},
+
+{q:"Which is not a sentence? / कौन-सा वाक्य नहीं है?", options:["She is happy","Happy she is","They are running","He plays football"], answer:1},
+
+{q:"Choose correct order: 'school / goes / Ram / to'", options:["Ram goes to school","Goes Ram school to","School Ram goes to","To school Ram goes"], answer:0},
+
+{q:"Identify subject: 'Birds fly in the sky.'", options:["fly","birds","sky","in"], answer:1},
+
+{q:"Identify verb: 'The sun rises in the east.'", options:["sun","rises","east","the"], answer:1},
+
+{q:"Which is correct structure? / सही संरचना", options:["Subject + Verb","Verb + Subject","Object + Verb","Adverb + Subject"], answer:0},
+
+{q:"Find object: 'She drinks milk.'", options:["She","drinks","milk","none"], answer:2},
+
+{q:"Which is a simple sentence? / सरल वाक्य कौन-सा है?", options:["Because he is tired","He is tired","Although he is tired","If he is tired"], answer:1},
+
+{q:"Identify structure: 'The teacher teaches English.'", options:["Subject + Verb + Object","Verb + Object + Subject","Object + Subject + Verb","Subject + Object + Verb"], answer:0},
+
+{q:"Which is correct sentence? / सही वाक्य", options:["Plays he cricket","He plays cricket","Cricket he plays","Playing he cricket"], answer:1},
+
+{q:"Find subject: 'My friends are coming.'", options:["coming","friends","are","My"], answer:1},
+
+{q:"Find verb: 'She is reading.'", options:["She","is","reading","none"], answer:2},
+
+{q:"Which is correct structure? / सही संरचना", options:["S + V + O","V + S + O","O + S + V","S + O + V"], answer:0},
+
+{q:"Which is a sentence? / वाक्य कौन-सा है?", options:["In the garden","Playing cricket","He is playing","Very fast"], answer:2},
+
+{q:"Identify object: 'They are watching TV.'", options:["They","are","watching","TV"], answer:3},
+
+{q:"Which is correct order? / सही क्रम", options:["is / he / reading","He is reading","Reading he is","Is reading he"], answer:1},
+
+{q:"Find subject: 'The cat is sleeping.'", options:["cat","sleeping","is","the"], answer:0},
+
+{q:"Find verb: 'We are going home.'", options:["We","are","going","home"], answer:2},
+
+{q:"Which is correct sentence? / सही वाक्य", options:["Home going we are","We are going home","Going home we are","Home we going are"], answer:1},
+
+{q:"Identify structure: 'He wrote a letter.'", options:["S + V + O","V + S + O","O + S + V","S + O + V"], answer:0},
+
+{q:"Which is a complete sentence? / पूर्ण वाक्य", options:["Running fast","Fast running","He runs fast","Very fast running"], answer:2},
+
+{q:"Find object: 'Ravi is eating an apple.'", options:["Ravi","is","eating","apple"], answer:3}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

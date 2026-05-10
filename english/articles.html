@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Articles Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - `Articles`)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which is a conjunction? / इनमें से कौन-सा समुच्चयबोधक है?", options:["Run","And","Happy","Quickly"], answer:1},
+
+{q:"Fill in the blank: I like tea ___ coffee.", options:["but","and","or","so"], answer:1},
+
+{q:"Which conjunction shows contrast? / विरोध दिखाने वाला conjunction?", options:["and","but","or","because"], answer:1},
+
+{q:"Fill in the blank: You can take tea ___ coffee.", options:["and","or","but","so"], answer:1},
+
+{q:"Choose correct conjunction: He is poor ___ honest.", options:["and","but","or","so"], answer:0},
+
+{q:"Fill in the blank: I was tired ___ I slept early.", options:["because","but","or","and"], answer:0},
+
+{q:"Which is correct? / सही वाक्य चुनिए", options:["She is smart and kind","She is smart but kind","She is smart or kind","She is smart so kind"], answer:0},
+
+{q:"Fill in the blank: Work hard ___ you will fail.", options:["or","and","but","so"], answer:0},
+
+{q:"Which conjunction shows reason? / कारण बताने वाला", options:["because","but","or","and"], answer:0},
+
+{q:"Fill in the blank: He was ill ___ he did not come.", options:["so","but","or","and"], answer:0},
+
+{q:"Choose correct conjunction: I want to go ___ I am busy.", options:["but","and","or","so"], answer:0},
+
+{q:"Fill in the blank: You can have tea ___ coffee.", options:["and","or","but","so"], answer:1},
+
+{q:"Which conjunction joins similar ideas? / समान विचार जोड़ने वाला", options:["but","and","or","because"], answer:1},
+
+{q:"Fill in the blank: He is rich ___ unhappy.", options:["but","and","or","so"], answer:0},
+
+{q:"Choose correct conjunction: She studied hard ___ she passed.", options:["so","but","or","and"], answer:0},
+
+{q:"Fill in the blank: Wait here ___ I come back.", options:["until","but","or","so"], answer:0},
+
+{q:"Which is a subordinating conjunction? / अधीनस्थ संयोजक", options:["and","but","because","or"], answer:2},
+
+{q:"Fill in the blank: I stayed at home ___ it was raining.", options:["because","but","or","and"], answer:0},
+
+{q:"Choose correct conjunction: He ran fast ___ he missed the bus.", options:["but","and","or","so"], answer:0},
+
+{q:"Fill in the blank: Work hard ___ you will succeed.", options:["and","but","or","so"], answer:0},
+
+{q:"Which conjunction shows choice? / विकल्प दिखाने वाला", options:["and","but","or","because"], answer:2},
+
+{q:"Fill in the blank: She sings ___ dances well.", options:["and","but","or","so"], answer:0},
+
+{q:"Choose correct conjunction: I will call you ___ I reach home.", options:["when","but","or","so"], answer:0},
+
+{q:"Fill in the blank: He is weak ___ he is brave.", options:["but","and","or","so"], answer:0},
+
+{q:"Which conjunction is correct? / सही विकल्प", options:["She cried because she was sad","She cried but she was sad","She cried or she was sad","She cried and she was sad"], answer:0},
+
+{q:"Fill in the blank: I will go ___ you come.", options:["if","but","or","so"], answer:0},
+
+{q:"Choose correct conjunction: He failed ___ he did not study.", options:["because","but","or","and"], answer:0},
+
+{q:"Fill in the blank: You must hurry ___ you will miss the train.", options:["or","and","but","so"], answer:0},
+
+{q:"Which is correct? / सही वाक्य", options:["I like tea and coffee","I like tea but coffee","I like tea or coffee so","I like tea so coffee"], answer:0},
+
+{q:"Fill in the blank: She is poor ___ honest.", options:["but","and","or","so"], answer:0},
+
+{q:"Choose correct article: ___ apple", options:["a","an","the","no article"], answer:1},
+
+{q:"I saw ___ elephant", options:["a","an","the","no article"], answer:1},
+
+{q:"She is ___ honest girl", options:["a","an","the","no article"], answer:1},
+
+{q:"He is ___ doctor", options:["a","an","the","no article"], answer:0},
+
+{q:"I went to ___ market", options:["a","an","the","no article"], answer:2},
+
+{q:"___ sun rises in the east", options:["a","an","the","no article"], answer:2},
+
+{q:"___ Ganga is a holy river", options:["a","an","the","no article"], answer:2},
+
+{q:"He is ___ best player", options:["a","an","the","no article"], answer:2},
+
+{q:"It is ___ unique idea", options:["a","an","the","no article"], answer:0},
+
+{q:"I have ___ pen", options:["a","an","the","no article"], answer:0},
+
+{q:"She is ___ MBA student", options:["a","an","the","no article"], answer:1},
+
+{q:"I love ___ music", options:["a","an","the","no article"], answer:3},
+
+{q:"She is ___ engineer", options:["a","an","the","no article"], answer:1},
+
+{q:"He lives in ___ United States", options:["a","an","the","no article"], answer:2},
+
+{q:"___ Earth revolves around the sun", options:["a","an","the","no article"], answer:2},
+
+{q:"I bought ___ umbrella", options:["a","an","the","no article"], answer:1},
+
+{q:"He is ___ richest man", options:["a","an","the","no article"], answer:2},
+
+{q:"She plays ___ piano", options:["a","an","the","no article"], answer:3},
+
+{q:"I met ___ European", options:["a","an","the","no article"], answer:0},
+
+{q:"He went to ___ hospital", options:["a","an","the","no article"], answer:3},
+
+{q:"She is ___ teacher", options:["a","an","the","no article"], answer:0},
+
+{q:"He saw ___ moon", options:["a","an","the","no article"], answer:2},
+
+{q:"I have ___ orange", options:["a","an","the","no article"], answer:1},
+
+{q:"This is ___ first time", options:["a","an","the","no article"], answer:2},
+
+{q:"We visited ___ Taj Mahal", options:["a","an","the","no article"], answer:2},
+
+{q:"He is ___ honest man", options:["a","an","the","no article"], answer:1},
+
+{q:"I need ___ information", options:["a","an","the","no article"], answer:3},
+
+{q:"She bought ___ car", options:["a","an","the","no article"], answer:0},
+
+{q:"He is ___ best in class", options:["a","an","the","no article"], answer:2},
+
+{q:"I saw ___ tiger in zoo", options:["a","an","the","no article"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

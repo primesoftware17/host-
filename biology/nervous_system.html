@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nervous System Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Nervous System / तंत्रिका तंत्र)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Nervous system controls? / तंत्रिका तंत्र?", options:["Body activities","Digestion only","Respiration only","Excretion only"], answer:0},
+
+{q:"Basic unit of nervous system? / इकाई?", options:["Neuron","Cell","Tissue","Organ"], answer:0},
+
+{q:"Brain is protected by? / मस्तिष्क?", options:["Skull","Heart","Lungs","Ribs"], answer:0},
+
+{q:"Spinal cord is part of? / रीढ़?", options:["CNS","PNS","Muscle system","Digestive system"], answer:0},
+
+{q:"CNS stands for? / CNS?", options:["Central Nervous System","Cell Nervous System","Circulatory System","Control Nervous Structure"], answer:0},
+
+{q:"PNS stands for? / PNS?", options:["Peripheral Nervous System","Primary Nervous System","Passive Nervous System","Partial Nervous System"], answer:0},
+
+{q:"Neuron consists of? / न्यूरॉन?", options:["Cell body, dendrites, axon","Only nucleus","Only axon","Only dendrites"], answer:0},
+
+{q:"Dendrites receive? / संकेत?", options:["Messages","Food","Water","Blood"], answer:0},
+
+{q:"Axon sends? / संकेत?", options:["Messages","Food","Oxygen","Hormones"], answer:0},
+
+{q:"Brain controls? / मस्तिष्क?", options:["Thinking","Digestion only","Breathing only","Excretion only"], answer:0},
+
+{q:"Spinal cord controls? / रीढ़ की हड्डी?", options:["Reflex actions","Digestion","Blood flow only","Growth"], answer:0},
+
+{q:"Reflex action is? / प्रतिक्रिया?", options:["Automatic response","Voluntary action","Thinking process","Memory"], answer:0},
+
+{q:"Example of reflex action? / उदाहरण?", options:["Blinking","Eating","Running","Writing"], answer:0},
+
+{q:"Brain has how many parts? / भाग?", options:["3","2","4","5"], answer:0},
+
+{q:"Cerebrum controls? / मस्तिष्क?", options:["Thinking","Heartbeat","Digestion","Breathing only"], answer:0},
+
+{q:"Cerebellum controls? / संतुलन?", options:["Balance","Memory","Vision only","Speech only"], answer:0},
+
+{q:"Medulla controls? / कार्य?", options:["Involuntary actions","Thinking","Writing","Reading"], answer:0},
+
+{q:"Nerves carry? / तंत्रिका?", options:["Signals","Food","Water","Blood"], answer:0},
+
+{q:"Stimulus is? / उत्तेजना?", options:["Any change","Food","Blood","Bone"], answer:0},
+
+{q:"Response is? / प्रतिक्रिया?", options:["Reaction to stimulus","Digestion","Breathing","Circulation"], answer:0},
+
+{q:"Synapse is? / जोड़?", options:["Gap between neurons","Bone joint","Muscle joint","Blood vessel"], answer:0},
+
+{q:"Neurotransmitters help in? / संदेश?", options:["Signal transmission","Digestion","Breathing","Growth"], answer:0},
+
+{q:"Brain is part of? / तंत्र?", options:["Central nervous system","Digestive system","Circulatory system","Respiratory system"], answer:0},
+
+{q:"Nervous system is made of? / संरचना?", options:["Brain, spinal cord, nerves","Only brain","Only nerves","Only spinal cord"], answer:0},
+
+{q:"Impulse travels through? / आवेग?", options:["Neurons","Blood","Food","Water"], answer:0},
+
+{q:"Voluntary actions are controlled by? / नियंत्रण?", options:["Brain","Heart","Liver","Lungs"], answer:0},
+
+{q:"Involuntary actions are controlled by? / स्वचालित?", options:["Medulla","Cerebrum","Cerebellum","Skin"], answer:0},
+
+{q:"Touch receptors are found in? / त्वचा?", options:["Skin","Bone","Blood","Heart"], answer:0},
+
+{q:"Smell is detected by? / गंध?", options:["Nose","Ear","Eye","Tongue"], answer:0},
+
+{q:"Taste is detected by? / स्वाद?", options:["Tongue","Skin","Ear","Nose"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plant Life Processes Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Plant Life Processes / पादप जीवन प्रक्रियाएँ)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Photosynthesis occurs in? / प्रकाश संश्लेषण कहाँ?", options:["Chloroplast","Mitochondria","Nucleus","Cell wall"], answer:0},
+
+{q:"Plants prepare food by? / भोजन बनाना?", options:["Photosynthesis","Respiration","Digestion","Fermentation"], answer:0},
+
+{q:"Raw materials of photosynthesis? / कच्चा माल?", options:["CO2 and water","Oxygen only","Nitrogen only","Salt only"], answer:0},
+
+{q:"Sunlight is required for? / सूर्य प्रकाश?", options:["Photosynthesis","Respiration","Digestion","Excretion"], answer:0},
+
+{q:"Oxygen is released in? / ऑक्सीजन?", options:["Photosynthesis","Respiration","Transpiration","Digestion"], answer:0},
+
+{q:"Stomata help in? / रंध्र?", options:["Gas exchange","Food storage","Growth","Protection"], answer:0},
+
+{q:"Transpiration is? / वाष्पोत्सर्जन?", options:["Water loss","Food making","Digestion","Respiration"], answer:0},
+
+{q:"Xylem transports? / जाइलम?", options:["Water","Food","Oxygen","Hormones"], answer:0},
+
+{q:"Phloem transports? / फ्लोएम?", options:["Food","Water","Gas","Minerals"], answer:0},
+
+{q:"Respiration in plants is? / श्वसन?", options:["Energy release","Food making","Water absorption","Growth"], answer:0},
+
+{q:"Plants respire in? / श्वसन?", options:["Day and night","Only day","Only night","Never"], answer:0},
+
+{q:"Glucose is? / ग्लूकोज?", options:["Food","Gas","Protein","Mineral"], answer:0},
+
+{q:"Chlorophyll is found in? / क्लोरोफिल?", options:["Chloroplast","Mitochondria","Nucleus","Cell wall"], answer:0},
+
+{q:"Carbon dioxide is absorbed by? / CO2?", options:["Leaves","Roots","Stem","Flowers"], answer:0},
+
+{q:"Water is absorbed by? / जल?", options:["Roots","Leaves","Stem","Flowers"], answer:0},
+
+{q:"Photosynthesis equation produces? / उत्पाद?", options:["Glucose and oxygen","CO2 and water","Salt and gas","Protein"], answer:0},
+
+{q:"Plants are? / पौधे?", options:["Autotrophs","Heterotrophs","Parasites","Consumers"], answer:0},
+
+{q:"Guard cells control? / द्वार कोशिका?", options:["Stomata","Roots","Stem","Flowers"], answer:0},
+
+{q:"Food is stored in plants as? / संग्रह?", options:["Starch","Protein","Fat only","Gas"], answer:0},
+
+{q:"Photosynthesis mainly occurs in? / मुख्य स्थान?", options:["Leaves","Roots","Stem","Flowers"], answer:0},
+
+{q:"Plants release water vapor through? / जल वाष्प?", options:["Transpiration","Respiration","Digestion","Absorption"], answer:0},
+
+{q:"Minerals are absorbed from? / खनिज?", options:["Soil","Air","Sun","Leaves"], answer:0},
+
+{q:"Plant growth occurs at? / वृद्धि?", options:["Meristem","Leaf only","Root only","Flower only"], answer:0},
+
+{q:"Food prepared in leaves is transported by? / परिवहन?", options:["Phloem","Xylem","Stomata","Roots"], answer:0},
+
+{q:"Photosynthesis needs? / आवश्यकता?", options:["Light energy","Sound energy","Heat only","Wind"], answer:0},
+
+{q:"Plants give out oxygen during? / ऑक्सीजन?", options:["Photosynthesis","Respiration","Digestion","Excretion"], answer:0},
+
+{q:"Water loss from leaves helps in? / लाभ?", options:["Cooling","Heating","Digestion","Growth only"], answer:0},
+
+{q:"Plants take CO2 from? / CO2 स्रोत?", options:["Air","Soil","Water","Roots"], answer:0},
+
+{q:"Energy in plants comes from? / ऊर्जा?", options:["Sun","Soil","Water","Air"], answer:0},
+
+{q:"Photosynthesis is a? / प्रक्रिया?", options:["Chemical process","Physical only","Mechanical","Random"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

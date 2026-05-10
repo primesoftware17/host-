@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Population)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is population? / जनसंख्या क्या है?", options:["Number of trees in an area / किसी क्षेत्र में पेड़ों की संख्या","Number of people living in a place / किसी स्थान पर रहने वाले लोगों की संख्या","Number of animals in forest / जंगल में जानवरों की संख्या","Number of rivers in country / देश में नदियों की संख्या"], answer:1},
+
+{q:"Which country has the largest population in the world? / विश्व में सबसे अधिक जनसंख्या वाला देश कौन सा है?", options:["India / भारत","China / चीन","USA / अमेरिका","Russia / रूस"], answer:0},
+
+{q:"Which factor increases population growth? / कौन सा कारक जनसंख्या वृद्धि बढ़ाता है?", options:["High death rate / उच्च मृत्यु दर","High birth rate / उच्च जन्म दर","Low migration / कम प्रवासन","Low fertility / कम प्रजनन क्षमता"], answer:1},
+
+{q:"What is population density? / जनसंख्या घनत्व क्या है?", options:["Number of animals in forest / जंगल में जानवरों की संख्या","Number of people per unit area / प्रति वर्ग इकाई क्षेत्र में लोगों की संख्या","Size of land / भूमि का आकार","Weather of place / स्थान का मौसम"], answer:1},
+
+{q:"Which area has high population density? / किस क्षेत्र में जनसंख्या घनत्व अधिक होता है?", options:["Desert / रेगिस्तान","Mountains / पर्वत","Urban areas / शहरी क्षेत्र","Polar regions / ध्रुवीय क्षेत्र"], answer:2},
+
+{q:"Which area has low population density? / किस क्षेत्र में जनसंख्या घनत्व कम होता है?", options:["Cities / शहर","Villages / गाँव","Deserts / रेगिस्तान","Coastal areas / तटीय क्षेत्र"], answer:2},
+
+{q:"What is migration? / प्रवासन क्या है?", options:["Birth of people / लोगों का जन्म","Movement of people from one place to another / लोगों का एक स्थान से दूसरे स्थान पर जाना","Death of people / लोगों की मृत्यु","Growth of plants / पौधों की वृद्धि"], answer:1},
+
+{q:"What is birth rate? / जन्म दर क्या है?", options:["Number of deaths / मृत्यु की संख्या","Number of births in a year / एक वर्ष में जन्मों की संख्या","Number of migrations / प्रवासों की संख्या","Population decrease / जनसंख्या में कमी"], answer:1},
+
+{q:"What is death rate? / मृत्यु दर क्या है?", options:["Number of births / जन्मों की संख्या","Number of deaths in a year / एक वर्ष में मृत्यु की संख्या","Population growth / जनसंख्या वृद्धि","Migration rate / प्रवासन दर"], answer:1},
+
+{q:"Which factor does NOT affect population? / इनमें से कौन जनसंख्या को प्रभावित नहीं करता?", options:["Food availability / भोजन की उपलब्धता","Climate / जलवायु","Education / शिक्षा","Distance from Sun / सूर्य से दूरी"], answer:3},
+
+{q:"Which country has the second largest population? / दूसरा सबसे अधिक जनसंख्या वाला देश कौन सा है?", options:["USA / अमेरिका","India / भारत","Indonesia / इंडोनेशिया","Brazil / ब्राजील"], answer:1},
+
+{q:"What is overpopulation? / अतिजनसंख्या क्या है?", options:["Low population / कम जनसंख्या","Population more than resources can support / संसाधनों से अधिक जनसंख्या","Equal population / समान जनसंख्या","No population / कोई जनसंख्या नहीं"], answer:1},
+
+{q:"Which is a consequence of overpopulation? / अतिजनसंख्या का एक परिणाम क्या है?", options:["More resources / अधिक संसाधन","Unemployment / बेरोजगारी","Clean environment / स्वच्छ वातावरण","Less pollution / कम प्रदूषण"], answer:1},
+
+{q:"Which age group is considered working population? / कार्यशील जनसंख्या किस आयु वर्ग को कहते हैं?", options:["0–14 years / 0–14 वर्ष","15–59 years / 15–59 वर्ष","60+ years / 60 वर्ष से अधिक","All ages / सभी आयु"], answer:1},
+
+{q:"What is population growth rate? / जनसंख्या वृद्धि दर क्या है?", options:["Decrease in population / जनसंख्या में कमी","Increase in population over time / समय के साथ जनसंख्या में वृद्धि","Constant population / स्थिर जनसंख्या","Migration only / केवल प्रवासन"], answer:1},
+
+{q:"Which is NOT a factor of population change? / इनमें से कौन जनसंख्या परिवर्तन का कारक नहीं है?", options:["Birth rate / जन्म दर","Death rate / मृत्यु दर","Migration / प्रवासन","Earth rotation / पृथ्वी का घूर्णन"], answer:3},
+
+{q:"Which sector provides most jobs in rural areas? / ग्रामीण क्षेत्रों में सबसे अधिक रोजगार किस क्षेत्र में मिलता है?", options:["Industry / उद्योग","Agriculture / कृषि","IT sector / आईटी क्षेत्र","Banking / बैंकिंग"], answer:1},
+
+{q:"What is census? / जनगणना क्या है?", options:["Study of weather / मौसम का अध्ययन","Counting population of a country / किसी देश की जनसंख्या की गणना","Study of rocks / चट्टानों का अध्ययन","Measurement of land / भूमि का मापन"], answer:1},
+
+{q:"How often is census conducted in India? / भारत में जनगणना कितने वर्षों में होती है?", options:["Every 5 years / हर 5 वर्ष","Every 10 years / हर 10 वर्ष","Every 15 years / हर 15 वर्ष","Every year / हर वर्ष"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Jainism and Buddhism)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who founded Jainism?", options:["Mahavira","Gautama Buddha","Ashoka","Chandragupta Maurya"], answer:0},
+{q:"Who founded Buddhism?", options:["Mahavira","Gautama Buddha","Harsha","Bindusara"], answer:1},
+{q:"Mahavira belonged to which clan?", options:["Lichchhavi","Shakya","Maurya","Gupta"], answer:0},
+{q:"Buddha was born in:", options:["Lumbini","Kushinagar","Sarnath","Rajgir"], answer:0},
+{q:"Jainism teaches:", options:["Ahimsa (non-violence)","War","Sacrifice","Caste system"], answer:0},
+{q:"Buddha attained enlightenment at:", options:["Bodh Gaya","Lumbini","Sarnath","Vaishali"], answer:0},
+{q:"Mahavira attained nirvana at:", options:["Pawapuri","Lumbini","Kushinagar","Sanchi"], answer:0},
+{q:"Buddha’s first sermon was given at:", options:["Sarnath","Bodh Gaya","Rajgir","Vaishali"], answer:0},
+{q:"Jainism has how many main Tirthankaras?", options:["24","12","10","18"], answer:0},
+{q:"Buddhism spread mainly due to:", options:["Ashoka","Akbar","Harsha","Samudragupta"], answer:0},
+
+{q:"Jainism believes in:", options:["Non-violence","Animal sacrifice","War","Wealth accumulation"], answer:0},
+{q:"Buddha was also known as:", options:["Siddhartha Gautama","Vardhamana","Mahavira","Chandragupta"], answer:0},
+{q:"Mahavira left home at age:", options:["30","40","25","50"], answer:0},
+{q:"Buddha left home at age:", options:["29","20","35","40"], answer:0},
+{q:"Main goal of Buddhism:", options:["Nirvana","Wealth","Power","War victory"], answer:0},
+{q:"Jain monks follow:", options:["Strict non-violence","Army life","Trade rules","Royal duties"], answer:0},
+{q:"Tripitaka is sacred text of:", options:["Buddhism","Jainism","Hinduism","Sikhism"], answer:0},
+{q:"Mahavira was born in:", options:["Vaishali","Lumbini","Kushinagar","Sarnath"], answer:0},
+{q:"Buddhism rejects:", options:["Caste system","Meditation","Kindness","Morality"], answer:0},
+{q:"Jainism is divided into:", options:["Digambara and Svetambara","Hinayana and Mahayana","Shaiva and Vaishnava","None"], answer:0},
+
+{q:"Buddha’s real name was:", options:["Siddhartha Gautama","Mahavira","Ashoka","Bimbisara"], answer:0},
+{q:"Mahavira is considered the:", options:["24th Tirthankara","1st Tirthankara","King","Priest"], answer:0},
+{q:"Buddha died at:", options:["Kushinagar","Sarnath","Bodh Gaya","Lumbini"], answer:0},
+{q:"Jainism believes in:", options:["Karma theory","No soul","Only rituals","Animal sacrifice"], answer:0},
+{q:"Buddha taught the Four Noble Truths at:", options:["Sarnath","Bodh Gaya","Rajgir","Lumbini"], answer:0},
+{q:"Jainism and Buddhism both reject:", options:["Violence","Meditation","Truth","Peace"], answer:0},
+{q:"Buddhist monks are called:", options:["Bhikkhus","Rishis","Kings","Soldiers"], answer:0},
+{q:"Jain scriptures are called:", options:["Agamas","Vedas","Tripitaka","Upanishads"], answer:0},
+{q:"Main language of early Buddhism teachings:", options:["Pali","Sanskrit","Prakrit","Tamil"], answer:0},
+{q:"Ashoka adopted Buddhism after:", options:["Kalinga War","Plassey War","Panipat War","Trojan War"], answer:0}
+];
+
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

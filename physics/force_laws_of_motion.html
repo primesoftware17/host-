@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Force & Laws of Motion Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Force & Laws of Motion)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Force is defined as?", options:["Push or pull","Energy","Mass","Speed"], answer:0},
+
+{q:"SI unit of force is?", options:["Newton","Joule","Watt","Pascal"], answer:0},
+
+{q:"Newton’s First Law is also called?", options:["Law of inertia","Law of motion","Law of force","Law of gravity"], answer:0},
+
+{q:"Inertia means?", options:["Resistance to change in motion","Speed","Force","Energy"], answer:0},
+
+{q:"SI unit of mass is?", options:["kg","m","s","N"], answer:0},
+
+{q:"Force can change?", options:["Shape","Speed","Direction","All of these"], answer:3},
+
+{q:"Newton’s Second Law is F = ?", options:["ma","m/a","a/m","m+a"], answer:0},
+
+{q:"Acceleration is proportional to?", options:["Force","Mass","Speed","Distance"], answer:0},
+
+{q:"Acceleration is inversely proportional to?", options:["Mass","Force","Speed","Time"], answer:0},
+
+{q:"Newton’s Third Law states?", options:["Action-reaction","Inertia","Gravity","Energy"], answer:0},
+
+{q:"Every action has equal and opposite?", options:["reaction","force","energy","motion"], answer:0},
+
+{q:"Momentum = ?", options:["mass × velocity","force × time","mass × force","speed × time"], answer:0},
+
+{q:"SI unit of momentum is?", options:["kg m/s","N","J","W"], answer:0},
+
+{q:"Balanced forces result in?", options:["No motion change","Acceleration","Speed increase","Force increase"], answer:0},
+
+{q:"Unbalanced force causes?", options:["Acceleration","Rest","No change","Zero motion"], answer:0},
+
+{q:"Friction is a force that opposes?", options:["motion","mass","energy","time"], answer:0},
+
+{q:"Which force acts between two bodies?", options:["Gravitational force","Magnetic only","Friction only","Electric only"], answer:0},
+
+{q:"Weight is equal to?", options:["mg","m/a","ma²","m+g"], answer:0},
+
+{q:"Gravity is a?", options:["force of attraction","repulsion","friction","magnetic force"], answer:0},
+
+{q:"Free fall acceleration is?", options:["9.8 m/s²","10 m/s","5 m/s²","1 m/s²"], answer:0},
+
+{q:"Mass is measure of?", options:["inertia","speed","force","energy"], answer:0},
+
+{q:"Heavier objects have more?", options:["inertia","speed","time","motion"], answer:0},
+
+{q:"Force = mass × ?", options:["acceleration","speed","time","distance"], answer:0},
+
+{q:"If force increases, acceleration?", options:["increases","decreases","becomes zero","none"], answer:0},
+
+{q:"If mass increases, acceleration?", options:["decreases","increases","same","infinite"], answer:0},
+
+{q:"SI unit of acceleration is?", options:["m/s²","kg","N","m/s"], answer:0},
+
+{q:"Friction depends on?", options:["surface","color","mass only","time"], answer:0},
+
+{q:"Which is not a force?", options:["Speed","Friction","Gravity","Magnetic"], answer:0},
+
+{q:"Newton is unit of?", options:["force","energy","mass","speed"], answer:0},
+
+{q:"Law of inertia states body remains in?", options:["rest or motion","acceleration","force","energy"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

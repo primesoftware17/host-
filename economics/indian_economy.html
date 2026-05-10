@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Indian Economy - MCQ Quiz</title>
+<style>
+body{font-family:Arial;background:#111;color:#fff;margin:0;padding:20px}
+h1{text-align:center;color:#ff9800}
+.q{background:#222;padding:15px;margin:10px 0;border-left:4px solid #ff9800}
+button{display:block;width:100%;margin:5px 0;padding:8px;border:1px solid #444;background:#000;color:#fff;cursor:pointer}
+button.correct{background:green}
+button.wrong{background:red}
+#score{text-align:center;margin-top:20px;color:#ff9800;font-size:20px}
+</style>
+</head>
+<body>
+
+<h1>Indian Economy</h1>
+<div id="quiz"></div>
+<div id="score"></div>
+
+<script>
+const questions=[
+{q:"Indian economy किस प्रकार की economy है?",opts:["Capitalist","Mixed Economy / मिश्रित अर्थव्यवस्था","Socialist","Closed"],ans:1},
+{q:"GDP का full form क्या है?",opts:["Gross Domestic Product","General Development Plan","Gross Demand Price","Global Domestic Policy"],ans:0},
+{q:"भारत का प्रमुख क्षेत्र कौन सा है?",opts:["Secondary","Primary","Tertiary / सेवा क्षेत्र","Quaternary"],ans:2},
+{q:"RBI का मुख्य कार्य क्या है?",opts:["Fiscal Policy","Monetary Policy / मौद्रिक नीति","Trade Policy","Industrial Policy"],ans:1},
+{q:"Inflation का मतलब?",opts:["Price decrease","Price increase / मूल्य वृद्धि","Income decrease","Production increase"],ans:1},
+{q:"NITI Aayog ने किसको replace किया?",opts:["RBI","Planning Commission / योजना आयोग","SEBI","Finance Ministry"],ans:1},
+{q:"Poverty line क्या दर्शाती है?",opts:["Rich people","Minimum income level / न्यूनतम आय स्तर","Export level","Tax level"],ans:1},
+{q:"Agriculture किस sector में आता है?",opts:["Primary / प्राथमिक क्षेत्र","Secondary","Tertiary","Service"],ans:0},
+{q:"Per capita income क्या है?",opts:["Total income","Income per person / प्रति व्यक्ति आय","Tax income","Bank income"],ans:1},
+{q:"Economic development means?",opts:["Only GDP growth","Improvement in living standard / जीवन स्तर सुधार","Only inflation","Only trade"],ans:1},
+{q:"India is called developing country because?",opts:["High GDP","Low population","Mixed development level / मिश्रित विकास स्तर","No industry"],ans:2},
+{q:"Fiscal policy is controlled by?",opts:["RBI","Government / सरकार","Banks","World Bank"],ans:1},
+{q:"Unemployment means?",opts:["No workers","People without job / बेरोजगारी","High salary","High production"],ans:1},
+{q:"Which is main source of income in rural India?",opts:["Industry","Agriculture / कृषि","IT sector","Banking"],ans:1},
+{q:"Black money means?",opts:["Bank money","Illegal income / अवैध आय","Foreign money","Loan"],ans:1},
+{q:"Export means?",opts:["Buying from abroad","Selling to other countries / निर्यात","Local selling","Storage"],ans:1},
+{q:"Import means?",opts:["Selling abroad","Buying from other countries / आयात","Manufacturing","Transport"],ans:1},
+{q:"Mixed economy means?",opts:["Only government","Only private","Both public & private / सार्वजनिक + निजी","Foreign only"],ans:2},
+{q:"Economic growth refers to?",opts:["Decrease in GDP","Increase in GDP / GDP वृद्धि","No change","Inflation only"],ans:1},
+{q:"Which is largest sector in India GDP?",opts:["Primary","Secondary","Tertiary / सेवा क्षेत्र","Agriculture"],ans:2}
+];
+
+let score=0;
+
+function load(){
+const c=document.getElementById("quiz");
+questions.forEach((item,i)=>{
+const div=document.createElement("div");
+div.className="q";
+div.innerHTML="<b>"+(i+1)+". "+item.q+"</b>";
+
+item.opts.forEach((o,j)=>{
+const b=document.createElement("button");
+b.innerText=o;
+b.onclick=()=>{
+if(div.classList.contains("done")) return;
+div.classList.add("done");
+if(j===item.ans){b.classList.add("correct");score++;}
+else{b.classList.add("wrong");div.children[item.ans+1].classList.add("correct");}
+document.getElementById("score").innerText="Score: "+score+"/"+questions.length;
+};
+div.appendChild(b);
+});
+
+c.appendChild(div);
+});
+}
+load();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Viewer</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    /* Buttons on top */
+    .controls {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    iframe {
+      border: 2px solid #333;
+      width: 100%;
+      height: 600px;
+      margin-top: 10px;
+    }
+
+    .links {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>PDF Viewer</h2>
+
+<!-- BUTTONS ON TOP -->
+<div class="controls">
+  <button onclick="loadPDF('com.pdf')">Open COM PDF</button>
+  <button onclick="loadPDF('computer.pdf')">Open Computer PDF</button>
+</div>
+
+<!-- PDF DISPLAY -->
+<iframe id="pdfFrame" src="com.pdf"></iframe>
+
+<!-- LINKS -->
+<div class="links">
+  <a id="openLink" href="com.pdf" target="_blank">Open PDF</a>
+  <br>
+  <a id="downloadLink" href="com.pdf" download>Download PDF</a>
+</div>
+
+<script>
+function loadPDF(file) {
+  document.getElementById("pdfFrame").src = file;
+  document.getElementById("openLink").href = file;
+  document.getElementById("downloadLink").href = file;
+}
+</script>
+
+</body>
+</html>

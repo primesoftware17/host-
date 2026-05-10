@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Weather and Climate)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is weather? / मौसम क्या है?", options:["Long-term condition of atmosphere / वायुमंडल की दीर्घकालिक स्थिति","Day-to-day condition of atmosphere / वायुमंडल की दैनिक स्थिति","Condition of oceans / महासागरों की स्थिति","Movement of Earth / पृथ्वी की गति"], answer:1},
+
+{q:"What is climate? / जलवायु क्या है?", options:["Daily weather changes / दैनिक मौसम परिवर्तन","Short-term rain / अल्पकालिक वर्षा","Average weather condition of a place over time / किसी स्थान का दीर्घकालिक औसत मौसम","Wind movement / हवा की गति"], answer:2},
+
+{q:"Which instrument measures temperature? / तापमान मापने वाला उपकरण कौन सा है?", options:["Barometer / बैरोमीटर","Thermometer / थर्मामीटर","Anemometer / एनीमोमीटर","Rain gauge / वर्षामापी"], answer:1},
+
+{q:"Which instrument measures rainfall? / वर्षा मापने वाला उपकरण कौन सा है?", options:["Rain gauge / वर्षामापी","Thermometer / थर्मामीटर","Barometer / बैरोमीटर","Hygrometer / हाइग्रोमीटर"], answer:0},
+
+{q:"Which instrument measures air pressure? / वायु दाब मापने वाला उपकरण कौन सा है?", options:["Anemometer / एनीमोमीटर","Barometer / बैरोमीटर","Thermometer / थर्मामीटर","Seismograph / सिस्मोग्राफ"], answer:1},
+
+{q:"What causes rain? / वर्षा किस कारण होती है?", options:["Evaporation only / केवल वाष्पीकरण","Condensation of water vapour / जल वाष्प का संघनन","Earthquake / भूकंप","Volcano / ज्वालामुखी"], answer:1},
+
+{q:"Which gas is most important for weather changes? / मौसम परिवर्तन के लिए सबसे महत्वपूर्ण गैस कौन सी है?", options:["Oxygen / ऑक्सीजन","Carbon dioxide / कार्बन डाइऑक्साइड","Water vapour / जल वाष्प","Nitrogen / नाइट्रोजन"], answer:2},
+
+{q:"What is humidity? / आर्द्रता क्या है?", options:["Amount of oxygen in air / हवा में ऑक्सीजन की मात्रा","Amount of water vapour in air / हवा में जल वाष्प की मात्रा","Air pressure / वायु दाब","Wind speed / हवा की गति"], answer:1},
+
+{q:"What is wind? / हवा क्या होती है?", options:["Moving water / बहता पानी","Moving air / चलती हवा","Solid particles / ठोस कण","Rain drops / बारिश की बूंदें"], answer:1},
+
+{q:"Which factor affects climate the most? / जलवायु को सबसे अधिक कौन सा कारक प्रभावित करता है?", options:["Population / जनसंख्या","Latitude / अक्षांश","Roads / सड़कें","Buildings / इमारतें"], answer:1},
+
+{q:"Which region is generally hot all year round? / कौन सा क्षेत्र पूरे वर्ष गर्म रहता है?", options:["Polar region / ध्रुवीय क्षेत्र","Tropical region / उष्णकटिबंधीय क्षेत्र","Temperate region / शीतोष्ण क्षेत्र","Mountain region / पर्वतीय क्षेत्र"], answer:1},
+
+{q:"Which region has very cold climate? / कौन सा क्षेत्र बहुत ठंडी जलवायु वाला होता है?", options:["Tropical region / उष्णकटिबंधीय क्षेत्र","Desert region / मरुस्थलीय क्षेत्र","Polar region / ध्रुवीय क्षेत्र","Coastal region / तटीय क्षेत्र"], answer:2},
+
+{q:"What is precipitation? / वर्षण क्या होता है?", options:["Evaporation of water / जल का वाष्पीकरण","Falling of water from clouds / बादलों से जल का गिरना","Wind movement / हवा की गति","Earth rotation / पृथ्वी का घूर्णन"], answer:1},
+
+{q:"Which season is associated with heavy rainfall in India? / भारत में भारी वर्षा किस मौसम में होती है?", options:["Summer / ग्रीष्म ऋतु","Monsoon / मानसून","Winter / शीत ऋतु","Spring / वसंत ऋतु"], answer:1},
+
+{q:"What is the main source of energy for weather systems? / मौसम प्रणालियों की मुख्य ऊर्जा का स्रोत क्या है?", options:["Moon / चंद्रमा","Sun / सूर्य","Earth core / पृथ्वी का क्रोड","Wind / हवा"], answer:1},
+
+{q:"Which factor is NOT a weather element? / इनमें से कौन मौसम का तत्व नहीं है?", options:["Temperature / तापमान","Humidity / आर्द्रता","Population / जनसंख्या","Wind / हवा"], answer:2},
+
+{q:"What is a weather forecast? / मौसम पूर्वानुमान क्या है?", options:["Study of rocks / चट्टानों का अध्ययन","Prediction of weather conditions / मौसम की भविष्यवाणी","Study of planets / ग्रहों का अध्ययन","Measurement of distance / दूरी मापना"], answer:1},
+
+{q:"Which season comes after winter in India? / भारत में शीत ऋतु के बाद कौन सा मौसम आता है?", options:["Monsoon / मानसून","Summer / ग्रीष्म ऋतु","Autumn / शरद ऋतु","Spring / वसंत ऋतु"], answer:3},
+
+{q:"What is cloud formed by? / बादल किससे बनते हैं?", options:["Dust only / केवल धूल","Water droplets / जल कणों से","Smoke / धुआं","Soil particles / मिट्टी के कण"], answer:1},
+
+{q:"Which instrument is used to measure wind speed? / हवा की गति मापने के लिए कौन सा उपकरण उपयोग होता है?", options:["Thermometer / थर्मामीटर","Anemometer / एनीमोमीटर","Barometer / बैरोमीटर","Rain gauge / वर्षामापी"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

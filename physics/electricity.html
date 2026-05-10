@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Electricity Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Electricity / विद्युत)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Electric current is flow of? / विद्युत धारा क्या है?", options:["charge / आवेश","mass / द्रव्यमान","heat / ऊष्मा","light / प्रकाश"], answer:0},
+
+{q:"SI unit of current is? / धारा की इकाई क्या है?", options:["Ampere","Volt","Ohm","Watt"], answer:0},
+
+{q:"SI unit of resistance is? / प्रतिरोध की इकाई क्या है?", options:["Ohm","Ampere","Volt","Joule"], answer:0},
+
+{q:"Ohm’s Law is? / ओम का नियम क्या है?", options:["V = IR","V = I/R","I = VR","R = VI"], answer:0},
+
+{q:"Voltage is also called? / वोल्टेज को क्या कहते हैं?", options:["Potential difference","Current","Resistance","Power"], answer:0},
+
+{q:"Electric power unit is? / विद्युत शक्ति की इकाई?", options:["Watt","Volt","Ampere","Ohm"], answer:0},
+
+{q:"1 kilowatt = ? / 1 किलोवाट बराबर?", options:["1000 watt","100 watt","10 watt","1 watt"], answer:0},
+
+{q:"Electric current flows from? / धारा बहती है?", options:["positive to negative","negative to positive","both","none"], answer:0},
+
+{q:"Resistance opposes? / प्रतिरोध किसका विरोध करता है?", options:["current","voltage","power","energy"], answer:0},
+
+{q:"Conductor is? / चालक क्या है?", options:["Allows current","Stops current","No effect","Insulator"], answer:0},
+
+{q:"Insulator is? / कुचालक क्या है?", options:["Stops current","Allows current","Increases current","None"], answer:0},
+
+{q:"Battery provides? / बैटरी क्या देती है?", options:["Voltage","Resistance","Mass","Heat"], answer:0},
+
+{q:"Electric circuit is? / विद्युत परिपथ क्या है?", options:["Closed path","Open path","Broken wire","None"], answer:0},
+
+{q:"Fuse is used for? / फ्यूज का उपयोग?", options:["Safety","Current increase","Power increase","Voltage increase"], answer:0},
+
+{q:"Electric bulb converts energy into? / बल्ब ऊर्जा बदलता है?", options:["Light and heat","Sound","Mass","Force"], answer:0},
+
+{q:"Current is measured using? / धारा किससे मापते हैं?", options:["Ammeter","Voltmeter","Thermometer","Barometer"], answer:0},
+
+{q:"Voltage is measured using? / वोल्टेज किससे मापते हैं?", options:["Voltmeter","Ammeter","Ohmmeter","Speedometer"], answer:0},
+
+{q:"Resistance increases current? / प्रतिरोध धारा बढ़ाता है?", options:["No / नहीं","Yes / हाँ","Sometimes","Always"], answer:0},
+
+{q:"Series circuit current is? / श्रेणी परिपथ में धारा?", options:["Same","Different","Zero","Infinite"], answer:0},
+
+{q:"Parallel circuit voltage is? / समान्तर परिपथ में वोल्टेज?", options:["Same","Different","Zero","Infinite"], answer:0},
+
+{q:"Electric energy unit is? / विद्युत ऊर्जा की इकाई?", options:["Joule","Watt","Ampere","Ohm"], answer:0},
+
+{q:"Power = ? / शक्ति =", options:["VI","IR","V/I","I/R"], answer:0},
+
+{q:"Electric shock is due to? / बिजली का झटका?", options:["Current","Voltage only","Resistance","Heat"], answer:0},
+
+{q:"High resistance means? / अधिक प्रतिरोध का मतलब?", options:["Low current","High current","No change","Infinite power"], answer:0},
+
+{q:"Good conductor example? / अच्छा चालक?", options:["Copper","Wood","Rubber","Plastic"], answer:0},
+
+{q:"Poor conductor example? / कुचालक?", options:["Rubber","Copper","Silver","Iron"], answer:0},
+
+{q:"Electric charge unit is? / आवेश की इकाई?", options:["Coulomb","Ampere","Volt","Ohm"], answer:0},
+
+{q:"Electron has charge? / इलेक्ट्रॉन का आवेश?", options:["Negative","Positive","Neutral","Zero"], answer:0},
+
+{q:"Proton has charge? / प्रोटॉन का आवेश?", options:["Positive","Negative","Neutral","Zero"], answer:0},
+
+{q:"Electricity flows due to? / बिजली बहती है?", options:["Potential difference","Mass","Heat","Light"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

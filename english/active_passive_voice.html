@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Active & Passive Voice Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Active & Passive Voice)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Change into Passive Voice: 'She writes a letter.'", options:["A letter is written by her","A letter was written by her","A letter is writing by her","A letter has written by her"], answer:0},
+
+{q:"Identify Active Voice sentence:", options:["The book is read by him","The cake was eaten by John","John eats cake","The work was done by her"], answer:2},
+
+{q:"Change into Passive Voice: 'They are playing football.'", options:["Football is played by them","Football was played by them","Football is being played by them","Football has played by them"], answer:2},
+
+{q:"Change into Active Voice: 'The letter was written by Ram.'", options:["Ram writes the letter","Ram wrote the letter","Ram is writing the letter","Ram has written the letter"], answer:1},
+
+{q:"Identify Passive Voice:", options:["She sings a song","A song is sung by her","She will sing a song","She sang a song"], answer:1},
+
+{q:"Change into Passive Voice: 'He cleans the room.'", options:["The room is cleaned by him","The room was cleaned by him","The room is cleaning by him","The room has cleaned by him"], answer:0},
+
+{q:"Change into Active Voice: 'The match was won by India.'", options:["India wins the match","India won the match","India is winning the match","India has won the match"], answer:1},
+
+{q:"Identify Active Voice:", options:["The food was cooked by her","The house is built by them","She cooks food","The letter was written by him"], answer:2},
+
+{q:"Change into Passive Voice: 'He is reading a book.'", options:["A book is read by him","A book is being read by him","A book was read by him","A book has been read by him"], answer:1},
+
+{q:"Change into Active Voice: 'The work is done by them.'", options:["They do the work","They did the work","They are doing the work","They have done the work"], answer:0},
+
+{q:"Identify Passive Voice:", options:["He writes a poem","A poem is written by him","He wrote a poem","He will write a poem"], answer:1},
+
+{q:"Change into Passive Voice: 'She cooked food.'", options:["Food is cooked by her","Food was cooked by her","Food has cooked by her","Food is cooking by her"], answer:1},
+
+{q:"Change into Active Voice: 'The letter is being written by me.'", options:["I write the letter","I wrote the letter","I am writing the letter","I have written the letter"], answer:2},
+
+{q:"Identify Active Voice:", options:["The car was repaired by him","A letter is written by her","He repairs the car","The work is done by them"], answer:2},
+
+{q:"Change into Passive Voice: 'They will build a house.'", options:["A house is built by them","A house was built by them","A house will be built by them","A house has been built by them"], answer:2},
+
+{q:"Change into Active Voice: 'The song was sung by her.'", options:["She sings the song","She sang the song","She is singing the song","She has sung the song"], answer:1},
+
+{q:"Identify Passive Voice:", options:["He eats food","Food is eaten by him","He will eat food","He is eating food"], answer:1},
+
+{q:"Change into Passive Voice: 'I am writing a letter.'", options:["A letter is written by me","A letter was written by me","A letter is being written by me","A letter has been written by me"], answer:2},
+
+{q:"Change into Active Voice: 'The window was broken by him.'", options:["He breaks the window","He broke the window","He is breaking the window","He has broken the window"], answer:1},
+
+{q:"Identify Active Voice:", options:["The task was completed by her","The cake is eaten by him","She completes the task","The letter was written by him"], answer:2},
+
+{q:"Change into Passive Voice: 'He will finish the work.'", options:["The work is finished by him","The work was finished by him","The work will be finished by him","The work has been finished by him"], answer:2},
+
+{q:"Change into Active Voice: 'The report was prepared by the student.'", options:["The student prepares the report","The student prepared the report","The student is preparing the report","The student has prepared the report"], answer:1},
+
+{q:"Identify Passive Voice:", options:["She draws a picture","A picture is drawn by her","She will draw a picture","She drew a picture"], answer:1},
+
+{q:"Change into Passive Voice: 'We are watching a movie.'", options:["A movie is watched by us","A movie was watched by us","A movie is being watched by us","A movie has been watched by us"], answer:2},
+
+{q:"Change into Active Voice: 'The door is opened by him.'", options:["He opens the door","He opened the door","He is opening the door","He has opened the door"], answer:0},
+
+{q:"Identify Active Voice:", options:["The letter is written by her","Food was cooked by him","He writes a letter","The book is read by him"], answer:2},
+
+{q:"Change into Passive Voice: 'She will complete the project.'", options:["The project is completed by her","The project was completed by her","The project will be completed by her","The project has been completed by her"], answer:2},
+
+{q:"Change into Active Voice: 'The match is being played by them.'", options:["They play the match","They played the match","They are playing the match","They have played the match"], answer:2},
+
+{q:"Identify Passive Voice:", options:["He runs fast","The food is eaten by them","She sings well","They play cricket"], answer:1},
+
+{q:"Change into Passive Voice: 'He has written a book.'", options:["A book is written by him","A book was written by him","A book has been written by him","A book will be written by him"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Number System Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Number System)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which is a natural number? / प्राकृतिक संख्या कौन-सी है?", options:["0","-5","3","-1"], answer:2},
+
+{q:"Which is the smallest whole number? / सबसे छोटी पूर्ण संख्या कौन-सी है?", options:["1","-1","0","2"], answer:2},
+
+{q:"Which number is an even number? / सम संख्या कौन-सी है?", options:["3","5","7","8"], answer:3},
+
+{q:"Which number is odd? / विषम संख्या कौन-सी है?", options:["2","4","6","9"], answer:3},
+
+{q:"Which is an integer? / पूर्णांक कौन-सा है?", options:["2.5","-3","3/4","0.5"], answer:1},
+
+{q:"Which is a rational number? / परिमेय संख्या कौन-सी है?", options:["√2","π","3/5","√3"], answer:2},
+
+{q:"Which is an irrational number? / अपरिमेय संख्या कौन-सी है?", options:["0.5","2/3","√2","-4"], answer:2},
+
+{q:"Which is the smallest prime number? / सबसे छोटी अभाज्य संख्या कौन-सी है?", options:["1","2","3","0"], answer:1},
+
+{q:"Which is not a prime number? / कौन-सी अभाज्य संख्या नहीं है?", options:["2","3","5","9"], answer:3},
+
+{q:"Which is a composite number? / संयुक्त संख्या कौन-सी है?", options:["2","3","5","6"], answer:3},
+
+{q:"What is the successor of 99? / 99 का अगला नंबर क्या है?", options:["98","100","101","97"], answer:1},
+
+{q:"What is the predecessor of 50? / 50 का पिछला नंबर क्या है?", options:["49","51","52","48"], answer:0},
+
+{q:"Which number is divisible by 2? / कौन-सी संख्या 2 से विभाज्य है?", options:["11","13","14","15"], answer:2},
+
+{q:"Which number is divisible by 5? / 5 से विभाज्य संख्या कौन-सी है?", options:["21","22","25","27"], answer:2},
+
+{q:"Which is the HCF of 12 and 18? / 12 और 18 का महत्तम समापवर्तक?", options:["3","6","9","12"], answer:1},
+
+{q:"Which is the LCM of 3 and 4? / 3 और 4 का लघुत्तम समापवर्त्य?", options:["6","8","12","9"], answer:2},
+
+{q:"Which is a perfect square? / पूर्ण वर्ग कौन-सा है?", options:["10","12","16","18"], answer:2},
+
+{q:"Square root of 25 is? / 25 का वर्गमूल क्या है?", options:["3","4","5","6"], answer:2},
+
+{q:"Cube of 2 is? / 2 का घन क्या है?", options:["4","6","8","10"], answer:2},
+
+{q:"Which is a multiple of 7? / 7 का गुणज कौन-सा है?", options:["14","15","16","18"], answer:0},
+
+{q:"Which is a factor of 12? / 12 का गुणनखंड कौन-सा है?", options:["5","7","3","11"], answer:2},
+
+{q:"Which number is prime? / अभाज्य संख्या कौन-सी है?", options:["4","6","9","7"], answer:3},
+
+{q:"Which is the even prime number? / सम अभाज्य संख्या कौन-सी है?", options:["1","2","3","5"], answer:1},
+
+{q:"Which is a whole number? / पूर्ण संख्या कौन-सी है?", options:["-1","-2","0","-3"], answer:2},
+
+{q:"Which is not a rational number? / कौन परिमेय नहीं है?", options:["2/5","3/7","√5","-4"], answer:2},
+
+{q:"Which is greater? / कौन बड़ा है?", options:["-1","0","-5","-10"], answer:1},
+
+{q:"Which is smallest? / सबसे छोटी संख्या कौन-सी है?", options:["-1","0","5","10"], answer:0},
+
+{q:"Which is divisible by 3? / 3 से विभाज्य कौन-सा है?", options:["14","15","17","19"], answer:1},
+
+{q:"Which is a prime number? / अभाज्य संख्या कौन-सी है?", options:["21","22","23","24"], answer:2},
+
+{q:"What is 10²? / 10 का वर्ग क्या है?", options:["10","20","100","1000"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

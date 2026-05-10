@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Stone Age)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Early humans first lived in which type of shelters?", options:["Caves","Concrete houses","Skyscrapers","Tents only"], answer:0},
+{q:"Stone Age tools were mainly made of:", options:["Plastic","Stone","Iron","Gold"], answer:1},
+{q:"The earliest period of Stone Age is called:", options:["Neolithic","Mesolithic","Paleolithic","Metal Age"], answer:2},
+{q:"Early humans were mainly:", options:["Farmers","Hunters and gatherers","Engineers","Traders"], answer:1},
+{q:"Fire was first used for:", options:["Cooking and protection","Writing","Building houses","Metal making"], answer:0},
+{q:"Which tool was commonly used in Paleolithic Age?", options:["Microliths","Hand axes","Iron sword","Plough"], answer:1},
+{q:"Mesolithic Age is also called:", options:["Middle Stone Age","Iron Age","Copper Age","Modern Age"], answer:0},
+{q:"Early humans painted in:", options:["Caves","Books","Paper","Wood"], answer:0},
+{q:"Neolithic Age is known for:", options:["Hunting only","Agriculture","Industrial work","Space science"], answer:1},
+{q:"First animals domesticated by humans:", options:["Dogs","Lions","Elephants","Whales"], answer:0},
+
+{q:"Early humans lived in groups called:", options:["Society","Families","Bands","Nations"], answer:2},
+{q:"Stone Age people used tools for:", options:["Decoration only","Hunting and cutting","Writing","Trade"], answer:1},
+{q:"Wheel was invented in:", options:["Mesolithic Age","Paleolithic Age","Neolithic Age","Iron Age"], answer:2},
+{q:"First crop cultivated by humans:", options:["Wheat and barley","Rice only","Cotton","Sugarcane"], answer:0},
+{q:"Early humans communicated through:", options:["Speech and symbols","Phones","Writing books","Internet"], answer:0},
+{q:"Microliths are:", options:["Small stone tools","Metal tools","Wooden tools","Plastic tools"], answer:0},
+{q:"Early humans were:", options:["Nomadic","Settled farmers","Scientists","Soldiers"], answer:0},
+{q:"Cave paintings are found in:", options:["Bhimbetka","Taj Mahal","Red Fort","Qutub Minar"], answer:0},
+{q:"Stone Age ended with discovery of:", options:["Metal tools","Fire","Water","Paper"], answer:0},
+{q:"Early humans wore clothes made of:", options:["Animal skins","Plastic","Silk","Nylon"], answer:0},
+
+{q:"Neolithic Revolution refers to:", options:["Start of farming","Start of war","Start of writing","Start of trade"], answer:0},
+{q:"Early humans used bones for:", options:["Tools and weapons","Cooking","Writing","Building houses"], answer:0},
+{q:"Which period had polished stone tools?", options:["Neolithic Age","Paleolithic Age","Iron Age","Modern Age"], answer:0},
+{q:"Early humans mostly lived near:", options:["Rivers","Deserts","Mountains only","Airports"], answer:0},
+{q:"Domestication means:", options:["Taming animals","Hunting animals","Painting walls","Building cities"], answer:0},
+{q:"Early humans discovered:", options:["Fire","Electricity","Internet","Machines"], answer:0},
+{q:"Food of early humans was:", options:["Fruits and meat","Pizza","Bread only","Rice only"], answer:0},
+{q:"Stone Age is divided into:", options:["3 phases","2 phases","5 phases","1 phase"], answer:0},
+{q:"Early humans used language for:", options:["Communication","Cooking","Fighting","Mining"], answer:0},
+{q:"Agriculture began in:", options:["Neolithic Age","Paleolithic Age","Iron Age","Bronze Age"], answer:0}
+];
+
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Environmental Chemistry Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Environmental Chemistry / पर्यावरणीय रसायन विज्ञान)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Environmental chemistry deals with? / पर्यावरणीय रसायन?", options:["Environment & chemicals","Only metals","Only gases","Only water"], answer:0},
+
+{q:"Air pollution is caused by? / वायु प्रदूषण?", options:["Pollutants","Pure air","Water","Soil only"], answer:0},
+
+{q:"Greenhouse gas example? / ग्रीनहाउस गैस?", options:["CO2","O2","N2","He"], answer:0},
+
+{q:"Ozone layer protects from? / ओजोन परत?", options:["UV rays","Heat","Rain","Wind"], answer:0},
+
+{q:"Ozone depletion is caused by? / क्षरण?", options:["CFCs","CO2","O2","N2"], answer:0},
+
+{q:"Acid rain contains? / अम्ल वर्षा?", options:["H2SO4, HNO3","Water only","Salt only","Oxygen"], answer:0},
+
+{q:"Water pollution affects? / जल प्रदूषण?", options:["Aquatic life","Air","Soil only","Sunlight"], answer:0},
+
+{q:"Soil pollution is caused by? / मृदा प्रदूषण?", options:["Chemicals","Water only","Air only","Heat"], answer:0},
+
+{q:"Global warming is due to? / वैश्विक ताप?", options:["Greenhouse effect","Rain","Wind","Snow"], answer:0},
+
+{q:"Main greenhouse gas? / मुख्य गैस?", options:["CO2","O2","N2","H2"], answer:0},
+
+{q:"CFC stands for? / CFC?", options:["ChloroFluoroCarbon","Carbon Fluoride","Calcium Fluoride","Chlorine Fuel"], answer:0},
+
+{q:"Smog is mixture of? / धुंध?", options:["Smoke + fog","Water + air","Dust + oxygen","Gas only"], answer:0},
+
+{q:"Biodegradable waste? / जैव अपघट्य?", options:["Decomposes naturally","Does not decompose","Metal only","Plastic only"], answer:0},
+
+{q:"Non-biodegradable waste? / अजैव?", options:["Plastic","Food","Leaves","Paper"], answer:0},
+
+{q:"Recycling means? / पुनर्चक्रण?", options:["Reuse materials","Burn waste","Dump waste","Destroy air"], answer:0},
+
+{q:"Deforestation causes? / वनों की कटाई?", options:["Climate change","More rain always","Less oxygen only","No effect"], answer:0},
+
+{q:"Oxygen in air is about? / ऑक्सीजन?", options:["21%","78%","1%","50%"], answer:0},
+
+{q:"Nitrogen in air is about? / नाइट्रोजन?", options:["78%","21%","50%","10%"], answer:0},
+
+{q:"Carbon monoxide is? / CO?", options:["Toxic gas","Useful gas","Water","Salt"], answer:0},
+
+{q:"Air quality is measured by? / गुणवत्ता?", options:["AQI","BMI","pH","GDP"], answer:0},
+
+{q:"Ozone is found in? / ओजोन?", options:["Stratosphere","Troposphere","Core","Ocean"], answer:0},
+
+{q:"Acid rain harms? / हानि?", options:["Buildings","Only air","Only water","Only soil"], answer:0},
+
+{q:"Eutrophication affects? / प्रभाव?", options:["Water bodies","Air","Sun","Soil only"], answer:0},
+
+{q:"Noise pollution is caused by? / शोर?", options:["Loud sounds","Clean air","Water","Trees"], answer:0},
+
+{q:"Main source of pollution in cities? / शहर?", options:["Vehicles","Trees","Rivers","Mountains"], answer:0},
+
+{q:"Environment protection needs? / सुरक्षा?", options:["Reduce pollution","Increase waste","Cut trees","Burn plastic"], answer:0},
+
+{q:"Ozone layer is important because? / महत्व?", options:["Blocks UV rays","Produces rain","Makes oxygen","Creates wind"], answer:0},
+
+{q:"Carbon cycle involves? / चक्र?", options:["Movement of carbon","Only oxygen","Only water","Only nitrogen"], answer:0},
+
+{q:"Clean energy example? / स्वच्छ ऊर्जा?", options:["Solar energy","Coal","Petrol","Diesel"], answer:0},
+
+{q:"Environmental chemistry helps in? / उपयोग?", options:["Protecting environment","Making plastics only","Increasing pollution","Destroying water"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

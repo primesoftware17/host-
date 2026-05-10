@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>International Trade - MCQ Quiz</title>
+<style>
+body{font-family:Arial;background:#111;color:#fff;margin:0;padding:20px}
+h1{text-align:center;color:#00e5ff}
+.q{background:#222;padding:15px;margin:10px 0;border-left:4px solid #00e5ff}
+button{display:block;width:100%;margin:5px 0;padding:8px;border:1px solid #444;background:#000;color:#fff;cursor:pointer}
+button.correct{background:green}
+button.wrong{background:red}
+#score{text-align:center;margin-top:20px;color:#00e5ff;font-size:20px}
+</style>
+</head>
+<body>
+
+<h1>International Trade</h1>
+<div id="quiz"></div>
+<div id="score"></div>
+
+<script>
+const questions=[
+{q:"International trade क्या है?",opts:["Local trade","Trade between countries / देशों के बीच व्यापार","Village trade","None"],ans:1},
+{q:"Export का मतलब?",opts:["Buying goods","Selling goods to other countries / विदेशों को बेचना","Transport","Production"],ans:1},
+{q:"Import का मतलब?",opts:["Selling abroad","Buying from other countries / विदेशों से खरीदना","Manufacturing","Storage"],ans:1},
+{q:"WTO का full form?",opts:["World Trade Organization","World Transport Office","Wide Trade Order","World Tax Office"],ans:0},
+{q:"Balance of Trade क्या दिखाता है?",opts:["Services only","Goods export-import / वस्तु व्यापार","Loans","Tax"],ans:1},
+{q:"Exchange rate क्या है?",opts:["Price of goods","Currency price / मुद्रा मूल्य","Tax rate","Interest rate"],ans:1},
+{q:"Trade deficit कब होता है?",opts:["Exports > Imports","Imports > Exports / आयात अधिक","Equal","No trade"],ans:1},
+{q:"Free trade मतलब?",opts:["No trade","Without restrictions / बिना रोक-टोक","Only import","Only export"],ans:1},
+{q:"Protectionism का मतलब?",opts:["Free trade","Restrict imports / आयात पर रोक","No tax","Open market"],ans:1},
+{q:"Devaluation क्या है?",opts:["Currency increase","Currency decrease / मुद्रा अवमूल्यन","No change","Inflation"],ans:1},
+{q:"Globalization का मतलब?",opts:["Local trade","World integration / वैश्वीकरण","No trade","Isolation"],ans:1},
+{q:"Export benefit क्या है?",opts:["Loss","Foreign exchange earnings / विदेशी मुद्रा","Debt","Tax"],ans:1},
+{q:"Import duty क्या है?",opts:["Subsidy","Tax on imports / आयात कर","Loan","Salary"],ans:1},
+{q:"Balance of Payment क्या है?",opts:["Only export","All transactions with world / सभी लेन-देन","Only import","Bank record"],ans:1},
+{q:"Foreign exchange reserve कौन रखता है?",opts:["RBI / भारतीय रिज़र्व बैंक","Private banks","Companies","Farmers"],ans:0},
+{q:"Dumping क्या है?",opts:["High price export","Low price export / कम कीमत पर निर्यात","Import ban","Tax increase"],ans:1},
+{q:"Tariff means?",opts:["Export reward","Import tax / आयात शुल्क","Free trade","Loan"],ans:1},
+{q:"Quota means?",opts:["Unlimited import","Limit on imports / आयात सीमा","Export bonus","No trade"],ans:1},
+{q:"Bilateral trade means?",opts:["Many countries","Two countries trade / दो देशों का व्यापार","No trade","Local trade"],ans:1},
+{q:"Multilateral trade means?",opts:["Two countries","Many countries trade / कई देशों का व्यापार","No trade","Single country"],ans:1}
+];
+
+let score=0;
+
+function load(){
+const c=document.getElementById("quiz");
+questions.forEach((item,i)=>{
+const div=document.createElement("div");
+div.className="q";
+div.innerHTML="<b>"+(i+1)+". "+item.q+"</b>";
+
+item.opts.forEach((o,j)=>{
+const b=document.createElement("button");
+b.innerText=o;
+b.onclick=()=>{
+if(div.classList.contains("done")) return;
+div.classList.add("done");
+if(j===item.ans){b.classList.add("correct");score++;}
+else{b.classList.add("wrong");div.children[item.ans+1].classList.add("correct");}
+document.getElementById("score").innerText="Score: "+score+"/"+questions.length;
+};
+div.appendChild(b);
+});
+
+c.appendChild(div);
+});
+}
+load();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Development Economics - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+  :root{--bg:#0d1117;--card:#161b22;--accent:#58a6ff;--green:#3fb950;--text:#c9d1d9;--sub:#8b949e;--correct:#3fb950;--wrong:#f85149;--border:#30363d;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{text-align:center;margin-bottom:40px;}
+  .tag{display:inline-block;border:1px solid var(--green);color:var(--green);font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:16px;}
+  h1{font-size:clamp(28px,6vw,52px);font-weight:900;background:linear-gradient(90deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .sub{color:var(--sub);font-size:14px;margin-top:8px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:border-color .2s;}
+  .q-card:hover{border-color:var(--accent)44;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:16px;color:#e6edf3;}
+  .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--border);color:var(--text);padding:11px 16px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Outfit',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+  .opt.correct{border-color:var(--correct);color:var(--correct);background:var(--correct)12;}
+  .opt.wrong{border-color:var(--wrong);color:var(--wrong);background:var(--wrong)12;}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#000;font-weight:900;font-size:16px;padding:14px 50px;border:none;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;letter-spacing:1px;transition:all .2s;}
+  .submit-btn:hover{opacity:.9;transform:translateY(-2px);}
+  .score-box{display:none;background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:30px;text-align:center;margin-top:20px;}
+  .score-box.show{display:block;}
+  .score-big{font-size:64px;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .score-label{color:var(--sub);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 9</div>
+  <h1>Development Economics</h1>
+  <p class="sub">30 Multiple Choice Questions — Growth, Poverty, Inequality & Sustainability</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"Economic development means / आर्थिक विकास का अर्थ है:",opts:["Only rise in GDP / केवल GDP में वृद्धि","Improvement in living standards and well-being / जीवन स्तर और कल्याण में सुधार","Increase in government spending / सरकारी खर्च में वृद्धि","Higher tax collection / अधिक कर संग्रह"],ans:1},
+  {q:"Economic growth refers to / आर्थिक संवृद्धि का संदर्भ है:",opts:["Qualitative change in economy / अर्थव्यवस्था में गुणात्मक परिवर्तन","Increase in real GDP over time / समय के साथ वास्तविक GDP में वृद्धि","Reduction in inequality / असमानता में कमी","Environmental improvement / पर्यावरण सुधार"],ans:1},
+  {q:"Difference between growth and development / वृद्धि और विकास में अंतर:",opts:["Growth is qualitative, development is quantitative / वृद्धि गुणात्मक, विकास मात्रात्मक","Growth is quantitative, development is qualitative / वृद्धि मात्रात्मक, विकास गुणात्मक","Both are same / दोनों एक समान","Neither matters / कोई मायने नहीं रखता"],ans:1},
+  {q:"Poverty line is defined by / गरीबी रेखा परिभाषित होती है:",opts:["Minimum education level / न्यूनतम शिक्षा स्तर","Minimum caloric and income threshold / न्यूनतम कैलोरी और आय सीमा","Government employment level / सरकारी रोजगार स्तर","Land ownership / भूमि स्वामित्व"],ans:1},
+  {q:"Absolute poverty means / पूर्ण गरीबी का अर्थ है:",opts:["Rich people becoming richer / अमीर लोग और अमीर हो रहे हैं","Inability to meet basic needs / बुनियादी जरूरतें पूरी करने में असमर्थता","Relative deprivation / सापेक्ष वंचना","High unemployment / उच्च बेरोजगारी"],ans:1},
+  {q:"Gini coefficient measures / गिनी गुणांक मापता है:",opts:["Economic growth / आर्थिक वृद्धि","Income inequality / आय असमानता","Unemployment rate / बेरोजगारी दर","Inflation / मुद्रास्फीति"],ans:1},
+  {q:"Gini coefficient of 0 means / गिनी गुणांक 0 का अर्थ है:",opts:["Perfect inequality / पूर्ण असमानता","Perfect equality / पूर्ण समानता","High poverty / उच्च गरीबी","Zero growth / शून्य वृद्धि"],ans:1},
+  {q:"Gini coefficient of 1 means / गिनी गुणांक 1 का अर्थ है:",opts:["Perfect equality / पूर्ण समानता","Perfect inequality / पूर्ण असमानता","No poverty / शून्य गरीबी","Maximum growth / अधिकतम वृद्धि"],ans:1},
+  {q:"Sustainable development means / सतत विकास का अर्थ है:",opts:["Development only for current generation / केवल वर्तमान पीढ़ी के लिए विकास","Meeting present needs without compromising future generations / भविष्य की पीढ़ियों से समझौता किए बिना वर्तमान जरूरतें पूरी करना","Maximum economic growth / अधिकतम आर्थिक वृद्धि","Industrialization only / केवल औद्योगीकरण"],ans:1},
+  {q:"SDGs stands for / SDGs का अर्थ है:",opts:["Sustainable Development Goals / सतत विकास लक्ष्य","Social Development Guidelines","State Development Grants","Standard Domestic Growth"],ans:0},
+  {q:"How many SDGs are there? / कितने SDGs हैं?",opts:["10","17","20","15"],ans:1},
+  {q:"Human Development Index (HDI) was introduced by / HDI किसके द्वारा प्रस्तुत किया गया?",opts:["World Bank","IMF","UNDP","World Trade Organization"],ans:2},
+  {q:"HDI is based on / HDI किन पर आधारित है?",opts:["Income only / केवल आय","Income, health, education / आय, स्वास्थ्य, शिक्षा","Military strength / सैन्य शक्ति","Trade balance / व्यापार संतुलन"],ans:1},
+  {q:"Lewis model of development focuses on / लेविस विकास मॉडल का ध्यान किस पर है?",opts:["Agricultural to industrial sector labour transfer / कृषि से औद्योगिक क्षेत्र में श्रम हस्तांतरण","International trade / अंतर्राष्ट्रीय व्यापार","Monetary policy / मौद्रिक नीति","Tax reform / कर सुधार"],ans:0},
+  {q:"Vicious circle of poverty means / गरीबी का दुष्चक्र का अर्थ है:",opts:["Rich getting richer / अमीर और अमीर होना","Low income → low savings → low investment → low growth → low income / कम आय → कम बचत → कम निवेश → कम वृद्धि → कम आय","High inflation / उच्च मुद्रास्फीति","Government spending spiral / सरकारी खर्च का सर्पिल"],ans:1},
+  {q:"Big Push theory was given by / बिग पुश सिद्धांत किसने दिया?",opts:["Adam Smith","Rosenstein-Rodan","Amartya Sen","Keynes"],ans:1},
+  {q:"Amartya Sen's development theory emphasizes / अमर्त्य सेन का विकास सिद्धांत बल देता है:",opts:["GDP maximization / GDP अधिकतमीकरण","Freedom and capabilities / स्वतंत्रता और क्षमताएँ","Industrial output / औद्योगिक उत्पादन","Trade surplus / व्यापार अधिशेष"],ans:1},
+  {q:"MNREGA is related to / MNREGA संबंधित है:",opts:["Agricultural subsidies / कृषि सब्सिडी","Rural employment guarantee / ग्रामीण रोजगार गारंटी","Urban development / शहरी विकास","Export promotion / निर्यात प्रोत्साहन"],ans:1},
+  {q:"Disguised unemployment is common in / प्रच्छन्न बेरोजगारी सामान्य है:",opts:["Urban manufacturing / शहरी विनिर्माण","Agricultural sector / कृषि क्षेत्र","Banking sector / बैंकिंग क्षेत्र","Information technology / सूचना प्रौद्योगिकी"],ans:1},
+  {q:"Foreign Direct Investment (FDI) means / विदेशी प्रत्यक्ष निवेश (FDI) का अर्थ है:",opts:["Government borrowing from IMF / IMF से सरकारी उधार","Investment by foreign entities in domestic businesses / घरेलू व्यवसायों में विदेशी संस्थाओं का निवेश","Buying foreign currency / विदेशी मुद्रा खरीदना","Trade subsidies / व्यापार सब्सिडी"],ans:1},
+  {q:"Green economy emphasizes / हरित अर्थव्यवस्था बल देती है:",opts:["Maximum pollution / अधिकतम प्रदूषण","High industrial output only / केवल उच्च औद्योगिक उत्पादन","Sustainable production with low environmental impact / पर्यावरण पर कम प्रभाव के साथ सतत उत्पादन","Increased fossil fuel use / जीवाश्म ईंधन का अधिक उपयोग"],ans:2},
+  {q:"NITI Aayog replaced / NITI Aayog ने बदला:",opts:["Finance Commission / वित्त आयोग","Planning Commission / योजना आयोग","RBI","Election Commission / चुनाव आयोग"],ans:1},
+  {q:"Lorenz Curve shows / लॉरेंज वक्र दर्शाता है:",opts:["Price changes / कीमत परिवर्तन","Income distribution / आय वितरण","Production function / उत्पादन फलन","Trade balance / व्यापार संतुलन"],ans:1},
+  {q:"Multidimensional Poverty Index considers / बहुआयामी गरीबी सूचकांक में विचार होता है:",opts:["Income only / केवल आय","Health, education and living standards / स्वास्थ्य, शिक्षा और जीवन स्तर","Trade and exports / व्यापार और निर्यात","Military spending / सैन्य खर्च"],ans:1},
+  {q:"Demographic dividend means / जनसांख्यिकीय लाभांश का अर्थ है:",opts:["High birth rate / उच्च जन्म दर","Large working-age population contributing to growth / कार्यशील आयु की बड़ी जनसंख्या द्वारा वृद्धि में योगदान","High old-age population / उच्च वृद्ध जनसंख्या","High infant mortality / उच्च शिशु मृत्यु दर"],ans:1},
+  {q:"Structural adjustment refers to / संरचनात्मक समायोजन का अर्थ है:",opts:["Changes in building construction / भवन निर्माण में परिवर्तन","Economic reforms to improve efficiency / दक्षता सुधारने के लिए आर्थिक सुधार","Military restructuring / सैन्य पुनर्गठन","Educational changes only / केवल शैक्षिक परिवर्तन"],ans:1},
+  {q:"Rostow's stages of growth model has how many stages? / रोस्टो के विकास के चरण मॉडल में कितने चरण हैं?",opts:["3","4","5","6"],ans:2},
+  {q:"Take-off stage in Rostow model means / रोस्टो मॉडल में टेक-ऑफ चरण का अर्थ है:",opts:["Country starts rapid industrialization / देश तेजी से औद्योगीकरण शुरू करता है","Country remains agricultural / देश कृषि प्रधान रहता है","Country stops growing / देश की वृद्धि रुक जाती है","Country invades others / देश दूसरों पर आक्रमण करता है"],ans:0},
+  {q:"Inclusive growth means / समावेशी वृद्धि का अर्थ है:",opts:["Growth benefiting only the rich / केवल अमीरों को लाभ देने वाली वृद्धि","Growth that benefits all sections of society / समाज के सभी वर्गों को लाभ देने वाली वृद्धि","Export-led growth only / केवल निर्यात-नेतृत्व वृद्धि","Growth through military power / सैन्य शक्ति के माध्यम से वृद्धि"],ans:1},
+  {q:"Brain drain refers to / ब्रेन ड्रेन का संदर्भ है:",opts:["Educated professionals migrating to other countries / शिक्षित पेशेवरों का अन्य देशों में प्रवास","Knowledge increase in a country / देश में ज्ञान में वृद्धि","Education spending / शिक्षा खर्च","IQ improvement / IQ में सुधार"],ans:0}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

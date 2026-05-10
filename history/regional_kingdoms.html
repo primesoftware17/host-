@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Regional Kingdoms)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who founded the Vijayanagara Empire? / विजयनगर साम्राज्य की स्थापना किसने की थी?", options:["Harihara and Bukka / हरिहर और बुक्का","Krishnadevaraya / कृष्णदेवराय","Rana Sanga / राणा सांगा","Shivaji / शिवाजी"], answer:0},
+
+{q:"Who was the greatest ruler of the Vijayanagara Empire? / विजयनगर साम्राज्य का सबसे महान शासक कौन था?", options:["Devaraya II / देवराय द्वितीय","Krishnadevaraya / कृष्णदेवराय","Harihara / हरिहर","Bukka / बुक्का"], answer:1},
+
+{q:"Which traveler visited the Vijayanagara Empire during Krishnadevaraya's reign? / कृष्णदेवराय के शासनकाल में कौन यात्री विजयनगर आया था?", options:["Ibn Battuta / इब्न बतूता","Nicolo Conti / निकोलो कॉन्टी","Domingo Paes / डोमिंगो पेस","Megasthenes / मेगस्थनीज"], answer:2},
+
+{q:"The famous Battle of Talikota was fought in which year? / प्रसिद्ध तालीकोटा का युद्ध किस वर्ष लड़ा गया था?", options:["1526 CE / 1526 ई.","1565 CE / 1565 ई.","1336 CE / 1336 ई.","1600 CE / 1600 ई."], answer:1},
+
+{q:"Who was the founder of the Bahmani Kingdom? / बहमनी राज्य का संस्थापक कौन था?", options:["Alauddin Bahman Shah / अलाउद्दीन बहमन शाह","Muhammad Shah / मुहम्मद शाह","Mahmud Gawan / महमूद गवां","Krishnadevaraya / कृष्णदेवराय"], answer:0},
+
+{q:"Who was the famous minister of the Bahmani Kingdom? / बहमनी राज्य का प्रसिद्ध मंत्री कौन था?", options:["Malik Kafur / मलिक काफूर","Mahmud Gawan / महमूद गवां","Todar Mal / टोडरमल","Birbal / बीरबल"], answer:1},
+
+{q:"Which kingdom emerged after the decline of the Bahmani Kingdom? / बहमनी राज्य के पतन के बाद कौन-सा राज्य उभरा?", options:["Mughal Empire / मुगल साम्राज्य","Delhi Sultanate / दिल्ली सल्तनत","Deccan Sultanates / दक्कन सल्तनतें","Maurya Empire / मौर्य साम्राज्य"], answer:2},
+
+{q:"Who founded the Maratha Kingdom? / मराठा राज्य की स्थापना किसने की?", options:["Shivaji / शिवाजी","Sambhaji / संभाजी","Baji Rao I / बाजीराव प्रथम","Balaji Vishwanath / बालाजी विश्वनाथ"], answer:0},
+
+{q:"What was the title assumed by Shivaji after his coronation? / शिवाजी ने राज्याभिषेक के बाद कौन-सी उपाधि धारण की?", options:["Sultan / सुल्तान","Chhatrapati / छत्रपति","Maharajadhiraj / महाराजाधिराज","Peshwa / पेशवा"], answer:1},
+
+{q:"Who was Shivaji's spiritual guru? / शिवाजी के आध्यात्मिक गुरु कौन थे?", options:["Ramdas / रामदास","Tulsidas / तुलसीदास","Kabir / कबीर","Surdas / सूरदास"], answer:0},
+
+{q:"Which Maratha ruler signed the Treaty of Purandar with Jai Singh? / किस मराठा शासक ने जय सिंह के साथ पुरंदर की संधि की?", options:["Sambhaji / संभाजी","Shahu / शाहू","Shivaji / शिवाजी","Rajaram / राजाराम"], answer:2},
+
+{q:"Who introduced the system of Peshwas in the Maratha administration? / मराठा प्रशासन में पेशवा प्रणाली किसने शुरू की?", options:["Shivaji / शिवाजी","Balaji Vishwanath / बालाजी विश्वनाथ","Baji Rao I / बाजीराव प्रथम","Sambhaji / संभाजी"], answer:0},
+
+{q:"Which Rajput ruler fought against Akbar in the Battle of Haldighati? / हल्दीघाटी के युद्ध में अकबर के विरुद्ध किस राजपूत शासक ने युद्ध किया?", options:["Rana Sanga / राणा सांगा","Maharana Pratap / महाराणा प्रताप","Prithviraj Chauhan / पृथ्वीराज चौहान","Rana Kumbha / राणा कुम्भा"], answer:1},
+
+{q:"Who founded the kingdom of Mewar? / मेवाड़ राज्य की स्थापना किसने की?", options:["Bappa Rawal / बप्पा रावल","Rana Sanga / राणा सांगा","Maharana Pratap / महाराणा प्रताप","Rana Kumbha / राणा कुम्भा"], answer:0},
+
+{q:"Which ruler built the Vijay Stambha at Chittorgarh? / चित्तौड़गढ़ में विजय स्तंभ किसने बनवाया?", options:["Rana Sanga / राणा सांगा","Rana Kumbha / राणा कुम्भा","Bappa Rawal / बप्पा रावल","Maharana Pratap / महाराणा प्रताप"], answer:1},
+
+{q:"Who was the founder of the Ahom Kingdom in Assam? / असम में अहोम राज्य का संस्थापक कौन था?", options:["Sukapha / सुकाफा","Lachit Borphukan / लाचित बरफुकन","Pratap Singha / प्रताप सिंह","Rudra Singha / रुद्र सिंह"], answer:0},
+
+{q:"Which Ahom general defeated the Mughals in the Battle of Saraighat? / सरायघाट के युद्ध में मुगलों को किस अहोम सेनापति ने हराया?", options:["Sukapha / सुकाफा","Lachit Borphukan / लाचित बरफुकन","Rudra Singha / रुद्र सिंह","Pratap Singha / प्रताप सिंह"], answer:1},
+
+{q:"Who founded the Sikh kingdom in Punjab? / पंजाब में सिख राज्य की स्थापना किसने की?", options:["Guru Gobind Singh / गुरु गोबिंद सिंह","Maharaja Ranjit Singh / महाराजा रणजीत सिंह","Guru Nanak / गुरु नानक","Banda Bahadur / बंदा बहादुर"], answer:1},
+
+{q:"Which ruler was known as the 'Lion of Punjab'? / 'पंजाब का शेर' किसे कहा जाता था?", options:["Guru Gobind Singh / गुरु गोबिंद सिंह","Banda Bahadur / बंदा बहादुर","Maharaja Ranjit Singh / महाराजा रणजीत सिंह","Hari Singh Nalwa / हरी सिंह नलवा"], answer:2},
+
+{q:"Which regional kingdom was famous for its naval power? / कौन-सा क्षेत्रीय राज्य अपनी नौसैनिक शक्ति के लिए प्रसिद्ध था?", options:["Maratha Kingdom / मराठा राज्य","Vijayanagara Empire / विजयनगर साम्राज्य","Mewar Kingdom / मेवाड़ राज्य","Ahom Kingdom / अहोम राज्य"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

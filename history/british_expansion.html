@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - British Expansion)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who won the Battle of Buxar? / बक्सर का युद्ध किसने जीता?", options:["British East India Company / ब्रिटिश ईस्ट इंडिया कंपनी","Mughal Empire / मुगल साम्राज्य","Marathas / मराठा","Sikh Empire / सिख साम्राज्य"], answer:0},
+
+{q:"In which year was the Battle of Buxar fought? / बक्सर का युद्ध किस वर्ष लड़ा गया था?", options:["1757 CE / 1757 ई.","1764 CE / 1764 ई.","1772 CE / 1772 ई.","1799 CE / 1799 ई."], answer:1},
+
+{q:"Who was defeated in the Battle of Buxar? / बक्सर के युद्ध में किसकी हार हुई थी?", options:["Siraj-ud-Daulah / सिराजुद्दौला","Mir Qasim / मीर कासिम","Tipu Sultan / टीपू सुल्तान","Bahadur Shah II / बहादुर शाह द्वितीय"], answer:1},
+
+{q:"Which treaty gave Diwani rights to the British? / ब्रिटिशों को दीवानी अधिकार किस संधि से मिले?", options:["Treaty of Allahabad / इलाहाबाद की संधि","Treaty of Versailles / वर्साय की संधि","Treaty of Seringapatam / श्रीरंगपट्टनम की संधि","Treaty of Paris / पेरिस की संधि"], answer:0},
+
+{q:"Who introduced the Doctrine of Lapse? / हड़प नीति किसने शुरू की?", options:["Lord Wellesley / लॉर्ड वेलेजली","Lord Dalhousie / लॉर्ड डलहौजी","Lord Cornwallis / लॉर्ड कॉर्नवालिस","Lord Hastings / लॉर्ड हेस्टिंग्स"], answer:1},
+
+{q:"Which states were annexed under the Doctrine of Lapse? / हड़प नीति के तहत कौन-से राज्य जोड़े गए?", options:["Awadh / अवध","Jhansi / झाँसी","Punjab / पंजाब","Mysore / मैसूर"], answer:1},
+
+{q:"Who was the last ruler of Awadh? / अवध का अंतिम शासक कौन था?", options:["Wajid Ali Shah / वाजिद अली शाह","Nana Saheb / नाना साहेब","Bahadur Shah II / बहादुर शाह द्वितीय","Rani Lakshmibai / रानी लक्ष्मीबाई"], answer:0},
+
+{q:"In which year was Awadh annexed by the British? / अवध को अंग्रेजों ने किस वर्ष मिलाया?", options:["1845 CE / 1845 ई.","1856 CE / 1856 ई.","1857 CE / 1857 ई.","1835 CE / 1835 ई."], answer:1},
+
+{q:"Who was the Governor-General during the annexation of Awadh? / अवध के विलय के समय गवर्नर-जनरल कौन था?", options:["Lord Dalhousie / लॉर्ड डलहौजी","Lord Curzon / लॉर्ड कर्जन","Lord Hastings / लॉर्ड हेस्टिंग्स","Warren Hastings / वॉरेन हेस्टिंग्स"], answer:0},
+
+{q:"Which policy allowed the British to expand through wars and annexations? / कौन-सी नीति से अंग्रेजों ने युद्ध और विलय द्वारा विस्तार किया?", options:["Subsidiary Alliance / सहायक संधि","Doctrine of Lapse / हड़प नीति","Divide and Rule / फूट डालो और राज करो","Permanent Settlement / स्थायी बंदोबस्त"], answer:0},
+
+{q:"Who introduced the Subsidiary Alliance system? / सहायक संधि प्रणाली किसने शुरू की?", options:["Lord Wellesley / लॉर्ड वेलेजली","Lord Dalhousie / लॉर्ड डलहौजी","Robert Clive / रॉबर्ट क्लाइव","Lord Cornwallis / लॉर्ड कॉर्नवालिस"], answer:0},
+
+{q:"Which Indian ruler first accepted the Subsidiary Alliance? / सबसे पहले सहायक संधि किसने स्वीकार की?", options:["Nizam of Hyderabad / हैदराबाद का निजाम","Tipu Sultan / टीपू सुल्तान","Maharaja Ranjit Singh / महाराजा रणजीत सिंह","Marathas / मराठा"], answer:0},
+
+{q:"Which battle marked the beginning of British control in Bengal? / बंगाल में ब्रिटिश नियंत्रण की शुरुआत किस युद्ध से हुई?", options:["Battle of Plassey / प्लासी का युद्ध","Battle of Buxar / बक्सर का युद्ध","Battle of Panipat / पानीपत का युद्ध","Battle of Wandiwash / वांडीवाश का युद्ध"], answer:0},
+
+{q:"Who was the Nawab of Bengal during the Battle of Plassey? / प्लासी के युद्ध में बंगाल का नवाब कौन था?", options:["Siraj-ud-Daulah / सिराजुद्दौला","Mir Jafar / मीर जाफर","Mir Qasim / मीर कासिम","Shuja-ud-Daulah / शुजाउद्दौला"], answer:0},
+
+{q:"Who betrayed Siraj-ud-Daulah in the Battle of Plassey? / प्लासी के युद्ध में सिराजुद्दौला के साथ विश्वासघात किसने किया?", options:["Mir Jafar / मीर जाफर","Mir Qasim / मीर कासिम","Shah Alam II / शाह आलम द्वितीय","Tipu Sultan / टीपू सुल्तान"], answer:0},
+
+{q:"Which treaty made the British de facto rulers of Bengal? / किस संधि ने अंग्रेजों को बंगाल का वास्तविक शासक बनाया?", options:["Treaty of Allahabad / इलाहाबाद की संधि","Treaty of Paris / पेरिस की संधि","Treaty of Versailles / वर्साय की संधि","Treaty of Seringapatam / श्रीरंगपट्टनम की संधि"], answer:0},
+
+{q:"Who was the last independent ruler of Mysore defeated by the British? / मैसूर का अंतिम स्वतंत्र शासक कौन था जिसे अंग्रेजों ने हराया?", options:["Tipu Sultan / टीपू सुल्तान","Hyder Ali / हैदर अली","Krishnaraja Wodeyar / कृष्णराजा वोडेयार","Raja Raja Chola / राजा राजा चोल"], answer:0},
+
+{q:"In which year did Tipu Sultan die? / टीपू सुल्तान की मृत्यु किस वर्ष हुई?", options:["1799 CE / 1799 ई.","1782 CE / 1782 ई.","1805 CE / 1805 ई.","1770 CE / 1770 ई."], answer:0},
+
+{q:"Which battle marked the final defeat of Tipu Sultan? / टीपू सुल्तान की अंतिम हार किस युद्ध में हुई?", options:["Battle of Plassey / प्लासी का युद्ध","Battle of Seringapatam / श्रीरंगपट्टनम का युद्ध","Battle of Buxar / बक्सर का युद्ध","Battle of Panipat / पानीपत का युद्ध"], answer:1},
+
+{q:"Which Governor-General is known as the 'Maker of British India'? / 'ब्रिटिश भारत का निर्माता' किस गवर्नर-जनरल को कहा जाता है?", options:["Lord Dalhousie / लॉर्ड डलहौजी","Warren Hastings / वॉरेन हेस्टिंग्स","Lord Wellesley / लॉर्ड वेलेजली","Robert Clive / रॉबर्ट क्लाइव"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

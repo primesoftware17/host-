@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sound Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Sound / ध्वनि)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Sound is a form of? / ध्वनि क्या है?", options:["Energy / ऊर्जा","Matter / पदार्थ","Force / बल","Light / प्रकाश"], answer:0},
+
+{q:"Sound travels fastest in? / ध्वनि सबसे तेज कहाँ चलती है?", options:["Solids / ठोस","Liquids / द्रव","Gases / गैस","Vacuum / निर्वात"], answer:0},
+
+{q:"SI unit of frequency is? / आवृत्ति की इकाई क्या है?", options:["Hertz / हर्ट्ज","Newton","Joule","Watt"], answer:0},
+
+{q:"Human audible range is? / मानव सुनने की सीमा क्या है?", options:["20 Hz to 20 kHz","0 to 20 Hz","20 kHz to 50 kHz","1 Hz to 10 Hz"], answer:0},
+
+{q:"Sound cannot travel in? / ध्वनि कहाँ नहीं चलती?", options:["Vacuum / निर्वात","Air","Water","Steel"], answer:0},
+
+{q:"Speed of sound in air is approx? / वायु में ध्वनि की गति कितनी होती है?", options:["340 m/s","3000 m/s","3×10^8 m/s","100 m/s"], answer:0},
+
+{q:"Echo is due to? / प्रतिध्वनि किस कारण होती है?", options:["Reflection / परावर्तन","Refraction","Absorption","Diffraction"], answer:0},
+
+{q:"Pitch depends on? / पिच किस पर निर्भर करती है?", options:["Frequency / आवृत्ति","Amplitude","Speed","Wavelength"], answer:0},
+
+{q:"Loudness depends on? / ध्वनि की तीव्रता किस पर निर्भर करती है?", options:["Amplitude","Frequency","Speed","Time"], answer:0},
+
+{q:"Sound is produced by? / ध्वनि किससे उत्पन्न होती है?", options:["Vibration / कंपन","Heat","Light","Force"], answer:0},
+
+{q:"Unit of loudness is? / तीव्रता की इकाई क्या है?", options:["Decibel / डेसिबल","Hertz","Newton","Joule"], answer:0},
+
+{q:"Frequency means? / आवृत्ति क्या है?", options:["Number of vibrations per second","Distance","Speed","Energy"], answer:0},
+
+{q:"Amplitude is? / आयाम क्या है?", options:["Maximum displacement","Minimum displacement","Time","Speed"], answer:0},
+
+{q:"Sound needs medium? / ध्वनि को माध्यम चाहिए?", options:["Yes / हाँ","No / नहीं","Only air","Only water"], answer:0},
+
+{q:"Which is ultrasonic sound? / अल्ट्रासोनिक ध्वनि क्या है?", options:["Above 20 kHz","Below 20 Hz","20 Hz to 20 kHz","None"], answer:0},
+
+{q:"Infrasound is? / इन्फ्रासाउंड क्या है?", options:["Below 20 Hz","Above 20 kHz","20 Hz to 20 kHz","None"], answer:0},
+
+{q:"Sound is longitudinal wave? / ध्वनि कैसी तरंग है?", options:["Yes / हाँ","No / नहीं","Transverse","Surface"], answer:0},
+
+{q:"Human ear has how many parts? / मानव कान के कितने भाग होते हैं?", options:["3","2","4","5"], answer:0},
+
+{q:"Which part collects sound? / ध्वनि कौन सा भाग एकत्र करता है?", options:["Pinna / कर्ण पल्लव","Ear drum","Cochlea","Nerve"], answer:0},
+
+{q:"Sound reflection produces? / ध्वनि परावर्तन से क्या बनता है?", options:["Echo / प्रतिध्वनि","Noise","Heat","Light"], answer:0},
+
+{q:"Noise is? / शोर क्या है?", options:["Unpleasant sound","Pleasant sound","Silent sound","Music"], answer:0},
+
+{q:"Music is? / संगीत क्या है?", options:["Pleasant sound","Noise","Silent","Ultrasound"], answer:0},
+
+{q:"Frequency increases, pitch? / आवृत्ति बढ़ने पर पिच?", options:["Increases","Decreases","Zero","Constant"], answer:0},
+
+{q:"Amplitude increases, loudness? / आयाम बढ़ने पर तीव्रता?", options:["Increases","Decreases","Zero","Constant"], answer:0},
+
+{q:"Sound wave is? / ध्वनि तरंग क्या है?", options:["Mechanical wave","Light wave","Electromagnetic","None"], answer:0},
+
+{q:"Sound travels in form of? / ध्वनि किस रूप में चलती है?", options:["Compression & rarefaction","Particles","Light rays","Heat waves"], answer:0},
+
+{q:"Doppler effect is related to? / डॉप्लर प्रभाव किससे संबंधित है?", options:["Frequency change","Mass","Force","Energy"], answer:0},
+
+{q:"Speed of sound is maximum in? / ध्वनि की गति सबसे अधिक कहाँ होती है?", options:["Solids","Liquids","Gases","Vacuum"], answer:0},
+
+{q:"Echo requires minimum distance? / प्रतिध्वनि के लिए न्यूनतम दूरी?", options:["17 m","10 m","5 m","1 m"], answer:0},
+
+{q:"Sound energy is converted into? / ध्वनि ऊर्जा किसमें बदलती है?", options:["Heat energy","Mass","Light only","None"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

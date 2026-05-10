@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subject Verb Agreement Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Subject Verb Agreement)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Choose the correct verb: 'He ___ to school daily.' / सही क्रिया चुनिए", options:["go","goes","going","gone"], answer:1},
+
+{q:"Choose the correct verb: 'They ___ football every evening.'", options:["plays","play","playing","played"], answer:1},
+
+{q:"Identify the correct sentence. / सही वाक्य पहचानिए", options:["She go to market.","She goes to market.","She going to market.","She gone to market."], answer:1},
+
+{q:"Choose the correct verb: 'The boys ___ in the park.'", options:["runs","run","running","ran"], answer:1},
+
+{q:"Choose the correct verb: 'Ram and Shyam ___ friends.'", options:["is","am","are","was"], answer:2},
+
+{q:"Choose the correct verb: 'Each student ___ a notebook.'", options:["have","having","has","had"], answer:2},
+
+{q:"Choose the correct verb: 'The teacher ___ very kind.'", options:["are","am","is","were"], answer:2},
+
+{q:"Choose the correct verb: 'My parents ___ in Delhi.'", options:["lives","live","living","lived"], answer:1},
+
+{q:"Choose the correct verb: 'Neither Ravi nor Mohan ___ present.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'Either the boys or the girl ___ responsible.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The news ___ true.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'Mathematics ___ my favorite subject.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'A bouquet of flowers ___ on the table.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The players ___ practicing hard.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'One of the boys ___ absent today.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The dogs ___ loudly at night.'", options:["barks","bark","barking","barked"], answer:1},
+
+{q:"Choose the correct verb: 'Every student and teacher ___ invited.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'Neither the teacher nor the students ___ ready.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'There ___ many books on the shelf.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'The captain, along with the players, ___ excited.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'My brother ___ watching TV now.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The children ___ making noise.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'Everyone ___ happy today.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The furniture ___ very costly.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'Ravi ___ completed his homework.'", options:["have","has","are","were"], answer:1},
+
+{q:"Choose the correct verb: 'The cows ___ grazing in the field.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'Bread and butter ___ my breakfast.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'The police ___ investigating the case.'", options:["is","was","are","has"], answer:2},
+
+{q:"Choose the correct verb: 'Neither of the answers ___ correct.'", options:["are","were","is","have"], answer:2},
+
+{q:"Choose the correct verb: 'A number of students ___ absent today.'", options:["is","was","are","has"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

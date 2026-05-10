@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - The Earth and the Solar System)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Which is the largest planet in the Solar System? / सौरमंडल का सबसे बड़ा ग्रह कौन सा है?", options:["Earth / पृथ्वी","Jupiter / बृहस्पति","Mars / मंगल","Venus / शुक्र"], answer:1},
+
+{q:"Which planet is known as the 'Red Planet'? / 'लाल ग्रह' किस ग्रह को कहा जाता है?", options:["Mars / मंगल","Mercury / बुध","Saturn / शनि","Neptune / नेपच्यून"], answer:0},
+
+{q:"What is the centre of the Solar System? / सौरमंडल का केंद्र क्या है?", options:["Earth / पृथ्वी","Moon / चंद्रमा","Sun / सूर्य","Mars / मंगल"], answer:2},
+
+{q:"Which planet is closest to the Sun? / सूर्य के सबसे निकट कौन सा ग्रह है?", options:["Venus / शुक्र","Mercury / बुध","Earth / पृथ्वी","Mars / मंगल"], answer:1},
+
+{q:"Which planet is known as Earth's twin? / पृथ्वी का जुड़वां ग्रह किसे कहा जाता है?", options:["Mars / मंगल","Venus / शुक्र","Jupiter / बृहस्पति","Saturn / शनि"], answer:1},
+
+{q:"How many planets are there in the Solar System? / सौरमंडल में कितने ग्रह हैं?", options:["7","8","9","10"], answer:1},
+
+{q:"Which is the hottest planet in the Solar System? / सौरमंडल का सबसे गर्म ग्रह कौन सा है?", options:["Mercury / बुध","Venus / शुक्र","Mars / मंगल","Jupiter / बृहस्पति"], answer:1},
+
+{q:"Which planet is famous for its rings? / किस ग्रह के चारों ओर छल्ले हैं?", options:["Earth / पृथ्वी","Saturn / शनि","Mars / मंगल","Venus / शुक्र"], answer:1},
+
+{q:"Which is the largest natural satellite of Earth? / पृथ्वी का सबसे बड़ा प्राकृतिक उपग्रह कौन सा है?", options:["Phobos / फोबोस","Moon / चंद्रमा","Europa / यूरोपा","Titan / टाइटन"], answer:1},
+
+{q:"What is the name of Earth's galaxy? / पृथ्वी की आकाशगंगा का नाम क्या है?", options:["Andromeda / एंड्रोमेडा","Milky Way / आकाशगंगा","Whirlpool / व्हर्लपूल","Sombrero / सोमब्रेरो"], answer:1},
+
+{q:"Which planet is known as the 'Blue Planet'? / 'नीला ग्रह' किसे कहा जाता है?", options:["Earth / पृथ्वी","Neptune / नेपच्यून","Uranus / यूरेनस","Saturn / शनि"], answer:0},
+
+{q:"What causes day and night on Earth? / पृथ्वी पर दिन और रात किस कारण होते हैं?", options:["Revolution / परिक्रमण","Rotation / घूर्णन","Gravity / गुरुत्वाकर्षण","Orbit / कक्षा"], answer:1},
+
+{q:"How long does Earth take to complete one rotation? / पृथ्वी एक घूर्णन में कितना समय लेती है?", options:["12 hours / 12 घंटे","24 hours / 24 घंटे","365 days / 365 दिन","30 days / 30 दिन"], answer:1},
+
+{q:"How long does Earth take to revolve around the Sun? / पृथ्वी सूर्य के चारों ओर एक चक्कर में कितना समय लेती है?", options:["24 hours / 24 घंटे","30 days / 30 दिन","365 days / 365 दिन","12 months / 12 महीने"], answer:2},
+
+{q:"Which force keeps planets in orbit around the Sun? / ग्रहों को सूर्य के चारों ओर कौन-सा बल घुमाता है?", options:["Magnetic force / चुंबकीय बल","Friction / घर्षण","Gravity / गुरुत्वाकर्षण","Electric force / विद्युत बल"], answer:2},
+
+{q:"Which planet is called the 'Giant Planet'? / 'विशाल ग्रह' किसे कहा जाता है?", options:["Mars / मंगल","Jupiter / बृहस्पति","Earth / पृथ्वी","Mercury / बुध"], answer:1},
+
+{q:"Which planet has the most moons? / किस ग्रह के सबसे अधिक उपग्रह हैं?", options:["Saturn / शनि","Earth / पृथ्वी","Mars / मंगल","Venus / शुक्र"], answer:0},
+
+{q:"What is a comet mainly made of? / धूमकेतु मुख्य रूप से किससे बने होते हैं?", options:["Rock and metal / चट्टान और धातु","Ice and dust / बर्फ और धूल","Gas and fire / गैस और आग","Water and air / पानी और हवा"], answer:1},
+
+{q:"What is the path of a planet around the Sun called? / ग्रह की सूर्य के चारों ओर कक्षा को क्या कहते हैं?", options:["Axis / अक्ष","Orbit / कक्षा","Rotation / घूर्णन","Cycle / चक्र"], answer:1},
+
+{q:"Which planet is farthest from the Sun (in the Solar System)? / सौरमंडल में सूर्य से सबसे दूर कौन सा ग्रह है?", options:["Neptune / नेपच्यून","Uranus / यूरेनस","Saturn / शनि","Pluto / प्लूटो"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heat & Thermodynamics Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Heat & Thermodynamics)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Heat is a form of?", options:["energy","force","mass","matter"], answer:0},
+
+{q:"SI unit of heat is?", options:["Joule","Newton","Watt","Kelvin"], answer:0},
+
+{q:"Temperature measures?", options:["hotness or coldness","mass","force","energy"], answer:0},
+
+{q:"SI unit of temperature is?", options:["Kelvin","Celsius","Joule","Newton"], answer:0},
+
+{q:"Heat flows from?", options:["hot to cold","cold to hot","low to high mass","none"], answer:0},
+
+{q:"Thermodynamics deals with?", options:["heat and energy","force","motion","light"], answer:0},
+
+{q:"Conduction happens in?", options:["solids","liquids","gases","vacuum"], answer:0},
+
+{q:"Convection occurs in?", options:["liquids and gases","solids","vacuum","none"], answer:0},
+
+{q:"Radiation can travel through?", options:["vacuum","solids only","liquids only","none"], answer:0},
+
+{q:"Boiling point of water is?", options:["100°C","0°C","50°C","200°C"], answer:0},
+
+{q:"Melting point of ice is?", options:["0°C","100°C","50°C","-10°C"], answer:0},
+
+{q:"Specific heat capacity means?", options:["heat required to raise temp","mass change","force change","energy loss"], answer:0},
+
+{q:"Thermometer is used to measure?", options:["temperature","heat","mass","force"], answer:0},
+
+{q:"Heat is transferred by?", options:["conduction, convection, radiation","only conduction","only radiation","only convection"], answer:0},
+
+{q:"Good conductor of heat is?", options:["iron","wood","plastic","air"], answer:0},
+
+{q:"Bad conductor of heat is?", options:["wood","copper","silver","iron"], answer:0},
+
+{q:"Kelvin scale starts from?", options:["0 K","0°C","100°C","-273°C"], answer:0},
+
+{q:"Absolute zero is?", options:["0 K","100 K","273 K","-100 K"], answer:0},
+
+{q:"Heat always flows from?", options:["higher to lower temperature","lower to higher","equal to equal","none"], answer:0},
+
+{q:"Unit of specific heat is?", options:["J/kg°C","J","kg","m/s"], answer:0},
+
+{q:"Thermal expansion means?", options:["increase in size with heat","decrease in size","no change","mass change"], answer:0},
+
+{q:"Gases expand more than?", options:["solids","liquids","vacuum","none"], answer:0},
+
+{q:"Heat energy is also called?", options:["thermal energy","kinetic energy","potential energy","nuclear energy"], answer:0},
+
+{q:"Sea breeze occurs during?", options:["day","night","winter","rainy season"], answer:0},
+
+{q:"Land breeze occurs during?", options:["night","day","summer only","rainy season"], answer:0},
+
+{q:"Radiation does not need?", options:["medium","energy","temperature","mass"], answer:0},
+
+{q:"Temperature increases when?", options:["heat is added","mass increases","force increases","time decreases"], answer:0},
+
+{q:"Heat transfer in solids is mainly by?", options:["conduction","convection","radiation","evaporation"], answer:0},
+
+{q:"Heat is measured using?", options:["calorimeter","barometer","ammeter","voltmeter"], answer:0},
+
+{q:"Thermodynamics law deals with?", options:["energy conservation","motion","force","light"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

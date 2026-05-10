@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Volcanoes and Earthquakes)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is a volcano? / ज्वालामुखी क्या है?", options:["A mountain that produces fire, lava and ash / ऐसा पर्वत जो लावा, राख और गैस निकालता है","A river system / नदी प्रणाली","A type of rock / चट्टान का प्रकार","A desert landform / रेगिस्तानी स्थलाकृति"], answer:0},
+
+{q:"What is lava? / लावा क्या होता है?", options:["Molten rock inside Earth / पृथ्वी के अंदर पिघली चट्टान","Molten rock that comes out of volcano / ज्वालामुखी से निकला पिघला पदार्थ","Solid rock / ठोस चट्टान","Water vapor / जल वाष्प"], answer:1},
+
+{q:"What is magma? / मैग्मा क्या है?", options:["Water inside Earth / पृथ्वी के अंदर पानी","Molten rock inside Earth / पृथ्वी के अंदर पिघली चट्टान","Air inside Earth / पृथ्वी के अंदर हवा","Soil inside Earth / पृथ्वी के अंदर मिट्टी"], answer:1},
+
+{q:"Which layer of Earth causes volcanoes? / ज्वालामुखी किस परत के कारण होते हैं?", options:["Crust / भूपर्पटी","Mantle / मेंटल","Core / क्रोड","Atmosphere / वायुमंडल"], answer:1},
+
+{q:"What is an earthquake? / भूकंप क्या है?", options:["Movement of sea water / समुद्री जल की गति","Sudden shaking of Earth's surface / पृथ्वी की सतह का अचानक हिलना","Rainfall / वर्षा","Wind movement / हवा की गति"], answer:1},
+
+{q:"What is the instrument used to measure earthquakes? / भूकंप मापने वाला उपकरण क्या है?", options:["Thermometer / थर्मामीटर","Seismograph / सिस्मोग्राफ","Barometer / बैरोमीटर","Hygrometer / हाइग्रोमीटर"], answer:1},
+
+{q:"What is the point inside Earth where earthquake starts called? / भूकंप की शुरुआत जहाँ से होती है उसे क्या कहते हैं?", options:["Epicenter / उपकेंद्र","Focus / केंद्र","Crater / क्रेटर","Fault line / भ्रंश रेखा"], answer:1},
+
+{q:"What is the point on Earth's surface above the focus called? / भूकंप केंद्र के ऊपर सतह पर स्थित बिंदु क्या कहलाता है?", options:["Focus / केंद्र","Epicenter / उपकेंद्र","Mantle / मेंटल","Crust / भूपर्पटी"], answer:1},
+
+{q:"Which movement of plates causes earthquakes? / कौन-सी प्लेटों की गति भूकंप का कारण बनती है?", options:["Wind plates / हवा प्लेटें","Tectonic plates / टेक्टोनिक प्लेटें","Water plates / जल प्लेटें","Soil plates / मिट्टी प्लेटें"], answer:1},
+
+{q:"Which region has the highest volcanic activity? / सबसे अधिक ज्वालामुखीय गतिविधि किस क्षेत्र में होती है?", options:["Ring of Fire / अग्नि वलय","Arctic Circle / आर्कटिक वृत्त","Equator / भूमध्य रेखा","Deserts / रेगिस्तान"], answer:0},
+
+{q:"What comes out of a volcano during eruption? / विस्फोट के समय ज्वालामुखी से क्या निकलता है?", options:["Only water / केवल पानी","Lava, ash and gases / लावा, राख और गैसें","Only rocks / केवल चट्टानें","Only air / केवल हवा"], answer:1},
+
+{q:"Which type of volcano erupts frequently? / कौन-सा ज्वालामुखी बार-बार फटता है?", options:["Active volcano / सक्रिय ज्वालामुखी","Dormant volcano / सुप्त ज्वालामुखी","Extinct volcano / मृत ज्वालामुखी","Old volcano / पुराना ज्वालामुखी"], answer:0},
+
+{q:"Which type of volcano never erupts again? / कौन-सा ज्वालामुखी दोबारा नहीं फटता?", options:["Active / सक्रिय","Dormant / सुप्त","Extinct / मृत","Living / जीवित"], answer:2},
+
+{q:"What is a fault line? / भ्रंश रेखा क्या होती है?", options:["A river path / नदी मार्ग","A crack in Earth's crust / पृथ्वी की भूपर्पटी में दरार","A mountain top / पर्वत शिखर","A desert area / रेगिस्तानी क्षेत्र"], answer:1},
+
+{q:"Which disaster is caused by sudden plate movement? / प्लेटों की अचानक गति से कौन-सी आपदा होती है?", options:["Flood / बाढ़","Earthquake / भूकंप","Drought / सूखा","Cyclone / चक्रवात"], answer:1},
+
+{q:"Which gas is commonly released during volcanic eruption? / ज्वालामुखी विस्फोट के समय कौन-सी गैस निकलती है?", options:["Oxygen / ऑक्सीजन","Sulphur dioxide / सल्फर डाइऑक्साइड","Nitrogen / नाइट्रोजन","Helium / हीलियम"], answer:1},
+
+{q:"What is crater? / क्रेटर क्या होता है?", options:["River mouth / नदी का मुहाना","Opening of a volcano / ज्वालामुखी का मुख","Ocean depth / समुद्र की गहराई","Mountain base / पर्वत का आधार"], answer:1},
+
+{q:"Which scale measures earthquake intensity? / भूकंप की तीव्रता किस पैमाने से मापी जाती है?", options:["Richter scale / रिक्टर स्केल","Beaufort scale / ब्यूफोर्ट स्केल","Mercalli scale / मर्काली स्केल","Kelvin scale / केल्विन स्केल"], answer:0},
+
+{q:"What is the main cause of volcanic eruption? / ज्वालामुखी विस्फोट का मुख्य कारण क्या है?", options:["Wind pressure / हवा का दबाव","Pressure of magma inside Earth / पृथ्वी के अंदर मैग्मा का दबाव","Rainfall / वर्षा","Ocean tides / समुद्री ज्वार"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

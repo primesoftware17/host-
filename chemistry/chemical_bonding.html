@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chemical Bonding Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Chemical Bonding / रासायनिक बंधन)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Chemical bond is? / रासायनिक बंध क्या है?", options:["Force between atoms","Heat","Light","Mass"], answer:0},
+
+{q:"Ionic bond is formed by? / आयनिक बंध?", options:["Transfer of electrons","Sharing electrons","Heat","Light"], answer:0},
+
+{q:"Covalent bond is formed by? / सहसंयोजक बंध?", options:["Sharing electrons","Transfer electrons","Loss of protons","Gain of neutrons"], answer:0},
+
+{q:"Ionic bond is also called? / आयनिक बंध?", options:["Electrovalent bond","Hydrogen bond","Metallic bond","Van der Waals"], answer:0},
+
+{q:"NaCl bond type is? / NaCl बंध?", options:["Ionic","Covalent","Metallic","Hydrogen"], answer:0},
+
+{q:"O2 bond type is? / O₂ बंध?", options:["Covalent","Ionic","Metallic","None"], answer:0},
+
+{q:"H2O bond type is? / जल बंध?", options:["Covalent","Ionic","Metallic","Gas bond"], answer:0},
+
+{q:"Metal bonding is called? / धातु बंध?", options:["Metallic bond","Ionic bond","Covalent bond","Hydrogen bond"], answer:0},
+
+{q:"Electrostatic force acts in? / बल?", options:["Ionic bond","Covalent bond","Metallic bond","None"], answer:0},
+
+{q:"Sharing electrons happens in? / इलेक्ट्रॉन साझा?", options:["Covalent bond","Ionic bond","Metallic bond","None"], answer:0},
+
+{q:"Ions are formed when? / आयन कब बनते हैं?", options:["Atoms gain or lose electrons","Gain neutrons","Gain protons","Lose nucleus"], answer:0},
+
+{q:"Positive ion is called? / धनायन?", options:["Cation","Anion","Electron","Neutron"], answer:0},
+
+{q:"Negative ion is called? / ऋणायन?", options:["Anion","Cation","Proton","Atom"], answer:0},
+
+{q:"Electronegativity is? / विद्युतऋणात्मकता?", options:["Attract electrons","Lose electrons","Gain protons","Lose neutrons"], answer:0},
+
+{q:"Bond formation leads to? / बंधन से?", options:["Stability","Instability","Explosion","Decay"], answer:0},
+
+{q:"Octet rule means? / अष्टक नियम?", options:["8 electrons in outer shell","8 protons","8 neutrons","8 atoms"], answer:0},
+
+{q:"Hydrogen bond is between? / हाइड्रोजन बंध?", options:["H and O/N/F","Na and Cl","Metal atoms","Neutrons"], answer:0},
+
+{q:"Strongest bond is? / सबसे मजबूत बंध?", options:["Covalent","Hydrogen","Van der Waals","Weak force"], answer:0},
+
+{q:"Weakest interaction is? / सबसे कमजोर?", options:["Van der Waals","Ionic","Covalent","Metallic"], answer:0},
+
+{q:"Bonding involves? / बंधन में?", options:["Valence electrons","Neutrons","Protons only","Nucleus"], answer:0},
+
+{q:"Chemical bond reduces energy? / ऊर्जा?", options:["Yes","No","Always increases","No change"], answer:0},
+
+{q:"Metal atoms share electrons in? / धातु में?", options:["Sea of electrons","Fixed pairs","No electrons","Protons"], answer:0},
+
+{q:"Ionic compounds are? / आयनिक यौगिक?", options:["Hard and brittle","Soft","Gaseous","Liquid only"], answer:0},
+
+{q:"Covalent compounds are? / सहसंयोजक?", options:["Soft","Very hard always","Metallic","Only ionic"], answer:0},
+
+{q:"Bond formation depends on? / निर्भर करता है?", options:["Valence electrons","Mass","Neutrons","Temperature only"], answer:0},
+
+{q:"Na loses electron becomes? / Na बनता है?", options:["Na+","Na-","Neutral","Na2"], answer:0},
+
+{q:"Cl gains electron becomes? / Cl बनता है?", options:["Cl-","Cl+","Neutral","Cl2+"], answer:0},
+
+{q:"Bond energy is? / बंध ऊर्जा?", options:["Energy to break bond","Heat only","Light energy","Mass energy"], answer:0},
+
+{q:"Bond length is distance between? / दूरी?", options:["Two nuclei","Electrons","Neutrons","Atoms center only"], answer:0},
+
+{q:"Chemical bonding study is part of? / अध्ययन?", options:["Chemistry","Physics","Biology","Math"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

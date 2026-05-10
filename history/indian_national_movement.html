@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Indian National Movement)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who founded the Indian National Congress? / भारतीय राष्ट्रीय कांग्रेस की स्थापना किसने की?", options:["A.O. Hume / ए.ओ. ह्यूम","Mahatma Gandhi / महात्मा गांधी","Bal Gangadhar Tilak / बाल गंगाधर तिलक","Dadabhai Naoroji / दादाभाई नौरोजी"], answer:0},
+
+{q:"In which year was the Indian National Congress founded? / भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?", options:["1857 CE / 1857 ई.","1885 CE / 1885 ई.","1905 CE / 1905 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Who is known as the 'Grand Old Man of India'? / 'भारत का ग्रैंड ओल्ड मैन' किसे कहा जाता है?", options:["Dadabhai Naoroji / दादाभाई नौरोजी","Bal Gangadhar Tilak / बाल गंगाधर तिलक","Lala Lajpat Rai / लाला लाजपत राय","Bipin Chandra Pal / बिपिन चंद्र पाल"], answer:0},
+
+{q:"Which movement was launched in 1905 against Bengal Partition? / बंगाल विभाजन के खिलाफ 1905 में कौन सा आंदोलन शुरू हुआ?", options:["Non-Cooperation Movement / असहयोग आंदोलन","Swadeshi Movement / स्वदेशी आंदोलन","Quit India Movement / भारत छोड़ो आंदोलन","Civil Disobedience Movement / सविनय अवज्ञा आंदोलन"], answer:1},
+
+{q:"Who partitioned Bengal in 1905? / 1905 में बंगाल का विभाजन किसने किया?", options:["Lord Curzon / लॉर्ड कर्जन","Lord Dalhousie / लॉर्ड डलहौजी","Lord Wellesley / लॉर्ड वेलेजली","Warren Hastings / वॉरेन हेस्टिंग्स"], answer:0},
+
+{q:"Who started the Non-Cooperation Movement? / असहयोग आंदोलन किसने शुरू किया?", options:["Bal Gangadhar Tilak / बाल गंगाधर तिलक","Mahatma Gandhi / महात्मा गांधी","Subhas Chandra Bose / सुभाष चंद्र बोस","Jawaharlal Nehru / जवाहरलाल नेहरू"], answer:1},
+
+{q:"In which year did the Non-Cooperation Movement start? / असहयोग आंदोलन किस वर्ष शुरू हुआ?", options:["1919 CE / 1919 ई.","1920 CE / 1920 ई.","1930 CE / 1930 ई.","1942 CE / 1942 ई."], answer:1},
+
+{q:"Which incident led to the suspension of Non-Cooperation Movement? / असहयोग आंदोलन किस घटना के कारण स्थगित हुआ?", options:["Jallianwala Bagh Massacre / जलियांवाला बाग हत्याकांड","Chauri Chaura incident / चौरी-चौरा कांड","Dandi March / दांडी मार्च","Simon Commission / साइमन कमीशन"], answer:1},
+
+{q:"Who led the Dandi March? / दांडी मार्च का नेतृत्व किसने किया?", options:["Jawaharlal Nehru / जवाहरलाल नेहरू","Mahatma Gandhi / महात्मा गांधी","Subhas Chandra Bose / सुभाष चंद्र बोस","Sardar Patel / सरदार पटेल"], answer:1},
+
+{q:"In which year was the Dandi March started? / दांडी मार्च किस वर्ष शुरू हुआ?", options:["1920 CE / 1920 ई.","1930 CE / 1930 ई.","1942 CE / 1942 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Which movement is also known as the Quit India Movement? / भारत छोड़ो आंदोलन किस नाम से भी जाना जाता है?", options:["Swadeshi Movement / स्वदेशी आंदोलन","Civil Disobedience Movement / सविनय अवज्ञा आंदोलन","August Kranti / अगस्त क्रांति","Home Rule Movement / होम रूल आंदोलन"], answer:2},
+
+{q:"In which year was Quit India Movement launched? / भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?", options:["1930 CE / 1930 ई.","1942 CE / 1942 ई.","1947 CE / 1947 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Who gave the slogan 'Do or Die'? / 'करो या मरो' का नारा किसने दिया?", options:["Subhas Chandra Bose / सुभाष चंद्र बोस","Mahatma Gandhi / महात्मा गांधी","Bhagat Singh / भगत सिंह","Jawaharlal Nehru / जवाहरलाल नेहरू"], answer:1},
+
+{q:"Who formed the Azad Hind Fauj? / आज़ाद हिंद फौज किसने बनाई?", options:["Bhagat Singh / भगत सिंह","Subhas Chandra Bose / सुभाष चंद्र बोस","Chandra Shekhar Azad / चंद्रशेखर आज़ाद","Lala Lajpat Rai / लाला लाजपत राय"], answer:1},
+
+{q:"Which slogan is associated with Subhas Chandra Bose? / सुभाष चंद्र बोस से कौन-सा नारा जुड़ा है?", options:["Jai Hind / जय हिंद","Inquilab Zindabad / इंकलाब जिंदाबाद","Swaraj is my birthright / स्वराज मेरा जन्मसिद्ध अधिकार है","Quit India / भारत छोड़ो"], answer:0},
+
+{q:"Who was the leader of Ghadar Party? / गदर पार्टी का नेता कौन था?", options:["Lala Hardayal / लाला हरदयाल","Bhagat Singh / भगत सिंह","Rajguru / राजगुरु","Sukhdev / सुखदेव"], answer:0},
+
+{q:"Which incident is associated with Jallianwala Bagh Massacre? / जलियांवाला बाग हत्याकांड किस घटना से जुड़ा है?", options:["1919 CE / 1919 ई.","1922 CE / 1922 ई.","1930 CE / 1930 ई.","1942 CE / 1942 ई."], answer:0},
+
+{q:"Who was responsible for Jallianwala Bagh Massacre? / जलियांवाला बाग हत्याकांड के लिए कौन जिम्मेदार था?", options:["Lord Mountbatten / लॉर्ड माउंटबेटन","General Dyer / जनरल डायर","Lord Curzon / लॉर्ड कर्जन","Warren Hastings / वॉरेन हेस्टिंग्स"], answer:1},
+
+{q:"Who is known as the 'Iron Man of India'? / 'भारत का लौह पुरुष' किसे कहा जाता है?", options:["Jawaharlal Nehru / जवाहरलाल नेहरू","Subhas Chandra Bose / सुभाष चंद्र बोस","Sardar Vallabhbhai Patel / सरदार वल्लभभाई पटेल","Lala Lajpat Rai / लाला लाजपत राय"], answer:2},
+
+{q:"Who played a key role in the integration of princely states? / रियासतों के एकीकरण में किसने महत्वपूर्ण भूमिका निभाई?", options:["Mahatma Gandhi / महात्मा गांधी","Sardar Patel / सरदार पटेल","Jawaharlal Nehru / जवाहरलाल नेहरू","Rajendra Prasad / राजेंद्र प्रसाद"], answer:1}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

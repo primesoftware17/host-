@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Work, Energy & Power Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Work, Energy & Power)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Work is done when?", options:["Force causes displacement","No motion","Only force","Only energy"], answer:0},
+
+{q:"SI unit of work is?", options:["Newton","Joule","Watt","Pascal"], answer:1},
+
+{q:"Work = ?", options:["Force × distance","Mass × speed","Force ÷ time","Energy × time"], answer:0},
+
+{q:"Energy is capacity to do?", options:["work","force","mass","speed"], answer:0},
+
+{q:"SI unit of energy is?", options:["Joule","Newton","Watt","Kg"], answer:0},
+
+{q:"Power is rate of doing?", options:["work","energy","force","motion"], answer:0},
+
+{q:"SI unit of power is?", options:["Watt","Joule","Newton","Pascal"], answer:0},
+
+{q:"1 Watt = ?", options:["1 Joule/second","1 Joule","1 Newton","1 kg"], answer:0},
+
+{q:"Kinetic energy depends on?", options:["motion","height","color","mass only"], answer:0},
+
+{q:"Potential energy depends on?", options:["height","speed","force","time"], answer:0},
+
+{q:"Formula of kinetic energy?", options:["½ mv²","mgh","ma","F×d"], answer:0},
+
+{q:"Formula of potential energy?", options:["mgh","½ mv²","F×d","ma"], answer:0},
+
+{q:"Work is zero when angle is?", options:["90°","0°","45°","180°"], answer:0},
+
+{q:"Energy cannot be?", options:["created or destroyed","increased","decreased","measured"], answer:0},
+
+{q:"Unit of power is also?", options:["J/s","N","kg","m"], answer:0},
+
+{q:"If no displacement, work is?", options:["zero","maximum","infinite","negative"], answer:0},
+
+{q:"Energy exists in?", options:["many forms","only motion","only heat","only light"], answer:0},
+
+{q:"Mechanical energy = ?", options:["KE + PE","KE - PE","Force × time","Mass × speed"], answer:0},
+
+{q:"Work done can be?", options:["positive, negative, zero","only positive","only negative","only zero"], answer:0},
+
+{q:"When force and displacement same direction, work is?", options:["positive","negative","zero","infinite"], answer:0},
+
+{q:"When force opposite to displacement, work is?", options:["negative","positive","zero","infinite"], answer:0},
+
+{q:"Energy transformation example?", options:["electric to light","mass to color","force to shape","time to speed"], answer:0},
+
+{q:"Power depends on?", options:["work and time","mass only","distance only","force only"], answer:0},
+
+{q:"High power means?", options:["fast work done","slow work done","no work","zero energy"], answer:0},
+
+{q:"Work done = 0 when angle is?", options:["90°","0°","180°","45°"], answer:0},
+
+{q:"Energy of moving object is?", options:["kinetic","potential","chemical","nuclear"], answer:0},
+
+{q:"Energy stored due to position is?", options:["potential","kinetic","heat","sound"], answer:0},
+
+{q:"Law of conservation of energy means?", options:["energy is constant","energy increases","energy decreases","energy disappears"], answer:0},
+
+{q:"Work is scalar or vector?", options:["scalar","vector","both","none"], answer:0},
+
+{q:"Energy is measured in?", options:["Joule","Newton","Watt","kg"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

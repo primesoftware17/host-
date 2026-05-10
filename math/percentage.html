@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Percentage Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Percentage)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"What is 50% of 100?", options:["25","50","75","100"], answer:1},
+
+{q:"What is 25% of 200?", options:["25","50","75","100"], answer:1},
+
+{q:"What is 10% of 500?", options:["10","20","50","100"], answer:2},
+
+{q:"What is 100% of 80?", options:["40","60","80","100"], answer:2},
+
+{q:"What is 75% of 40?", options:["20","25","30","35"], answer:2},
+
+{q:"What is 20% of 150?", options:["20","25","30","35"], answer:2},
+
+{q:"What is 5% of 200?", options:["5","10","15","20"], answer:1},
+
+{q:"What is 40% of 250?", options:["80","90","100","110"], answer:2},
+
+{q:"What is 60% of 120?", options:["60","70","72","80"], answer:2},
+
+{q:"What is 30% of 300?", options:["60","80","90","100"], answer:2},
+
+{q:"What is 15% of 200?", options:["20","25","30","35"], answer:2},
+
+{q:"What is 80% of 50?", options:["30","35","40","45"], answer:2},
+
+{q:"What is 12% of 100?", options:["10","11","12","13"], answer:2},
+
+{q:"What is 90% of 20?", options:["16","17","18","19"], answer:2},
+
+{q:"What is 200% of 50?", options:["50","100","150","200"], answer:1},
+
+{q:"What is 1% of 1000?", options:["1","10","100","1000"], answer:1},
+
+{q:"What is 35% of 200?", options:["60","65","70","75"], answer:2},
+
+{q:"What is 45% of 100?", options:["35","40","45","50"], answer:2},
+
+{q:"What is 55% of 200?", options:["90","100","110","120"], answer:2},
+
+{q:"What is 65% of 100?", options:["55","60","65","70"], answer:2},
+
+{q:"What is 70% of 50?", options:["30","35","40","45"], answer:1},
+
+{q:"What is 85% of 20?", options:["15","16","17","18"], answer:1},
+
+{q:"What is 95% of 100?", options:["90","95","100","85"], answer:1},
+
+{q:"What is 110% of 50?", options:["50","55","60","65"], answer:2},
+
+{q:"What is 150% of 40?", options:["50","55","60","60"], answer:2},
+
+{q:"What is 0% of 100?", options:["0","10","100","1"], answer:0},
+
+{q:"What is 33% of 300?", options:["90","95","100","105"], answer:0},
+
+{q:"What is 66% of 150?", options:["90","95","100","105"], answer:0},
+
+{q:"What is 125% of 80?", options:["90","100","110","120"], answer:2},
+
+{q:"What is 2% of 500?", options:["5","10","15","20"], answer:1}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

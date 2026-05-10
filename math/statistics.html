@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Statistics Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Statistics)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"What is mean? / माध्य क्या है?", options:["Middle value","Average","Highest value","Lowest value"], answer:1},
+
+{q:"Median is?", options:["Average","Middle value","Mode","Range"], answer:1},
+
+{q:"Mode means? / बहुलक क्या है?", options:["Average","Most frequent value","Middle value","Difference"], answer:1},
+
+{q:"Range = ?", options:["Max - Min","Max + Min","Mean - Mode","Median × Mode"], answer:0},
+
+{q:"Mean is calculated by?", options:["Sum / number of observations","Max - Min","Middle value","Frequency only"], answer:0},
+
+{q:"Which is central tendency?", options:["Mean","Median","Mode","All of these"], answer:3},
+
+{q:"Median of odd numbers is?", options:["Average","Middle value","Sum","Difference"], answer:1},
+
+{q:"Data means?", options:["Numbers","Information","Graphs","Tables"], answer:1},
+
+{q:"Frequency means?", options:["Count of values","Sum","Average","Difference"], answer:0},
+
+{q:"Bar graph is used for?", options:["Text","Data representation","Drawing","Shapes"], answer:1},
+
+{q:"Pie chart is also called?", options:["Circle graph","Square graph","Line graph","Bar graph"], answer:0},
+
+{q:"Mean of 2, 4, 6 is?", options:["3","4","5","6"], answer:1},
+
+{q:"Median of 1, 3, 5 is?", options:["1","3","5","4"], answer:1},
+
+{q:"Mode of 2, 2, 3, 4 is?", options:["2","3","4","None"], answer:0},
+
+{q:"Statistics deals with?", options:["Letters","Data","Shapes","Angles"], answer:1},
+
+{q:"What is observation?", options:["Data value","Graph","Formula","Equation"], answer:0},
+
+{q:"Class interval is used in?", options:["Tables","Graphs","Geometry","Algebra"], answer:0},
+
+{q:"Histogram is a type of?", options:["Line graph","Bar graph","Circle graph","Table"], answer:1},
+
+{q:"Median divides data into?", options:["2 equal parts","3 parts","4 parts","5 parts"], answer:0},
+
+{q:"Mean is affected by?", options:["Extreme values","Only middle values","Only mode","None"], answer:0},
+
+{q:"Mode is useful for?", options:["Average","Most repeated value","Sum","Difference"], answer:1},
+
+{q:"Statistics is branch of?", options:["Physics","Mathematics","Chemistry","Biology"], answer:1},
+
+{q:"Data representation helps in?", options:["Confusion","Understanding data","Ignoring data","Removing data"], answer:1},
+
+{q:"Median of even numbers is?", options:["Middle value","Average of two middle values","Highest value","Lowest value"], answer:1},
+
+{q:"Mean of 10, 20, 30 is?", options:["10","20","30","25"], answer:1},
+
+{q:"Mode can be?", options:["One value","More than one","No value","All of these"], answer:3},
+
+{q:"Range of 5 and 15 is?", options:["5","10","15","20"], answer:1},
+
+{q:"Which is not central tendency?", options:["Mean","Median","Mode","Range"], answer:3},
+
+{q:"Statistics is used in?", options:["Science","Economics","Daily life","All of these"], answer:3},
+
+{q:"Data can be shown by?", options:["Graphs","Tables","Charts","All of these"], answer:3}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Public Finance - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Karla:wght@400;600&display=swap');
+  :root{--bg:#f8f6f0;--card:#fff;--accent:#1d3557;--accent2:#457b9d;--text:#1d1d1d;--sub:#666;--correct:#2d6a4f;--wrong:#c0392b;--border:#dce8f0;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Karla',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{max-width:780px;margin:0 auto 40px;text-align:center;padding:44px 20px;background:var(--accent);border-radius:20px;color:#fff;}
+  .tag{display:inline-block;border:1.5px solid #fff6;color:#fff;font-weight:600;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:14px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,50px);letter-spacing:1px;}
+  .sub{opacity:.75;font-size:14px;margin-top:8px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;box-shadow:0 1px 6px #0000000a;}
+  .q-num{font-size:11px;font-weight:600;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;line-height:1.5;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#f0f6f9;border:1.5px solid var(--border);color:var(--text);padding:11px 16px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Karla',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent2);background:#e1f0f8;}
+  .opt.correct{background:#e8f5ee;border-color:var(--correct);color:var(--correct);font-weight:600;}
+  .opt.wrong{background:#fdecea;border-color:var(--wrong);color:var(--wrong);}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:var(--accent);color:#fff;font-weight:600;font-size:16px;padding:14px 50px;border:none;border-radius:10px;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:1px;transition:all .2s;}
+  .submit-btn:hover{background:var(--accent2);transform:translateY(-2px);}
+  .score-box{display:none;background:var(--accent);border-radius:16px;padding:30px;text-align:center;margin-top:20px;color:#fff;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;}
+  .score-label{opacity:.75;margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 8</div>
+  <h1>Public Finance</h1>
+  <p class="sub">30 Multiple Choice Questions — Budget, Taxation & Government Revenue</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">Submit Quiz</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"Public finance deals with / सार्वजनिक वित्त किससे संबंधित है?",opts:["Private businesses / निजी व्यवसाय","Government income and expenditure / सरकारी आय और व्यय","Consumer behavior / उपभोक्ता व्यवहार","Foreign trade only / केवल विदेश व्यापार"],ans:1},
+  {q:"Government budget shows / सरकारी बजट दर्शाता है:",opts:["Trade balance / व्यापार संतुलन","Estimated income and expenditure for next year / अगले वर्ष की अनुमानित आय और व्यय","National income accounts / राष्ट्रीय आय लेखे","Bank balance / बैंक शेष"],ans:1},
+  {q:"Budget deficit means / बजट घाटा का अर्थ है:",opts:["Revenue > Expenditure / राजस्व > व्यय","Revenue = Expenditure / राजस्व = व्यय","Expenditure > Revenue / व्यय > राजस्व","No trade / कोई व्यापार नहीं"],ans:2},
+  {q:"Fiscal deficit = ? / राजकोषीय घाटा = ?",opts:["Total expenditure - Total revenue receipts / कुल व्यय - कुल राजस्व प्राप्तियाँ","Revenue deficit + Capital deficit / राजस्व घाटा + पूँजीगत घाटा","Total income - Government spending","Tax revenue - Non-tax revenue"],ans:0},
+  {q:"Revenue deficit is / राजस्व घाटा है:",opts:["Capital expenditure > Capital receipts","Revenue expenditure > Revenue receipts / राजस्व व्यय > राजस्व प्राप्तियाँ","Total expenditure > Total receipts","Exports < Imports"],ans:1},
+  {q:"Primary deficit = ? / प्राथमिक घाटा = ?",opts:["Fiscal deficit + Interest payments","Fiscal deficit - Interest payments / राजकोषीय घाटा - ब्याज भुगतान","Revenue deficit + Capital deficit","GDP - National income"],ans:1},
+  {q:"Direct tax is / प्रत्यक्ष कर है:",opts:["Tax on goods / वस्तुओं पर कर","Tax paid directly by the payer to government / करदाता द्वारा सरकार को सीधे दिया जाने वाला कर","Tax shifted to others / दूसरों पर स्थानांतरित कर","Import duty / आयात शुल्क"],ans:1},
+  {q:"Indirect tax is / अप्रत्यक्ष कर है:",opts:["Income tax / आयकर","Wealth tax / संपत्ति कर","Tax on goods/services, burden shifted to consumer / वस्तुओं/सेवाओं पर कर, बोझ उपभोक्ता पर","Corporation tax / निगम कर"],ans:2},
+  {q:"GST replaced / GST ने बदला:",opts:["Income tax / आयकर","Multiple indirect taxes / अनेक अप्रत्यक्ष कर","Direct taxes only / केवल प्रत्यक्ष कर","Import duties only / केवल आयात शुल्क"],ans:1},
+  {q:"GST stands for / GST का अर्थ है:",opts:["General Sales Tax","Goods and Services Tax / वस्तु एवं सेवा कर","Government Standard Tax","Gross Spending Tax"],ans:1},
+  {q:"Progressive tax means / प्रगतिशील कर का अर्थ है:",opts:["Tax rate falls as income rises / आय बढ़ने पर कर दर घटती है","Tax rate rises as income rises / आय बढ़ने पर कर दर बढ़ती है","Same tax for all / सभी के लिए एक जैसा कर","Tax only on luxury goods / केवल विलासिता वस्तुओं पर कर"],ans:1},
+  {q:"Regressive tax means / प्रतिगामी कर का अर्थ है:",opts:["Tax rate rises with income / आय के साथ कर दर बढ़ती है","Tax rate falls as income rises / आय बढ़ने पर कर दर घटती है","Flat tax for all / सभी के लिए एक जैसा कर","Tax on income only / केवल आय पर कर"],ans:1},
+  {q:"Proportional tax means / समानुपातिक कर का अर्थ है:",opts:["Same rate regardless of income level / आय स्तर की परवाह किए बिना समान दर","Higher rate for rich / अमीरों के लिए अधिक दर","Lower rate for poor / गरीबों के लिए कम दर","No tax at all / बिल्कुल कर नहीं"],ans:0},
+  {q:"Union Budget in India is presented by / भारत में केंद्रीय बजट प्रस्तुत किया जाता है:",opts:["President of India / भारत के राष्ट्रपति","Prime Minister / प्रधानमंत्री","Finance Minister / वित्त मंत्री","RBI Governor / RBI गवर्नर"],ans:2},
+  {q:"Capital receipts include / पूँजीगत प्राप्तियों में शामिल हैं:",opts:["Tax revenue / कर राजस्व","Non-tax revenue / गैर-कर राजस्व","Borrowings and disinvestment / उधार और विनिवेश","Fines and fees / जुर्माना और शुल्क"],ans:2},
+  {q:"Revenue receipts include / राजस्व प्राप्तियों में शामिल हैं:",opts:["Borrowings / उधार","Disinvestment proceeds / विनिवेश आय","Tax and non-tax revenue / कर और गैर-कर राजस्व","Recovery of loans / ऋण वसूली"],ans:2},
+  {q:"Fiscal policy refers to / राजकोषीय नीति का संदर्भ है:",opts:["RBI's monetary decisions / RBI के मौद्रिक निर्णय","Government's use of taxation and expenditure / सरकार द्वारा कर और व्यय का उपयोग","Trade balance policies / व्यापार संतुलन नीतियाँ","Exchange rate policy / विनिमय दर नीति"],ans:1},
+  {q:"Public debt is / सार्वजनिक ऋण है:",opts:["Private sector loans / निजी क्षेत्र के ऋण","Money owed by government / सरकार पर बकाया धन","Consumer credit / उपभोक्ता ऋण","Foreign trade deficit / विदेश व्यापार घाटा"],ans:1},
+  {q:"Deficit financing means / घाटा वित्त पोषण का अर्थ है:",opts:["Government earns more than it spends / सरकार खर्च से अधिक कमाती है","Government covers deficit by borrowing or printing money / सरकार उधार या मुद्रा छापकर घाटा पूरा करती है","Reducing all government spending / सभी सरकारी खर्च घटाना","Increasing taxes / कर बढ़ाना"],ans:1},
+  {q:"Plan expenditure refers to / योजना व्यय का संदर्भ है:",opts:["Defense spending / रक्षा खर्च","Spending on development plans / विकास योजनाओं पर खर्च","Interest payment / ब्याज भुगतान","Government salaries / सरकारी वेतन"],ans:1},
+  {q:"Non-plan expenditure includes / गैर-योजना व्यय में शामिल है:",opts:["Infrastructure building / बुनियादी ढाँचे का निर्माण","Education spending / शिक्षा खर्च","Interest payments and defense / ब्याज भुगतान और रक्षा","Health programs / स्वास्थ्य कार्यक्रम"],ans:2},
+  {q:"Canons of taxation were given by / कराधान के सिद्धांत किसने दिए?",opts:["Karl Marx","Adam Smith","John Keynes","Alfred Marshall"],ans:1},
+  {q:"Canon of equity means / समानता का सिद्धांत अर्थ है:",opts:["All pay same amount / सभी समान राशि देते हैं","Tax based on ability to pay / भुगतान क्षमता के आधार पर कर","No taxes on poor / गरीबों पर कर नहीं","Equal tax on all goods / सभी वस्तुओं पर समान कर"],ans:1},
+  {q:"FRBM Act stands for / FRBM अधिनियम का अर्थ है:",opts:["Fiscal Responsibility and Budget Management Act / राजकोषीय उत्तरदायित्व और बजट प्रबंधन अधिनियम","Finance Reserve Bank Management","Federal Revenue Budget Model","Fixed Rate Banking Method"],ans:0},
+  {q:"Disinvestment means / विनिवेश का अर्थ है:",opts:["Government investing in new projects / सरकार नई परियोजनाओं में निवेश करती है","Government selling its stake in PSUs / सरकार PSUs में अपनी हिस्सेदारी बेचती है","Private companies buying banks / निजी कंपनियाँ बैंक खरीदती हैं","Increasing government employees / सरकारी कर्मचारी बढ़ाना"],ans:1},
+  {q:"Subsidies are / सब्सिडी है:",opts:["Taxes on goods / वस्तुओं पर कर","Financial assistance given by government to reduce prices / कीमत घटाने के लिए सरकार द्वारा वित्तीय सहायता","Loans from banks / बैंकों से ऋण","Trade barriers / व्यापार बाधाएँ"],ans:1},
+  {q:"Income tax is a / आयकर है:",opts:["Indirect tax / अप्रत्यक्ष कर","Direct tax / प्रत्यक्ष कर","Trade tax / व्यापार कर","Local body tax / स्थानीय निकाय कर"],ans:1},
+  {q:"Custom duty is a tax on / सीमा शुल्क है कर:",opts:["Income / आय","Imports and exports / आयात और निर्यात","Production / उत्पादन","Sales within country / देश में बिक्री"],ans:1},
+  {q:"Finance Commission in India is set up every / भारत में वित्त आयोग कितने वर्षों में गठित होता है?",opts:["2 years / 2 वर्ष","5 years / 5 वर्ष","10 years / 10 वर्ष","3 years / 3 वर्ष"],ans:1},
+  {q:"Transfer payments by government include / सरकारी हस्तांतरण भुगतान में शामिल है:",opts:["Salary to government employees / सरकारी कर्मचारियों को वेतन","Defense spending / रक्षा खर्च","Old age pension and scholarships / वृद्धावस्था पेंशन और छात्रवृत्ति","Infrastructure spending / बुनियादी ढाँचा खर्च"],ans:2}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

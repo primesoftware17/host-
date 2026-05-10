@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Carbon & Its Compounds Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Carbon & Its Compounds / कार्बन एवं उसके यौगिक)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Carbon is? / कार्बन?", options:["Non-metal","Metal","Gas","Liquid"], answer:0},
+
+{q:"Atomic number of carbon? / कार्बन का परमाणु क्रमांक?", options:["6","12","8","14"], answer:0},
+
+{q:"Carbon shows property of? / कार्बन की विशेषता?", options:["Catenation","Conductivity","Magnetism","Radioactivity"], answer:0},
+
+{q:"Catenation means? / कैटेनेशन?", options:["Self-linking of carbon atoms","Breaking bonds","Heat transfer","Electron loss"], answer:0},
+
+{q:"Carbon forms covalent bonds because? / क्यों?", options:["Tetravalent","Monovalent","Divalent","No valency"], answer:0},
+
+{q:"Valency of carbon is? / संयोजकता?", options:["4","2","1","3"], answer:0},
+
+{q:"Diamond is? / हीरा?", options:["Hard form of carbon","Soft metal","Gas","Liquid"], answer:0},
+
+{q:"Graphite is? / ग्रेफाइट?", options:["Good conductor","Insulator always","Gas","Liquid"], answer:0},
+
+{q:"Fullerene is? / फुलरीन?", options:["Allotrope of carbon","Metal","Gas","Salt"], answer:0},
+
+{q:"Hydrocarbons contain? / हाइड्रोकार्बन?", options:["Carbon and hydrogen","Only carbon","Only hydrogen","Oxygen only"], answer:0},
+
+{q:"Saturated hydrocarbons are? / संतृप्त?", options:["Alkanes","Alkenes","Alkynes","Alcohols"], answer:0},
+
+{q:"Unsaturated hydrocarbons are? / असंतृप्त?", options:["Alkenes & Alkynes","Alkanes","Ethers","Salts"], answer:0},
+
+{q:"Methane formula? / मीथेन?", options:["CH4","C2H6","CO2","CH3OH"], answer:0},
+
+{q:"Ethane formula? / ईथेन?", options:["C2H6","CH4","C2H4","C3H8"], answer:0},
+
+{q:"Ethanol is? / एथेनॉल?", options:["Alcohol","Acid","Base","Salt"], answer:0},
+
+{q:"Ethanol formula? / एथेनॉल सूत्र?", options:["C2H5OH","CH4","CO2","NaCl"], answer:0},
+
+{q:"Acetic acid is? / एसीटिक अम्ल?", options:["CH3COOH","HCl","H2SO4","NaOH"], answer:0},
+
+{q:"Carbon dioxide is? / CO2?", options:["Gas","Solid","Liquid","Metal"], answer:0},
+
+{q:"CO2 is used in? / उपयोग?", options:["Fire extinguisher","Cooking only","Welding","Painting"], answer:0},
+
+{q:"Carbon forms maximum? / अधिकतम?", options:["Covalent bonds","Ionic bonds","Metallic bonds","No bonds"], answer:0},
+
+{q:"Organic chemistry is study of? / अध्ययन?", options:["Carbon compounds","Metals","Gases only","Water only"], answer:0},
+
+{q:"Soap is made from? / साबुन?", options:["Fat + alkali","Acid + metal","Gas + gas","Water only"], answer:0},
+
+{q:"Detergent is? / डिटर्जेंट?", options:["Cleaning agent","Metal","Gas","Acid"], answer:0},
+
+{q:"Carbon burns in oxygen gives? / जलने पर?", options:["CO2","CO","O2","H2O"], answer:0},
+
+{q:"Incomplete combustion produces? / अपूर्ण दहन?", options:["CO","CO2","O2","H2"], answer:0},
+
+{q:"Carbon is present in? / कार्बन?", options:["All living things","Only air","Only water","Only metals"], answer:0},
+
+{q:"Diamond structure is? / संरचना?", options:["Tetrahedral","Linear","Flat","Gas"], answer:0},
+
+{q:"Graphite structure is? / ग्रेफाइट?", options:["Layered","3D spherical","Gas","Random"], answer:0},
+
+{q:"Carbon compounds mostly show? / गुण?", options:["Covalent bonding","Ionic bonding","Metallic bonding","No bonding"], answer:0},
+
+{q:"Alcohol functional group is? / समूह?", options:["-OH","-COOH","-CHO","-NH2"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

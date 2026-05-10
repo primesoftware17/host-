@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Maurya Empire)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"The Sangam Age is associated with which region?", options:["North India","South India","Central Asia","West Asia"], answer:1},
+{q:"Capital of the Cholas during Sangam period was:", options:["Madurai","Uraiyur","Kanchi","Vanji"], answer:1},
+{q:"Capital of the Pandyas was:", options:["Uraiyur","Madurai","Vanji","Puhar"], answer:1},
+{q:"Capital of the Cheras was:", options:["Vanji","Madurai","Uraiyur","Kanchi"], answer:0},
+{q:"Sangam literature was mainly written in:", options:["Sanskrit","Prakrit","Tamil","Pali"], answer:2},
+{q:"Tolkappiyam is a work on:", options:["Medicine","Grammar","Astronomy","Law"], answer:1},
+{q:"The earliest Sangam literature is:", options:["Silappadikaram","Tolkappiyam","Manimekalai","Purananuru"], answer:1},
+{q:"The famous Chola ruler Karikala is known for:", options:["Building Ganga canal","Conquering Sri Lanka","Building Kallanai dam","Founding Madurai"], answer:2},
+{q:"Kallanai (Grand Anicut) is built across river:", options:["Godavari","Krishna","Kaveri","Tungabhadra"], answer:2},
+{q:"The Chera kingdom was famous for trade in:", options:["Spices","Gold","Cotton only","Iron"], answer:0},
+
+{q:"Ancient South Indian ports traded with:", options:["Rome","China only","Japan","Africa only"], answer:0},
+{q:"Periplus of the Erythraean Sea describes:", options:["Indian temples","South Indian trade routes","Mauryan wars","Gupta coins"], answer:1},
+{q:"Megalithic culture is known for:", options:["Temple building","Burial monuments","Coin minting","City planning"], answer:1},
+{q:"The Sangam assemblies were held in:", options:["Three stages","Two cities","One dynasty","Four kingdoms"], answer:0},
+{q:"Madurai was the capital of:", options:["Cholas","Pandyas","Cheras","Satavahanas"], answer:1},
+{q:"Silappadikaram is a:", options:["Epic poem","Medical text","Law book","Astronomy text"], answer:0},
+{q:"Manimekalai is associated with:", options:["Jainism","Buddhism","Shaivism","Vaishnavism"], answer:1},
+{q:"The Chera king Senguttuvan is associated with:", options:["Sea trade","Silk trade","Kaveri irrigation","Stone architecture"], answer:0},
+{q:"Uraiyur was an important city of:", options:["Pandyas","Cholas","Cheras","Guptas"], answer:1},
+{q:"Puhar (Kaveripattinam) was a major:", options:["Hill station","Port city","Capital city","Temple town"], answer:1},
+
+{q:"Sangam age society was mainly:", options:["Urban industrial","Agricultural and trade based","Nomadic","Pastoral only"], answer:1},
+{q:"The main deity of early South India was:", options:["Indra","Murugan","Buddha","Shiva only"], answer:1},
+{q:"Roman coins found in South India indicate:", options:["War with Rome","Trade relations","Migration of Romans","Religious influence"], answer:1},
+{q:"The Satavahanas ruled mainly in:", options:["North India","Deccan region","Sri Lanka","Nepal"], answer:1},
+{q:"The famous Sangam academy was supported by:", options:["Kings","Foreign traders","Priests only","Farmers only"], answer:0},
+{q:"Agriculture in South India mainly depended on:", options:["Monsoon and rivers","Deserts","Snowfall","Oceans only"], answer:0},
+{q:"The Cheras ruled over present-day:", options:["Kerala region","Punjab region","Bihar region","Rajasthan region"], answer:0},
+{q:"Pandyas were known for:", options:["Horse trade","Pearl fisheries","Iron weapons","Silk weaving"], answer:1},
+{q:"Cholas are famous for:", options:["Sea power and navy","Mountain warfare","Nomadic life","Pastoral economy"], answer:0},
+{q:"The Sangam age ended around:", options:["300 CE","100 BCE","1000 CE","500 BCE"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

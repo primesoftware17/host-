@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - reform movements)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who founded the Brahmo Samaj? / ब्रह्म समाज की स्थापना किसने की?", options:["Raja Ram Mohan Roy / राजा राम मोहन राय","Swami Vivekananda / स्वामी विवेकानंद","Dayanand Saraswati / दयानंद सरस्वती","Ishwar Chandra Vidyasagar / ईश्वर चंद्र विद्यासागर"], answer:0},
+
+{q:"In which year was the Brahmo Samaj founded? / ब्रह्म समाज की स्थापना किस वर्ष हुई?", options:["1817 CE / 1817 ई.","1828 CE / 1828 ई.","1857 CE / 1857 ई.","1905 CE / 1905 ई."], answer:1},
+
+{q:"Who is known as the 'Father of Indian Renaissance'? / 'भारतीय पुनर्जागरण का जनक' किसे कहा जाता है?", options:["Raja Ram Mohan Roy / राजा राम मोहन राय","Bal Gangadhar Tilak / बाल गंगाधर तिलक","Gopal Krishna Gokhale / गोपाल कृष्ण गोखले","Dadabhai Naoroji / दादाभाई नौरोजी"], answer:0},
+
+{q:"Who founded the Arya Samaj? / आर्य समाज की स्थापना किसने की?", options:["Swami Vivekananda / स्वामी विवेकानंद","Dayanand Saraswati / दयानंद सरस्वती","Raja Ram Mohan Roy / राजा राम मोहन राय","Ramkrishna Paramhans / रामकृष्ण परमहंस"], answer:1},
+
+{q:"Which slogan is associated with Arya Samaj? / आर्य समाज से कौन-सा नारा जुड़ा है?", options:["Swaraj is my birthright / स्वराज मेरा जन्मसिद्ध अधिकार है","Go Back to Vedas / वेदों की ओर लौटो","Inquilab Zindabad / इंकलाब जिंदाबाद","Jai Hind / जय हिंद"], answer:1},
+
+{q:"Who founded the Ramakrishna Mission? / रामकृष्ण मिशन की स्थापना किसने की?", options:["Swami Vivekananda / स्वामी विवेकानंद","Ramkrishna Paramhans / रामकृष्ण परमहंस","Dayanand Saraswati / दयानंद सरस्वती","Aurobindo Ghosh / अरविंद घोष"], answer:0},
+
+{q:"In which year was the Ramakrishna Mission founded? / रामकृष्ण मिशन की स्थापना किस वर्ष हुई?", options:["1885 CE / 1885 ई.","1897 CE / 1897 ई.","1905 CE / 1905 ई.","1919 CE / 1919 ई."], answer:1},
+
+{q:"Who started the Aligarh Movement? / अलीगढ़ आंदोलन किसने शुरू किया?", options:["Syed Ahmed Khan / सैयद अहमद खान","Abul Kalam Azad / अबुल कलाम आज़ाद","Muhammad Ali Jinnah / मुहम्मद अली जिन्ना","Sir Syed Amir Ali / सर सैयद आमिर अली"], answer:0},
+
+{q:"Which institution was founded by Sir Syed Ahmed Khan? / सर सैयद अहमद खान ने कौन-सी संस्था की स्थापना की?", options:["Jamia Millia Islamia / जामिया मिलिया इस्लामिया","Aligarh Muslim University / अलीगढ़ मुस्लिम विश्वविद्यालय","Osmania University / उस्मानिया विश्वविद्यालय","Delhi University / दिल्ली विश्वविद्यालय"], answer:1},
+
+{q:"Who founded the Theosophical Society in India? / भारत में थियोसोफिकल सोसायटी किसने शुरू की?", options:["Annie Besant / एनी बेसेंट","Madam Blavatsky / मैडम ब्लावात्स्की","Swami Vivekananda / स्वामी विवेकानंद","Raja Ram Mohan Roy / राजा राम मोहन राय"], answer:1},
+
+{q:"Where was the headquarters of the Theosophical Society in India? / भारत में थियोसोफिकल सोसायटी का मुख्यालय कहाँ था?", options:["Mumbai / मुंबई","Chennai / चेन्नई","Kolkata / कोलकाता","Delhi / दिल्ली"], answer:1},
+
+{q:"Who was associated with the Women's Education movement in India? / भारत में महिला शिक्षा आंदोलन से कौन जुड़े थे?", options:["Ishwar Chandra Vidyasagar / ईश्वर चंद्र विद्यासागर","Bal Gangadhar Tilak / बाल गंगाधर तिलक","Lala Lajpat Rai / लाला लाजपत राय","Gopal Krishna Gokhale / गोपाल कृष्ण गोखले"], answer:0},
+
+{q:"Who is known for widow remarriage reform in India? / विधवा पुनर्विवाह सुधार के लिए कौन प्रसिद्ध हैं?", options:["Raja Ram Mohan Roy / राजा राम मोहन राय","Ishwar Chandra Vidyasagar / ईश्वर चंद्र विद्यासागर","Swami Vivekananda / स्वामी विवेकानंद","Dayanand Saraswati / दयानंद सरस्वती"], answer:1},
+
+{q:"Which social reformer opposed caste discrimination and untouchability strongly? / जाति भेद और छुआछूत का विरोध किस समाज सुधारक ने किया?", options:["B.R. Ambedkar / बी.आर. अंबेडकर","Raja Ram Mohan Roy / राजा राम मोहन राय","Swami Vivekananda / स्वामी विवेकानंद","Dadabhai Naoroji / दादाभाई नौरोजी"], answer:0},
+
+{q:"Who founded the Prarthana Samaj? / प्रार्थना समाज की स्थापना किसने की?", options:["Atmaram Pandurang / आत्माराम पांडुरंग","Raja Ram Mohan Roy / राजा राम मोहन राय","Swami Vivekananda / स्वामी विवेकानंद","Dayanand Saraswati / दयानंद सरस्वती"], answer:0},
+
+{q:"Which reform movement was influenced by Western education and rationalism? / कौन-सा सुधार आंदोलन पश्चिमी शिक्षा और तर्कवाद से प्रभावित था?", options:["Brahmo Samaj / ब्रह्म समाज","Arya Samaj / आर्य समाज","Bhakti Movement / भक्ति आंदोलन","Sufi Movement / सूफी आंदोलन"], answer:0},
+
+{q:"Who wrote 'Hind Swaraj'? / 'हिंद स्वराज' किसने लिखा?", options:["Bal Gangadhar Tilak / बाल गंगाधर तिलक","Mahatma Gandhi / महात्मा गांधी","Jawaharlal Nehru / जवाहरलाल नेहरू","Subhas Chandra Bose / सुभाष चंद्र बोस"], answer:1},
+
+{q:"Which reformer founded the Servants of India Society? / सर्वेंट्स ऑफ इंडिया सोसाइटी किसने स्थापित की?", options:["Gopal Krishna Gokhale / गोपाल कृष्ण गोखले","Bal Gangadhar Tilak / बाल गंगाधर तिलक","Lala Lajpat Rai / लाला लाजपत राय","Madan Mohan Malaviya / मदन मोहन मालवीय"], answer:0},
+
+{q:"Who was known as 'Lokmanya' Tilak? / 'लोकमान्य' तिलक किसे कहा जाता है?", options:["Bal Gangadhar Tilak / बाल गंगाधर तिलक","Lala Lajpat Rai / लाला लाजपत राय","Bipin Chandra Pal / बिपिन चंद्र पाल","Gopal Krishna Gokhale / गोपाल कृष्ण गोखले"], answer:0},
+
+{q:"Which movement emphasized social equality and removal of superstitions? / किस आंदोलन ने सामाजिक समानता और अंधविश्वास हटाने पर जोर दिया?", options:["Reform Movements / सुधार आंदोलन","Revolt of 1857 / 1857 का विद्रोह","Non-Cooperation Movement / असहयोग आंदोलन","Civil Disobedience Movement / सविनय अवज्ञा आंदोलन"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

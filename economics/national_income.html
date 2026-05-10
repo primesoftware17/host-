@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>National Income - MCQ Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Fraunces:wght@700&display=swap');
+  :root{--bg:#0a192f;--card:#112240;--accent:#64ffda;--text:#ccd6f6;--sub:#8892b0;--correct:#64ffda;--wrong:#ff6b6b;--border:#233554;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:30px 20px;}
+  .hero{text-align:center;margin-bottom:40px;}
+  .tag{display:inline-block;border:1px solid var(--accent);color:var(--accent);font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:4px;margin-bottom:16px;}
+  h1{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,50px);color:#e6f1ff;}
+  .sub{color:var(--sub);font-size:14px;margin-top:8px;}
+  .quiz-wrap{max-width:780px;margin:0 auto;}
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:border-color .3s;}
+  .q-card.answered{border-color:var(--accent)44;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:16px;color:#e6f1ff;}
+  .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--border);color:var(--text);padding:11px 16px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px;font-family:'Space Grotesk',sans-serif;transition:all .2s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+  .opt.correct{border-color:var(--correct);color:var(--correct);background:var(--correct)12;}
+  .opt.wrong{border-color:var(--wrong);color:var(--wrong);background:var(--wrong)12;}
+  .submit-area{text-align:center;margin:30px 0;}
+  .submit-btn{background:transparent;color:var(--accent);font-weight:700;font-size:16px;padding:14px 50px;border:2px solid var(--accent);border-radius:4px;cursor:pointer;font-family:'Space Grotesk',sans-serif;letter-spacing:2px;transition:all .2s;}
+  .submit-btn:hover{background:var(--accent)18;}
+  .score-box{display:none;background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:30px;text-align:center;margin-top:20px;}
+  .score-box.show{display:block;}
+  .score-big{font-family:'Fraunces',serif;font-size:60px;color:var(--accent);}
+  .score-label{color:var(--sub);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Chapter 5</div>
+  <h1>National Income</h1>
+  <p class="sub">30 Multiple Choice Questions — GDP, GNP, NNP & Measurement Methods</p>
+</div>
+<div class="quiz-wrap">
+  <div id="quiz"></div>
+  <div class="submit-area"><button class="submit-btn" onclick="showScore()">SUBMIT QUIZ</button></div>
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreVal"></div>
+    <div class="score-label">Your Score (out of 30)</div>
+  </div>
+</div>
+<script>
+const questions=[
+  {q:"National Income is the total value of / राष्ट्रीय आय है:",opts:["Exports only / केवल निर्यात","All goods and services produced in a year / एक वर्ष में उत्पादित सभी वस्तुओं और सेवाओं का मूल्य","Government spending only / केवल सरकारी खर्च","Taxes collected / एकत्रित कर"],ans:1},
+  {q:"GDP stands for / GDP का पूर्ण रूप है:",opts:["General Domestic Product","Gross Domestic Product / सकल घरेलू उत्पाद","Government Domestic Policy","Gross Development Plan"],ans:1},
+  {q:"GNP stands for / GNP का पूर्ण रूप है:",opts:["Gross National Product / सकल राष्ट्रीय उत्पाद","Government National Policy","General National Productivity","Gross Net Product"],ans:0},
+  {q:"NNP = ? / NNP = ?",opts:["GNP + Depreciation / GNP + मूल्यह्रास","GNP - Depreciation / GNP - मूल्यह्रास","GDP + Net Factor Income / GDP + शुद्ध कारक आय","GDP - Taxes / GDP - कर"],ans:1},
+  {q:"GDP at market price - Indirect taxes + Subsidies = ? / बाजार कीमत पर GDP - अप्रत्यक्ष कर + सब्सिडी = ?",opts:["NNP at MP","GNP at FC","GDP at FC / कारक लागत पर GDP","NDP at MP"],ans:2},
+  {q:"Which method calculates GDP by adding all incomes? / आय जोड़कर GDP की गणना कौन सी विधि करती है?",opts:["Expenditure method / व्यय विधि","Value added method / मूल्य संवर्धित विधि","Income method / आय विधि","Output method / उत्पाद विधि"],ans:2},
+  {q:"Which method calculates GDP by summing all spending? / सभी व्यय जोड़कर GDP की गणना कौन सी विधि करती है?",opts:["Income method / आय विधि","Expenditure method / व्यय विधि","Output method / उत्पाद विधि","Value added method / मूल्य संवर्धित विधि"],ans:1},
+  {q:"Real GDP differs from Nominal GDP in that / वास्तविक GDP और नाममात्र GDP में अंतर है:",opts:["Real GDP includes trade / वास्तविक GDP में व्यापार शामिल है","Real GDP is adjusted for inflation / वास्तविक GDP मुद्रास्फीति के लिए समायोजित है","Real GDP counts only agriculture / वास्तविक GDP केवल कृषि गिनता है","Nominal GDP includes only exports / नाममात्र GDP में केवल निर्यात शामिल है"],ans:1},
+  {q:"Per capita income = ? / प्रति व्यक्ति आय = ?",opts:["National income × Population / राष्ट्रीय आय × जनसंख्या","National income / Population / राष्ट्रीय आय / जनसंख्या","Population / National income / जनसंख्या / राष्ट्रीय आय","GDP + Trade / GDP + व्यापार"],ans:1},
+  {q:"Depreciation is also called / मूल्यह्रास को यह भी कहते हैं:",opts:["Capital formation / पूँजी निर्माण","Consumption of fixed capital / स्थिर पूँजी की खपत","Net investment / शुद्ध निवेश","Government expenditure / सरकारी व्यय"],ans:1},
+  {q:"Transfer payments are / हस्तांतरण भुगतान हैं:",opts:["Included in national income / राष्ट्रीय आय में शामिल","Not included in national income / राष्ट्रीय आय में शामिल नहीं","Part of GDP calculation / GDP गणना का हिस्सा","Part of exports / निर्यात का हिस्सा"],ans:1},
+  {q:"NDP = ? / NDP = ?",opts:["GDP + Depreciation","GDP - Depreciation / GDP - मूल्यह्रास","GNP - Net exports","GDP × Price level"],ans:1},
+  {q:"GNP = GDP + ? / GNP = GDP + ?",opts:["Government revenue / सरकारी राजस्व","Net factor income from abroad / विदेश से शुद्ध कारक आय","Total exports / कुल निर्यात","Subsidies / सब्सिडी"],ans:1},
+  {q:"Double counting problem is avoided by / दोहरी गणना की समस्या से बचा जाता है:",opts:["Income method / आय विधि","Expenditure method / व्यय विधि","Value added method / मूल्य संवर्धित विधि","Output method / उत्पाद विधि"],ans:2},
+  {q:"Value added means / मूल्य संवर्धन का अर्थ है:",opts:["Final sale price only / केवल अंतिम बिक्री कीमत","Difference between output value and input cost / आउटपुट मूल्य और इनपुट लागत का अंतर","All profits earned / सभी अर्जित लाभ","Export earnings / निर्यात आय"],ans:1},
+  {q:"National income at factor cost includes / कारक लागत पर राष्ट्रीय आय में शामिल है:",opts:["Wages, rent, interest, profit / मजदूरी, किराया, ब्याज, लाभ","Taxes only / केवल कर","Imports only / केवल आयात","Government grants / सरकारी अनुदान"],ans:0},
+  {q:"GDP deflator is used to / GDP deflator का उपयोग होता है:",opts:["Measure unemployment / बेरोजगारी मापने के लिए","Convert nominal to real GDP / नाममात्र GDP को वास्तविक में बदलने के लिए","Calculate trade balance / व्यापार संतुलन गणना के लिए","Measure poverty / गरीबी मापने के लिए"],ans:1},
+  {q:"Which is included in GDP? / GDP में क्या शामिल है?",opts:["Housewife's domestic work / गृहिणी का घरेलू काम","Government services / सरकारी सेवाएँ","Volunteer work / स्वयंसेवी कार्य","Black market transactions / काले बाजार के लेनदेन"],ans:1},
+  {q:"Personal income is / व्यक्तिगत आय है:",opts:["Income received by individuals / व्यक्तियों द्वारा प्राप्त आय","Corporate profit only / केवल कॉर्पोरेट लाभ","Government taxes / सरकारी कर","Export earnings / निर्यात आय"],ans:0},
+  {q:"Disposable income = ? / प्रयोज्य आय = ?",opts:["Personal income + Taxes","Personal income - Direct taxes / व्यक्तिगत आय - प्रत्यक्ष कर","GDP / Population","NNP - Depreciation"],ans:1},
+  {q:"Green GDP adjusts for / हरित GDP में समायोजित होता है:",opts:["Trade deficit / व्यापार घाटा","Environmental degradation / पर्यावरण क्षरण","Military expenditure / सैन्य खर्च","Healthcare spending / स्वास्थ्य खर्च"],ans:1},
+  {q:"Human Development Index includes / मानव विकास सूचकांक में शामिल है:",opts:["Only income / केवल आय","Income, health and education / आय, स्वास्थ्य और शिक्षा","Only health / केवल स्वास्थ्य","Only education / केवल शिक्षा"],ans:1},
+  {q:"HDI was developed by / HDI किसने विकसित किया?",opts:["World Bank","IMF","UNDP / संयुक्त राष्ट्र विकास कार्यक्रम","WTO"],ans:2},
+  {q:"Which sector contributes most to India's GDP? / भारत की GDP में किस क्षेत्र का सर्वाधिक योगदान है?",opts:["Agriculture / कृषि","Industry / उद्योग","Services / सेवाएँ","Mining / खनन"],ans:2},
+  {q:"If GDP of a country rises, it means / यदि किसी देश का GDP बढ़ता है तो:",opts:["Population declined / जनसंख्या घटी","Total output of economy increased / अर्थव्यवस्था का कुल उत्पादन बढ़ा","Exports fell / निर्यात घटा","Taxes reduced / कर घटे"],ans:1},
+  {q:"Purchasing Power Parity (PPP) is used to / क्रय शक्ति समता (PPP) का उपयोग होता है:",opts:["Compare living standards across countries / देशों में जीवन स्तर की तुलना","Measure inflation / मुद्रास्फीति मापने के लिए","Calculate taxes / कर की गणना के लिए","Measure exports / निर्यात मापने के लिए"],ans:0},
+  {q:"National income accounting concept was developed by / राष्ट्रीय आय लेखांकन अवधारणा किसने विकसित की?",opts:["Karl Marx","Simon Kuznets","Adam Smith","John Keynes"],ans:1},
+  {q:"Intermediate goods are / मध्यवर्ती वस्तुएँ हैं:",opts:["Final consumer goods / अंतिम उपभोक्ता वस्तुएँ","Goods used in producing other goods / अन्य वस्तुओं के उत्पादन में प्रयुक्त वस्तुएँ","Luxury items / विलासिता वस्तुएँ","Government services / सरकारी सेवाएँ"],ans:1},
+  {q:"Final goods are / अंतिम वस्तुएँ हैं:",opts:["Goods used in further production / आगे उत्पादन में उपयोग होने वाली वस्तुएँ","Goods used by end consumer / अंतिम उपभोक्ता द्वारा उपयोग होने वाली वस्तुएँ","Government goods / सरकारी वस्तुएँ","Exported goods only / केवल निर्यातित वस्तुएँ"],ans:1},
+  {q:"Net exports = ? / शुद्ध निर्यात = ?",opts:["Exports + Imports","Exports - Imports / निर्यात - आयात","Imports - Exports","Exports × Imports"],ans:1}
+];
+let score=0;
+function load(){
+  const c=document.getElementById("quiz");
+  questions.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q-card";
+    d.innerHTML=`<div class="q-num">Question ${i+1} of ${questions.length}</div><div class="q-text">${item.q}</div>`;
+    item.opts.forEach((o,j)=>{
+      const b=document.createElement("button"); b.className="opt"; b.textContent=o;
+      b.onclick=function(){
+        if(d.classList.contains("answered")) return;
+        d.classList.add("answered");
+        d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+        if(j===item.ans){b.classList.add("correct");score++;}
+        else{b.classList.add("wrong"); d.querySelectorAll(".opt")[item.ans].classList.add("correct");}
+      };
+      d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+function showScore(){
+  const box=document.getElementById("scoreBox");
+  box.classList.add("show");
+  document.getElementById("scoreVal").textContent=score+" / "+questions.length;
+  box.scrollIntoView({behavior:"smooth"});
+}
+load();
+</script>
+</body>
+</html>

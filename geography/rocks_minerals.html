@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Rocks and Minerals)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What are the three main types of rocks? / चट्टानों के तीन मुख्य प्रकार कौन-से हैं?", options:["Igneous, Sedimentary, Metamorphic / आग्नेय, अवसादी, कायांतरित","Granite, Marble, Sand / ग्रेनाइट, संगमरमर, रेत","Soil, Water, Air / मिट्टी, पानी, हवा","Metal, Wood, Stone / धातु, लकड़ी, पत्थर"], answer:0},
+
+{q:"Which rocks are formed from cooled magma? / ठंडे हुए मैग्मा से कौन-सी चट्टान बनती है?", options:["Sedimentary / अवसादी","Igneous / आग्नेय","Metamorphic / कायांतरित","Limestone / चूना पत्थर"], answer:1},
+
+{q:"Which rock is formed by layers of sediments? / परतों से बनी चट्टान कौन-सी है?", options:["Igneous / आग्नेय","Metamorphic / कायांतरित","Sedimentary / अवसादी","Granite / ग्रेनाइट"], answer:2},
+
+{q:"Which rocks are formed due to heat and pressure? / गर्मी और दबाव से कौन-सी चट्टान बनती है?", options:["Igneous / आग्नेय","Sedimentary / अवसादी","Metamorphic / कायांतरित","Basalt / बेसाल्ट"], answer:2},
+
+{q:"What is the main component of rocks? / चट्टानों का मुख्य घटक क्या होता है?", options:["Minerals / खनिज","Water / पानी","Gas / गैस","Soil / मिट्टी"], answer:0},
+
+{q:"Which is an example of igneous rock? / आग्नेय चट्टान का उदाहरण कौन-सा है?", options:["Limestone / चूना पत्थर","Marble / संगमरमर","Granite / ग्रेनाइट","Coal / कोयला"], answer:2},
+
+{q:"Which is an example of sedimentary rock? / अवसादी चट्टान का उदाहरण कौन-सा है?", options:["Basalt / बेसाल्ट","Granite / ग्रेनाइट","Sandstone / बलुआ पत्थर","Marble / संगमरमर"], answer:2},
+
+{q:"Which is an example of metamorphic rock? / कायांतरित चट्टान का उदाहरण कौन-सा है?", options:["Sandstone / बलुआ पत्थर","Limestone / चूना पत्थर","Marble / संगमरमर","Pumice / प्यूमिस"], answer:2},
+
+{q:"What are minerals? / खनिज क्या होते हैं?", options:["Living organisms / जीवित जीव","Naturally occurring inorganic substances / प्राकृतिक अकार्बनिक पदार्थ","Artificial materials / कृत्रिम पदार्थ","Gases in air / वायु में गैस"], answer:1},
+
+{q:"Which mineral is used to make pencils? / पेंसिल बनाने में कौन-सा खनिज उपयोग होता है?", options:["Quartz / क्वार्ट्ज","Graphite / ग्रेफाइट","Feldspar / फेल्डस्पार","Mica / अभ्रक"], answer:1},
+
+{q:"Which mineral is the hardest natural substance? / सबसे कठोर प्राकृतिक पदार्थ कौन-सा है?", options:["Gold / सोना","Iron / लोहा","Diamond / हीरा","Copper / तांबा"], answer:2},
+
+{q:"Which rock is called the 'parent rock'? / 'मूल चट्टान' किसे कहा जाता है?", options:["Igneous rock / आग्नेय चट्टान","Sedimentary rock / अवसादी चट्टान","Metamorphic rock / कायांतरित चट्टान","Soil / मिट्टी"], answer:0},
+
+{q:"Which process changes sediment into sedimentary rock? / अवसाद को अवसादी चट्टान में बदलने की प्रक्रिया क्या है?", options:["Melting / पिघलना","Cooling / ठंडा होना","Compaction and cementation / संपीड़न और सीमेंटेशन","Evaporation / वाष्पीकरण"], answer:2},
+
+{q:"Which rock is formed inside the Earth? / पृथ्वी के अंदर कौन-सी चट्टान बनती है?", options:["Sedimentary / अवसादी","Igneous / आग्नेय","Soil / मिट्टी","Clay / चिकनी मिट्टी"], answer:1},
+
+{q:"Which rock is formed on Earth's surface? / पृथ्वी की सतह पर कौन-सी चट्टान बनती है?", options:["Igneous / आग्नेय","Sedimentary / अवसादी","Mantle rock / मेंटल चट्टान","Core rock / क्रोड चट्टान"], answer:1},
+
+{q:"What is limestone mainly made of? / चूना पत्थर मुख्य रूप से किससे बना होता है?", options:["Calcium carbonate / कैल्शियम कार्बोनेट","Iron / लोहा","Silicon / सिलिकॉन","Aluminium / एल्युमिनियम"], answer:0},
+
+{q:"Which rock is used in construction of buildings? / भवन निर्माण में कौन-सी चट्टान उपयोग होती है?", options:["Granite / ग्रेनाइट","Coal / कोयला","Graphite / ग्रेफाइट","Sulphur / सल्फर"], answer:0},
+
+{q:"What is soil formed from? / मिट्टी किससे बनती है?", options:["Only water / केवल पानी","Broken rocks / टूटी हुई चट्टानें","Only plants / केवल पौधे","Only air / केवल हवा"], answer:1},
+
+{q:"Which rock cycle process breaks rocks into smaller particles? / कौन-सी प्रक्रिया चट्टानों को छोटे कणों में तोड़ती है?", options:["Erosion / अपरदन","Melting / पिघलना","Cooling / ठंडा होना","Fusion / संलयन"], answer:0},
+
+{q:"Which mineral is used in making glass? / कांच बनाने में कौन-सा खनिज उपयोग होता है?", options:["Quartz / क्वार्ट्ज","Gold / सोना","Copper / तांबा","Iron / लोहा"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

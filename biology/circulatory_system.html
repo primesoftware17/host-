@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Circulatory System Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Biology Quiz (30 Questions - Circulatory System / परिसंचरण तंत्र)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Circulatory system transports? / परिवहन?", options:["Blood","Food only","Air only","Water only"], answer:0},
+
+{q:"Heart is? / हृदय?", options:["Pump organ","Digestive organ","Bone","Muscle only"], answer:0},
+
+{q:"Blood carries? / रक्त?", options:["Oxygen & nutrients","Only water","Only gases","Only salts"], answer:0},
+
+{q:"Red blood cells contain? / RBC?", options:["Haemoglobin","Chlorophyll","DNA only","Fat"], answer:0},
+
+{q:"White blood cells help in? / WBC?", options:["Immunity","Digestion","Breathing","Movement"], answer:0},
+
+{q:"Platelets help in? / प्लेटलेट्स?", options:["Clotting","Digestion","Respiration","Transport"], answer:0},
+
+{q:"Blood is made of? / रक्त?", options:["Plasma, RBC, WBC, platelets","Only RBC","Only plasma","Only WBC"], answer:0},
+
+{q:"Blood vessels include? / रक्त वाहिकाएँ?", options:["Arteries, veins, capillaries","Only arteries","Only veins","Only capillaries"], answer:0},
+
+{q:"Arteries carry blood? / धमनियाँ?", options:["Away from heart","To heart","Only oxygen","Only CO2"], answer:0},
+
+{q:"Veins carry blood? / शिराएँ?", options:["To heart","Away from heart","Only oxygen","Only food"], answer:0},
+
+{q:"Capillaries are for? / केशिकाएँ?", options:["Exchange of materials","Digestion","Breathing","Movement"], answer:0},
+
+{q:"Heart has how many chambers? / कक्ष?", options:["4","2","3","1"], answer:0},
+
+{q:"Upper chambers are called? / आलिंद?", options:["Atria","Ventricles","Valves","Arteries"], answer:0},
+
+{q:"Lower chambers are called? / निलय?", options:["Ventricles","Atria","Capillaries","Veins"], answer:0},
+
+{q:"Blood circulation was discovered by? / खोज?", options:["William Harvey","Newton","Darwin","Hooke"], answer:0},
+
+{q:"Blood is? / रक्त?", options:["Fluid connective tissue","Solid","Gas","Bone"], answer:0},
+
+{q:"Heartbeat is controlled by? / नियंत्रण?", options:["SA node","Brain only","Liver","Lungs"], answer:0},
+
+{q:"Pulse is felt in? / नाड़ी?", options:["Arteries","Veins","Capillaries","Heart only"], answer:0},
+
+{q:"Oxygenated blood is? / ऑक्सीजन?", options:["Rich in oxygen","Low oxygen","No oxygen","Only CO2"], answer:0},
+
+{q:"Deoxygenated blood is? / CO2?", options:["Low oxygen","High oxygen","Pure oxygen","No blood"], answer:0},
+
+{q:"Blood pressure is measured in? / इकाई?", options:["mmHg","Kg","Litres","Meters"], answer:0},
+
+{q:"Hypertension means? / उच्च रक्तचाप?", options:["High BP","Low BP","Normal BP","No BP"], answer:0},
+
+{q:"Heart pumps blood to? / शरीर?", options:["Whole body","Only brain","Only lungs","Only liver"], answer:0},
+
+{q:"Valves prevent? / वाल्व?", options:["Backflow","Flow","Digestion","Breathing"], answer:0},
+
+{q:"Blood clotting prevents? / रोक?", options:["Excess bleeding","Digestion","Breathing","Infection only"], answer:0},
+
+{q:"Plasma is? / प्लाज्मा?", options:["Liquid part of blood","Solid part","Gas","Tissue"], answer:0},
+
+{q:"Circulatory system is also called? / प्रणाली?", options:["Cardiovascular system","Digestive system","Respiratory system","Nervous system"], answer:0},
+
+{q:"Exercise affects heart rate? / व्यायाम?", options:["Increases","Decreases always","No change","Stops heart"], answer:0},
+
+{q:"Healthy heart needs? / स्वास्थ्य?", options:["Exercise & diet","Smoking","Stress","Fat only"], answer:0},
+
+{q:"Blood carries waste to? / अपशिष्ट?", options:["Kidneys","Heart","Lungs only","Brain"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ratio & Proportion Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Ratio & Proportion)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Ratio of 2 and 4 is?", options:["1:2","2:1","2:4","4:2"], answer:0},
+
+{q:"Simplest form of 6:12 is?", options:["1:2","2:1","3:6","6:3"], answer:0},
+
+{q:"Proportion means?", options:["Equal ratios","Sum of ratios","Difference of ratios","Product of ratios"], answer:0},
+
+{q:"If 3:6 = 1:x, value of x?", options:["1","2","3","4"], answer:1},
+
+{q:"Ratio of 5 and 10 is?", options:["1:2","2:1","5:10","10:5"], answer:0},
+
+{q:"If a:b = 2:3, then a/b = ?", options:["2/3","3/2","1","5"], answer:0},
+
+{q:"Mean proportion of 4 and 9 is?", options:["6","7","8","9"], answer:0},
+
+{q:"Fourth proportional of 2,3,4 is?", options:["5","6","7","8"], answer:1},
+
+{q:"Ratio 8:16 simplifies to?", options:["1:2","2:1","3:4","4:3"], answer:0},
+
+{q:"If 5: x = 10:20, x = ?", options:["5","10","15","20"], answer:1},
+
+{q:"Proportion symbol is?", options:["=","+","-","×"], answer:0},
+
+{q:"If a:b = c:d, then a×d = ?", options:["b×c","a×c","b×d","a×b"], answer:0},
+
+{q:"Ratio compares?", options:["Quantities","Time","Speed","Area"], answer:0},
+
+{q:"Simplest form of 15:25?", options:["3:5","5:3","1:2","2:1"], answer:0},
+
+{q:"If 7: x = 14:28, x = ?", options:["14","21","28","7"], answer:2},
+
+{q:"Ratio of 1 hour to 60 minutes?", options:["1:1","1:60","60:1","2:1"], answer:0},
+
+{q:"In proportion, cross multiplication is used for?", options:["Addition","Equality check","Division","Subtraction"], answer:1},
+
+{q:"Ratio 9:3 simplifies to?", options:["3:1","1:3","2:1","9:1"], answer:0},
+
+{q:"If a:b = 4:5, then b/a = ?", options:["4/5","5/4","1","9"], answer:1},
+
+{q:"Mean proportion between 9 and 16 is?", options:["12","13","14","15"], answer:0},
+
+{q:"Ratio of 100 and 25?", options:["4:1","1:4","2:1","3:1"], answer:0},
+
+{q:"If 2:3 = x:9, x = ?", options:["4","5","6","7"], answer:2},
+
+{q:"Simplest form of 18:24?", options:["3:4","4:3","2:3","1:2"], answer:0},
+
+{q:"Ratio 12:6 simplifies to?", options:["2:1","1:2","3:1","1:3"], answer:0},
+
+{q:"If a:b = b:c, it is called?", options:["continued proportion","simple ratio","mean ratio","unit ratio"], answer:0},
+
+{q:"Third proportional of 2,4 is?", options:["6","8","10","12"], answer:1},
+
+{q:"Ratio of 50 to 100?", options:["1:2","2:1","3:1","1:3"], answer:0},
+
+{q:"If 3:5 = 6:x, x = ?", options:["8","9","10","11"], answer:2},
+
+{q:"Ratio compares quantities of?", options:["same unit","different unit","both","none"], answer:0},
+
+{q:"Proportion is used to find?", options:["missing value","sum","difference","product"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gravitation Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Gravitation)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Who discovered gravitation? / गुरुत्वाकर्षण किसने खोजा?", options:["Newton","Einstein","Galileo","Kepler"], answer:0},
+
+{q:"SI unit of force of gravity is?", options:["Newton","Joule","Watt","Pascal"], answer:0},
+
+{q:"Gravity is a force of?", options:["attraction","repulsion","friction","motion"], answer:0},
+
+{q:"Value of g on Earth is?", options:["9.8 m/s²","10 m/s","5 m/s²","1 m/s²"], answer:0},
+
+{q:"SI unit of g is?", options:["m/s²","kg","N","m"], answer:0},
+
+{q:"Weight = ?", options:["mg","m/v","F×d","mgh"], answer:0},
+
+{q:"Mass is measured in?", options:["kg","N","m","J"], answer:0},
+
+{q:"Weight is measured in?", options:["Newton","kg","m","s"], answer:0},
+
+{q:"Gravitational force depends on?", options:["mass and distance","speed","time","color"], answer:0},
+
+{q:"Force decreases when distance?", options:["increases","decreases","same","zero"], answer:0},
+
+{q:"Free fall means?", options:["only gravity acts","no force","no motion","constant speed"], answer:0},
+
+{q:"Acceleration due to gravity is?", options:["9.8 m/s²","1 m/s²","10 m/s","5 m/s²"], answer:0},
+
+{q:"Weight becomes zero in?", options:["space","earth","water","air"], answer:0},
+
+{q:"Mass of a body is?", options:["constant","changing","zero","infinite"], answer:0},
+
+{q:"Weight depends on?", options:["gravity","mass only","speed","time"], answer:0},
+
+{q:"Gravitational force formula is?", options:["Gm1m2/r²","ma","mgh","F=ma"], answer:0},
+
+{q:"G is called?", options:["universal gravitational constant","gravity","force","energy"], answer:0},
+
+{q:"Value of G is?", options:["6.67×10⁻¹¹","9.8","10","1"], answer:0},
+
+{q:"Free fall acceleration is same for?", options:["all bodies","heavy only","light only","none"], answer:0},
+
+{q:"Weight in moon is?", options:["less than earth","same","more","zero"], answer:0},
+
+{q:"Gravity is strongest on?", options:["earth","moon","sun","space"], answer:2},
+
+{q:"Escape velocity is related to?", options:["gravity","force","energy","time"], answer:0},
+
+{q:"Gravity keeps planets in?", options:["orbit","rest","motionless","random motion"], answer:0},
+
+{q:"SI unit of mass is?", options:["kg","N","m","s"], answer:0},
+
+{q:"If mass increases, weight?", options:["increases","decreases","zero","same"], answer:0},
+
+{q:"Force of gravity acts towards?", options:["center of earth","sky","sideways","outwards"], answer:0},
+
+{q:"Weight is vector or scalar?", options:["vector","scalar","both","none"], answer:0},
+
+{q:"Mass is scalar or vector?", options:["scalar","vector","both","none"], answer:0},
+
+{q:"Gravity is weakest on?", options:["space","earth","moon","sun"], answer:0},
+
+{q:"Free fall object has acceleration?", options:["g","0","1","infinite"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

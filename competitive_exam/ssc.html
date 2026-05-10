@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Exam MCQ Quiz</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    padding:20px;
+}
+
+.quiz-container{
+    max-width:1100px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+h1{
+    text-align:center;
+    color:#333;
+}
+
+.section-title{
+    background:#222;
+    color:white;
+    padding:12px;
+    margin-top:40px;
+    border-radius:5px;
+}
+
+.subject-title{
+    background:#2196F3;
+    color:white;
+    padding:10px;
+    margin-top:25px;
+    border-radius:5px;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:10px;
+    border-bottom:1px solid #ccc;
+}
+
+.option{
+    display:block;
+    padding:10px;
+    margin:5px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    cursor:pointer;
+    background:#fafafa;
+}
+
+.option:hover{
+    background:#eee;
+}
+
+.correct{
+    background:#4CAF50;
+    color:white;
+}
+
+.wrong{
+    background:#f44336;
+    color:white;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    background:#2196F3;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+#score{
+    margin-top:20px;
+    font-size:24px;
+    color:#333;
+    text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+<h1>SSC Exam MCQ Quiz</h1>
+
+<div id="quiz"></div>
+
+<button onclick="showScore()">Submit Quiz</button>
+
+<h2 id="score"></h2>
+
+</div>
+
+<script>
+
+const quizData = [
+
+/* ================= SSC CGL ================= */
+
+{
+section:"SSC CGL",
+subject:"General Awareness",
+questions:[
+
+{q:"Who is known as Father of Nation?", options:["Mahatma Gandhi","Nehru","Subhash Bose","Patel"], answer:0},
+
+{q:"Capital of India?", options:["Delhi","Mumbai","Patna","Kolkata"], answer:0},
+
+{q:"National animal of India?", options:["Tiger","Lion","Elephant","Leopard"], answer:0},
+
+{q:"Who invented bulb?", options:["Thomas Edison","Newton","Einstein","Tesla"], answer:0},
+
+{q:"Which planet is called Red Planet?", options:["Mars","Venus","Earth","Saturn"], answer:0}
+
+]
+},
+
+{
+section:"SSC CGL",
+subject:"Reasoning",
+questions:[
+
+{q:"Find next number: 2,4,6,8,?", options:["10","12","14","16"], answer:0},
+
+{q:"Odd one out?", options:["Apple","Banana","Mango","Car"], answer:3},
+
+{q:"Mirror of LEFT?", options:["TFEL","LEFT","FELT","TELF"], answer:0},
+
+{q:"If A=1, B=2 then C=?", options:["3","4","5","6"], answer:0},
+
+{q:"Complete series: 5,10,15,?", options:["20","25","30","35"], answer:0}
+
+]
+},
+
+{
+section:"SSC CGL",
+subject:"Mathematics",
+questions:[
+
+{q:"25 × 4 = ?", options:["100","120","80","90"], answer:0},
+
+{q:"Square root of 81?", options:["9","8","7","6"], answer:0},
+
+{q:"15% of 200?", options:["30","20","40","50"], answer:0},
+
+{q:"Area of circle formula?", options:["πr²","2πr","r²","πd"], answer:0},
+
+{q:"10² = ?", options:["100","10","20","50"], answer:0}
+
+]
+},
+
+{
+section:"SSC CGL",
+subject:"English",
+questions:[
+
+{q:"Synonym of Happy?", options:["Joyful","Sad","Angry","Cry"], answer:0},
+
+{q:"Antonym of Dark?", options:["Light","Black","Night","Shade"], answer:0},
+
+{q:"Choose correct spelling?", options:["Beautiful","Beautifull","Beautifal","Beautifool"], answer:0},
+
+{q:"He ___ going to school.", options:["is","are","am","be"], answer:0},
+
+{q:"Plural of Child?", options:["Children","Childs","Childes","Childrens"], answer:0}
+
+]
+},
+
+/* ================= SSC CHSL ================= */
+
+{
+section:"SSC CHSL",
+subject:"General Awareness",
+questions:[
+
+{q:"Who wrote Ramayana?", options:["Valmiki","Tulsidas","Kalidas","Ved Vyas"], answer:0},
+
+{q:"Currency of India?", options:["Rupee","Dollar","Euro","Yen"], answer:0},
+
+{q:"Largest ocean?", options:["Pacific","Indian","Atlantic","Arctic"], answer:0},
+
+{q:"Who discovered gravity?", options:["Newton","Einstein","Galileo","Tesla"], answer:0},
+
+{q:"National bird of India?", options:["Peacock","Crow","Parrot","Eagle"], answer:0}
+
+]
+},
+
+{
+section:"SSC CHSL",
+subject:"Reasoning",
+questions:[
+
+{q:"Find missing: 3,6,9,?", options:["12","15","18","21"], answer:0},
+
+{q:"Odd one out?", options:["Dog","Cat","Tiger","Table"], answer:3},
+
+{q:"If CAT = 24 then BAT = ?", options:["23","22","21","20"], answer:1},
+
+{q:"Complete: A,C,E,?", options:["G","H","I","J"], answer:0},
+
+{q:"Mirror image of TOP?", options:["POT","TOP","OPT","TPO"], answer:0}
+
+]
+},
+
+{
+section:"SSC CHSL",
+subject:"Mathematics",
+questions:[
+
+{q:"50 ÷ 5 = ?", options:["10","15","20","25"], answer:0},
+
+{q:"12 × 12 = ?", options:["144","124","134","154"], answer:0},
+
+{q:"Half of 200?", options:["100","50","150","75"], answer:0},
+
+{q:"Perimeter of square formula?", options:["4a","a²","2a","3a"], answer:0},
+
+{q:"20% of 500?", options:["100","50","80","120"], answer:0}
+
+]
+},
+
+{
+section:"SSC CHSL",
+subject:"English",
+questions:[
+
+{q:"Synonym of Big?", options:["Large","Tiny","Short","Weak"], answer:0},
+
+{q:"Antonym of Rich?", options:["Poor","Strong","Heavy","Fast"], answer:0},
+
+{q:"Choose correct spelling?", options:["Education","Educaation","Educasion","Educetion"], answer:0},
+
+{q:"She ___ a doctor.", options:["is","are","am","be"], answer:0},
+
+{q:"Plural of Mouse?", options:["Mice","Mouses","Mouse","Mices"], answer:0}
+
+]
+},
+
+/* ================= SSC GD ================= */
+
+{
+section:"SSC GD",
+subject:"General Knowledge",
+questions:[
+
+{q:"Who is Prime Minister of India?", options:["Narendra Modi","Rahul Gandhi","Amit Shah","Yogi"], answer:0},
+
+{q:"Indian flag has how many colors?", options:["3","2","4","5"], answer:0},
+
+{q:"Which is national song of India?", options:["Vande Mataram","Jana Gana Mana","Saare Jahan","None"], answer:0},
+
+{q:"Largest state of India?", options:["Rajasthan","Bihar","UP","Punjab"], answer:0},
+
+{q:"Who is known as Missile Man?", options:["A.P.J Abdul Kalam","Einstein","Newton","Tesla"], answer:0}
+
+]
+},
+
+{
+section:"SSC GD",
+subject:"Reasoning",
+questions:[
+
+{q:"Find next: 1,2,3,4,?", options:["5","6","7","8"], answer:0},
+
+{q:"Odd one out?", options:["Pen","Book","Chair","Pencil"], answer:2},
+
+{q:"A=1 then D=?", options:["4","3","5","6"], answer:0},
+
+{q:"Complete series: 2,4,8,?", options:["16","14","12","10"], answer:0},
+
+{q:"Mirror of GOD?", options:["DOG","GOD","ODG","DGO"], answer:0}
+
+]
+},
+
+{
+section:"SSC GD",
+subject:"Mathematics",
+questions:[
+
+{q:"100 ÷ 10 = ?", options:["10","20","5","15"], answer:0},
+
+{q:"7 × 8 = ?", options:["56","48","64","72"], answer:0},
+
+{q:"Square of 9?", options:["81","91","71","61"], answer:0},
+
+{q:"25% of 100?", options:["25","20","15","10"], answer:0},
+
+{q:"5² = ?", options:["25","15","20","10"], answer:0}
+
+]
+},
+
+{
+section:"SSC GD",
+subject:"English",
+questions:[
+
+{q:"Synonym of Fast?", options:["Quick","Slow","Weak","Late"], answer:0},
+
+{q:"Antonym of Hot?", options:["Cold","Warm","Heat","Fire"], answer:0},
+
+{q:"Choose correct spelling?", options:["Success","Sucess","Succes","Sucses"], answer:0},
+
+{q:"They ___ playing cricket.", options:["are","is","am","be"], answer:0},
+
+{q:"Plural of Foot?", options:["Feet","Foots","Feets","Footes"], answer:0}
+
+]
+}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+
+let currentSection = "";
+
+quizData.forEach((data)=>{
+
+    if(currentSection !== data.section){
+
+        currentSection = data.section;
+
+        let sectionTitle = document.createElement("h2");
+        sectionTitle.classList.add("section-title");
+        sectionTitle.innerText = currentSection;
+
+        quiz.appendChild(sectionTitle);
+    }
+
+    let subjectTitle = document.createElement("h3");
+    subjectTitle.classList.add("subject-title");
+    subjectTitle.innerText = data.subject;
+
+    quiz.appendChild(subjectTitle);
+
+    data.questions.forEach((item,index)=>{
+
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt,i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+
+                    score++;
+
+                }else{
+
+                    btn.classList.add("wrong");
+
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+});
+
+}
+
+function showScore(){
+
+document.getElementById("score").innerText =
+"Your Score: " + score;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

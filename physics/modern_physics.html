@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modern Physics Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Science Quiz (30 Questions - Modern Physics / आधुनिक भौतिकी)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Atom is made of? / परमाणु किससे बना है?", options:["Proton, Neutron, Electron","Only Proton","Only Electron","Only Neutron"], answer:0},
+
+{q:"Electron was discovered by? / इलेक्ट्रॉन किसने खोजा?", options:["J.J. Thomson","Newton","Einstein","Bohr"], answer:0},
+
+{q:"Proton charge is? / प्रोटॉन का आवेश?", options:["Positive","Negative","Neutral","Zero"], answer:0},
+
+{q:"Neutron charge is? / न्यूट्रॉन का आवेश?", options:["Neutral","Positive","Negative","Zero"], answer:0},
+
+{q:"Electron charge is? / इलेक्ट्रॉन का आवेश?", options:["Negative","Positive","Neutral","Zero"], answer:0},
+
+{q:"Nucleus contains? / नाभिक में होता है?", options:["Protons & neutrons","Only electrons","Only protons","Only light"], answer:0},
+
+{q:"Bohr model is related to? / बोहर मॉडल किससे?", options:["Atom structure","Force","Motion","Sound"], answer:0},
+
+{q:"Radioactivity was discovered by? / रेडियोधर्मिता?", options:["Becquerel","Newton","Einstein","Faraday"], answer:0},
+
+{q:"Alpha particle is? / अल्फा कण?", options:["Helium nucleus","Electron","Photon","Neutron"], answer:0},
+
+{q:"Beta particle is? / बीटा कण?", options:["Electron","Proton","Neutron","Photon"], answer:0},
+
+{q:"Gamma rays are? / गामा किरणें?", options:["Electromagnetic waves","Particles","Atoms","Molecules"], answer:0},
+
+{q:"Speed of light is? / प्रकाश की गति?", options:["3×10^8 m/s","3×10^6 m/s","300 m/s","30 m/s"], answer:0},
+
+{q:"Photon is a? / फोटॉन क्या है?", options:["Light particle","Mass","Force","Wave only"], answer:0},
+
+{q:"Einstein is known for? / आइंस्टीन?", options:["Relativity","Gravity","Electricity","Sound"], answer:0},
+
+{q:"Mass-energy relation is? / द्रव्यमान-ऊर्जा संबंध?", options:["E=mc²","F=ma","V=IR","P=VI"], answer:0},
+
+{q:"Nuclear energy comes from? / परमाणु ऊर्जा?", options:["Nucleus","Electron","Proton only","Neutron only"], answer:0},
+
+{q:"Fission means? / विखंडन?", options:["Splitting nucleus","Joining nucleus","Electron flow","Light emission"], answer:0},
+
+{q:"Fusion means? / संलयन?", options:["Joining nuclei","Splitting nuclei","Breaking electrons","Heat only"], answer:0},
+
+{q:"Radioactivity is? / रेडियोधर्मिता?", options:["Spontaneous emission","Forced motion","Heat transfer","Light reflection"], answer:0},
+
+{q:"Half-life is related to? / अर्ध-आयु?", options:["Radioactive decay","Speed","Force","Heat"], answer:0},
+
+{q:"Nuclear reactor is used for? / रिएक्टर?", options:["Energy production","Sound","Light only","Friction"], answer:0},
+
+{q:"Isotopes have same? / समस्थानिक?", options:["Protons","Neutrons","Mass","Energy"], answer:0},
+
+{q:"Isotopes differ in? / अंतर?", options:["Neutrons","Protons","Electrons","Charge"], answer:0},
+
+{q:"Quantum theory is related to? / क्वांटम?", options:["Energy packets","Motion","Force","Heat"], answer:0},
+
+{q:"Planck constant is symbol? / प्लैंक स्थिरांक?", options:["h","c","e","m"], answer:0},
+
+{q:"Black body radiation is? / कृष्ण पिंड?", options:["Perfect absorber","Reflector","Conductor","Insulator"], answer:0},
+
+{q:"X-rays are used in? / एक्स-रे?", options:["Medical imaging","Cooking","Heating","Sound"], answer:0},
+
+{q:"Laser means? / लेजर?", options:["Light amplification","Sound","Heat","Mass"], answer:0},
+
+{q:"Nuclear power is? / परमाणु ऊर्जा?", options:["High energy","Low energy","Zero","Mechanical only"], answer:0},
+
+{q:"Atomic number is number of? / परमाणु क्रमांक?", options:["Protons","Neutrons","Electrons+Neutrons","Mass"], answer:0},
+
+{q:"Mass number is sum of? / द्रव्यमान संख्या?", options:["Protons + Neutrons","Electrons only","Protons only","Energy"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

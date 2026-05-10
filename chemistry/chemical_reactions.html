@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chemical Reactions Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Chemistry Quiz (30 Questions - Chemical Reactions / रासायनिक अभिक्रियाएँ)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Chemical reaction is? / रासायनिक अभिक्रिया?", options:["Change in substances","Only change in shape","Only change in color","No change"], answer:0},
+
+{q:"Reactants are? / अभिकारक?", options:["Starting substances","Final substances","Products only","Gases only"], answer:0},
+
+{q:"Products are? / उत्पाद?", options:["Formed substances","Starting substances","Catalysts","Ions only"], answer:0},
+
+{q:"Rusting is example of? / जंग?", options:["Chemical reaction","Physical change","Melting","Boiling"], answer:0},
+
+{q:"Burning is? / जलना?", options:["Chemical reaction","Physical change","Only heating","Only cooling"], answer:0},
+
+{q:"Photosynthesis is? / प्रकाश संश्लेषण?", options:["Chemical reaction","Physical change","Diffusion","Melting"], answer:0},
+
+{q:"Chemical equation shows? / समीकरण?", options:["Reaction","Speed","Mass only","Color"], answer:0},
+
+{q:"Exothermic reaction releases? / ऊष्माक्षेपी?", options:["Heat","Cold","Light only","Mass"], answer:0},
+
+{q:"Endothermic reaction absorbs? / ऊष्माशोषी?", options:["Heat","Light","Mass","Gas only"], answer:0},
+
+{q:"Catalyst is? / उत्प्रेरक?", options:["Speed up reaction","Stops reaction","Reactant","Product"], answer:0},
+
+{q:"Balance equation means? / संतुलन?", options:["Equal atoms","Equal color","Equal mass only","Equal gases"], answer:0},
+
+{q:"Law of conservation of mass? / द्रव्यमान संरक्षण?", options:["Mass constant","Mass changes","Energy increases","Volume changes"], answer:0},
+
+{q:"Oxidation is? / ऑक्सीकरण?", options:["Gain oxygen","Loss oxygen","Gain hydrogen","Loss mass"], answer:0},
+
+{q:"Reduction is? / अपचयन?", options:["Loss oxygen","Gain oxygen","Loss electrons only","Gain mass"], answer:0},
+
+{q:"Combination reaction? / संयोजन?", options:["Two into one","One into two","No change","Only gas"], answer:0},
+
+{q:"Decomposition reaction? / अपघटन?", options:["One into many","Many into one","No reaction","Gas only"], answer:0},
+
+{q:"Displacement reaction? / विस्थापन?", options:["One element replaces another","No change","Heat only","Light only"], answer:0},
+
+{q:"Double displacement? / द्विविस्थापन?", options:["Exchange of ions","No reaction","Only heat","Only light"], answer:0},
+
+{q:"Corrosion is? / संक्षारण?", options:["Slow reaction","Fast reaction","Physical change","No change"], answer:0},
+
+{q:"Rancidity is? / बासीपन?", options:["Oxidation of fats","Boiling","Melting","Freezing"], answer:0},
+
+{q:"Chemical change is? / रासायनिक परिवर्तन?", options:["Irreversible","Reversible always","No change","Only physical"], answer:0},
+
+{q:"Physical change is? / भौतिक परिवर्तन?", options:["Reversible","Irreversible","Permanent","Chemical only"], answer:0},
+
+{q:"Gas evolution means? / गैस बनना?", options:["Gas formation","Heat loss","Color change","Solid formation"], answer:0},
+
+{q:"Precipitation is? / अवक्षेप?", options:["Solid formation","Gas formation","Heat release","Color change"], answer:0},
+
+{q:"Reaction rate depends on? / दर?", options:["Temperature","Color","Mass only","Shape only"], answer:0},
+
+{q:"Enzymes are? / एंजाइम?", options:["Biological catalysts","Acids","Bases","Salts"], answer:0},
+
+{q:"Chemical reactions involve? / शामिल?", options:["Breaking/forming bonds","Only melting","Only freezing","Only heating"], answer:0},
+
+{q:"Energy is? / ऊर्जा?", options:["Released or absorbed","Destroyed","Created","Constant only"], answer:0},
+
+{q:"Indicator shows? / सूचक?", options:["Change in reaction","Mass","Volume","Speed"], answer:0},
+
+{q:"Reaction occurs when? / कब?", options:["Particles collide","No collision","No particles","Only light"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tenses Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>English Grammar Quiz (30 Questions - Tenses)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Which tense is used in the sentence 'He goes to school daily.'? / 'He goes to school daily.' कौन-सा Tense है?", options:["Present Continuous","Simple Present","Past Continuous","Future Perfect"], answer:1},
+
+{q:"Identify the tense: 'She is cooking food.' / Tense पहचानिए", options:["Simple Present","Past Perfect","Present Continuous","Simple Future"], answer:2},
+
+{q:"Which tense is used for habitual actions? / आदत बताने के लिए कौन-सा Tense प्रयोग होता है?", options:["Simple Present","Past Continuous","Future Continuous","Present Perfect"], answer:0},
+
+{q:"Identify the tense in 'They were playing cricket.'", options:["Past Continuous","Simple Past","Present Perfect","Future Perfect"], answer:0},
+
+{q:"Which tense is used in 'I have finished my homework.'?", options:["Present Perfect","Simple Past","Future Perfect","Past Continuous"], answer:0},
+
+{q:"Identify the tense: 'Ram had gone to Delhi.'", options:["Past Perfect","Simple Present","Future Continuous","Present Continuous"], answer:0},
+
+{q:"Which tense expresses an action completed in the past? / भूतकाल में पूर्ण कार्य को कौन-सा Tense बताता है?", options:["Simple Future","Past Perfect","Present Continuous","Future Continuous"], answer:1},
+
+{q:"Identify the tense in 'She will come tomorrow.'", options:["Simple Future","Present Perfect","Past Perfect","Past Continuous"], answer:0},
+
+{q:"Which tense is used in 'I will be waiting for you.'?", options:["Future Perfect","Future Continuous","Present Continuous","Past Perfect"], answer:1},
+
+{q:"Identify the tense: 'They will have completed the work.'", options:["Future Perfect","Simple Future","Past Perfect","Present Perfect"], answer:0},
+
+{q:"Which tense is used for actions happening now? / अभी हो रही क्रिया के लिए कौन-सा Tense प्रयोग होता है?", options:["Present Continuous","Simple Past","Past Perfect","Future Perfect"], answer:0},
+
+{q:"Identify the tense in 'He wrote a letter.'", options:["Simple Past","Present Perfect","Future Continuous","Past Continuous"], answer:0},
+
+{q:"Which tense is used for universal truths? / सार्वभौमिक सत्य के लिए कौन-सा Tense प्रयोग होता है?", options:["Simple Present","Past Continuous","Future Perfect","Present Perfect"], answer:0},
+
+{q:"Identify the tense: 'I am reading a book.'", options:["Simple Present","Present Continuous","Simple Past","Future Continuous"], answer:1},
+
+{q:"Which tense is used in 'They have been working since morning.'?", options:["Present Perfect Continuous","Past Continuous","Future Perfect","Simple Present"], answer:0},
+
+{q:"Identify the tense in 'She had been waiting for two hours.'", options:["Past Perfect Continuous","Simple Past","Future Continuous","Present Continuous"], answer:0},
+
+{q:"Which tense is used in 'I shall help you.'?", options:["Simple Future","Present Perfect","Past Perfect","Future Continuous"], answer:0},
+
+{q:"Identify the tense: 'We were watching TV.'", options:["Past Continuous","Simple Present","Present Perfect","Future Perfect"], answer:0},
+
+{q:"Which tense is used in 'He has gone to market.'?", options:["Present Perfect","Past Perfect","Simple Future","Future Continuous"], answer:0},
+
+{q:"Identify the tense in 'They had completed the project.'", options:["Past Perfect","Present Continuous","Simple Present","Future Perfect"], answer:0},
+
+{q:"Which tense is used for an action continuing up to the present? / वर्तमान तक जारी कार्य के लिए कौन-सा Tense प्रयोग होता है?", options:["Present Perfect Continuous","Simple Past","Past Continuous","Future Perfect"], answer:0},
+
+{q:"Identify the tense: 'She will be studying tonight.'", options:["Future Continuous","Present Continuous","Simple Future","Past Perfect"], answer:0},
+
+{q:"Which tense is used in 'I had seen the movie before.'?", options:["Past Perfect","Simple Present","Future Perfect","Present Continuous"], answer:0},
+
+{q:"Identify the tense in 'He is writing a letter.'", options:["Present Continuous","Past Continuous","Simple Past","Future Perfect"], answer:0},
+
+{q:"Which tense is used in 'They will have reached home.'?", options:["Future Perfect","Simple Future","Past Perfect","Present Perfect"], answer:0},
+
+{q:"Identify the tense: 'Birds fly in the sky.'", options:["Simple Present","Past Continuous","Future Continuous","Present Perfect"], answer:0},
+
+{q:"Which tense is used in 'She was singing a song.'?", options:["Past Continuous","Present Perfect","Simple Future","Future Perfect"], answer:0},
+
+{q:"Identify the tense in 'I have been learning English.'", options:["Present Perfect Continuous","Simple Present","Past Perfect","Future Continuous"], answer:0},
+
+{q:"Which tense is used in 'They had been playing football.'?", options:["Past Perfect Continuous","Simple Future","Present Continuous","Future Perfect"], answer:0},
+
+{q:"Identify the tense: 'He will travel next week.'", options:["Simple Future","Past Continuous","Present Perfect","Future Perfect"], answer:0}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

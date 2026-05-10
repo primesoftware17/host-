@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Algebra Quiz</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .question {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h2>Mathematics Quiz (30 Questions - Algebra)</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="showScore()">Submit</button>
+
+    <h3 id="score"></h3>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"Solve: x + 5 = 12", options:["5","6","7","8"], answer:2},
+
+{q:"Solve: 2x = 10", options:["2","3","4","5"], answer:3},
+
+{q:"Value of x in x - 3 = 7", options:["10","11","12","13"], answer:0},
+
+{q:"Simplify: 3x + 2x", options:["5","6x","5x","x"], answer:2},
+
+{q:"Solve: x/2 = 6", options:["10","11","12","13"], answer:2},
+
+{q:"If x = 2, value of x²", options:["2","3","4","5"], answer:2},
+
+{q:"Expand: (x + 2)(x)", options:["x² + 2x","x² + 4","2x²","x + 2"], answer:0},
+
+{q:"Solve: x - 8 = 0", options:["6","7","8","9"], answer:2},
+
+{q:"Simplify: 4x - x", options:["2x","3x","4x","x"], answer:1},
+
+{q:"Solve: 3x = 15", options:["3","4","5","6"], answer:2},
+
+{q:"Value of x in 5x = 25", options:["3","4","5","6"], answer:2},
+
+{q:"Simplify: x + x + x", options:["x","2x","3x","4x"], answer:2},
+
+{q:"Solve: x + 10 = 20", options:["8","9","10","11"], answer:2},
+
+{q:"If x = 3, value of 2x", options:["4","5","6","7"], answer:2},
+
+{q:"Simplify: 6x ÷ 2", options:["2x","3x","4x","5x"], answer:1},
+
+{q:"Solve: x - 5 = 15", options:["10","15","20","25"], answer:2},
+
+{q:"Expand: x(x + 3)", options:["x² + 3x","x² + 6x","3x²","x + 3"], answer:0},
+
+{q:"Value of x in x + x = 10", options:["3","4","5","6"], answer:2},
+
+{q:"Solve: 4x = 20", options:["3","4","5","6"], answer:2},
+
+{q:"Simplify: 2x + 3x + x", options:["4x","5x","6x","7x"], answer:2},
+
+{q:"If x = 4, value of x² + 1", options:["15","16","17","18"], answer:2},
+
+{q:"Solve: x/5 = 3", options:["10","12","15","18"], answer:2},
+
+{q:"Simplify: 7x - 2x", options:["4x","5x","6x","7x"], answer:1},
+
+{q:"Solve: x + 7 = 14", options:["5","6","7","8"], answer:2},
+
+{q:"Value of x in 6x = 36", options:["4","5","6","7"], answer:2},
+
+{q:"Simplify: x × x", options:["x","x²","2x","3x"], answer:1},
+
+{q:"Solve: x - 9 = 1", options:["8","9","10","11"], answer:2},
+
+{q:"Simplify: 10x - 4x", options:["4x","5x","6x","7x"], answer:2},
+
+{q:"If x = 5, value of 3x", options:["10","12","15","18"], answer:2},
+
+{q:"Solve: x + x + 2 = 10", options:["2","3","4","5"], answer:2}
+
+];
+
+let score = 0;
+
+function loadQuiz(){
+
+    const quiz = document.getElementById("quiz");
+
+    questions.forEach((item, index)=>{
+
+        let div = document.createElement("div");
+
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+
+        q.innerText = (index + 1) + ". " + item.q;
+
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+
+            let btn = document.createElement("div");
+
+            btn.classList.add("option");
+
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+
+                if(div.classList.contains("answered")) return;
+
+                div.classList.add("answered");
+
+                if(i === item.answer){
+
+                    btn.classList.add("correct");
+                    score++;
+
+                } else {
+
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer]
+                .classList.add("correct");
+
+            };
+
+            div.appendChild(btn);
+
+        });
+
+        quiz.appendChild(div);
+
+    });
+
+}
+
+function showScore(){
+
+    document.getElementById("score").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

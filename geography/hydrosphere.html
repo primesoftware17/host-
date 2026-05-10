@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geography MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Geography Quiz (30 Questions - Hydrosphere)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"What is the hydrosphere? / जलमंडल क्या है?", options:["All land on Earth / पृथ्वी की सभी भूमि","All water on Earth / पृथ्वी पर सभी जल","All air around Earth / पृथ्वी के चारों ओर की हवा","All rocks on Earth / पृथ्वी की सभी चट्टानें"], answer:1},
+
+{q:"Which is the largest source of water on Earth? / पृथ्वी पर जल का सबसे बड़ा स्रोत कौन सा है?", options:["Rivers / नदियाँ","Oceans / महासागर","Lakes / झीलें","Groundwater / भूजल"], answer:1},
+
+{q:"What percentage of Earth's water is saltwater? / पृथ्वी के जल का कितना प्रतिशत खारा पानी है?", options:["50%","70%","97%","30%"], answer:2},
+
+{q:"Which is the largest ocean on Earth? / पृथ्वी का सबसे बड़ा महासागर कौन सा है?", options:["Atlantic Ocean / अटलांटिक महासागर","Indian Ocean / हिंद महासागर","Pacific Ocean / प्रशांत महासागर","Arctic Ocean / आर्कटिक महासागर"], answer:2},
+
+{q:"Which is the smallest ocean on Earth? / पृथ्वी का सबसे छोटा महासागर कौन सा है?", options:["Pacific Ocean / प्रशांत महासागर","Indian Ocean / हिंद महासागर","Atlantic Ocean / अटलांटिक महासागर","Arctic Ocean / आर्कटिक महासागर"], answer:3},
+
+{q:"What is freshwater? / मीठा पानी क्या होता है?", options:["Salty water / खारा पानी","Water with very low salt content / कम नमक वाला पानी","Hot water / गर्म पानी","Frozen water only / केवल बर्फीला पानी"], answer:1},
+
+{q:"Which is an example of freshwater source? / मीठे पानी का उदाहरण कौन सा है?", options:["Sea / समुद्र","Ocean / महासागर","River / नदी","Salt lake / खारी झील"], answer:2},
+
+{q:"What is groundwater? / भूजल क्या है?", options:["Water in oceans / महासागरों का पानी","Water under the Earth's surface / पृथ्वी की सतह के नीचे का जल","Rainwater in clouds / बादलों का पानी","River water / नदी का पानी"], answer:1},
+
+{q:"What is the water cycle? / जल चक्र क्या है?", options:["Movement of rocks / चट्टानों की गति","Continuous movement of water on Earth / पृथ्वी पर जल का निरंतर चक्र","Movement of air / हवा की गति","Movement of land / भूमि की गति"], answer:1},
+
+{q:"Which process changes water into vapor? / जल को वाष्प में बदलने की प्रक्रिया क्या है?", options:["Condensation / संघनन","Evaporation / वाष्पीकरण","Precipitation / वर्षण","Infiltration / रिसाव"], answer:1},
+
+{q:"Which process forms clouds? / बादल किस प्रक्रिया से बनते हैं?", options:["Evaporation / वाष्पीकरण","Condensation / संघनन","Melting / पिघलना","Freezing / जमना"], answer:1},
+
+{q:"What is precipitation? / वर्षण क्या है?", options:["Water turning into vapor / जल का वाष्प बनना","Water falling from clouds / बादलों से जल का गिरना","Water freezing into ice / जल का बर्फ बनना","Water moving underground / जल का जमीन के नीचे जाना"], answer:1},
+
+{q:"Which is NOT part of hydrosphere? / इनमें से कौन जलमंडल का भाग नहीं है?", options:["Rivers / नदियाँ","Oceans / महासागर","Lakes / झीलें","Mountains / पर्वत"], answer:3},
+
+{q:"Which ocean surrounds the North Pole? / उत्तरी ध्रुव को कौन सा महासागर घेरता है?", options:["Indian Ocean / हिंद महासागर","Pacific Ocean / प्रशांत महासागर","Arctic Ocean / आर्कटिक महासागर","Atlantic Ocean / अटलांटिक महासागर"], answer:2},
+
+{q:"What is the main source of river water? / नदियों के जल का मुख्य स्रोत क्या है?", options:["Seawater / समुद्री जल","Rain and melting snow / वर्षा और बर्फ का पिघलना","Groundwater only / केवल भूजल","Ocean tides / समुद्री ज्वार"], answer:1},
+
+{q:"Which is the longest river in the world? / विश्व की सबसे लंबी नदी कौन सी है?", options:["Amazon / अमेज़न","Nile / नील","Ganga / गंगा","Yangtze / यांग्त्ज़ी"], answer:1},
+
+{q:"What is salinity? / लवणता क्या होती है?", options:["Amount of sugar in water / पानी में चीनी की मात्रा","Amount of salt in water / पानी में नमक की मात्रा","Amount of oxygen in water / पानी में ऑक्सीजन की मात्रा","Amount of sand in water / पानी में रेत की मात्रा"], answer:1},
+
+{q:"Which water body is smaller than ocean but larger than pond? / कौन सा जल निकाय महासागर से छोटा लेकिन तालाब से बड़ा होता है?", options:["Sea / सागर","River / नदी","Canal / नहर","Glacier / हिमनद"], answer:0},
+
+{q:"What is glacier? / हिमनद क्या होता है?", options:["Flowing river / बहती नदी","Large mass of ice / बर्फ का बड़ा समूह","Hot water spring / गर्म जल स्रोत","Underground water / भूजल"], answer:1},
+
+{q:"Which process returns water to Earth's surface as rain? / वर्षा के रूप में जल वापस पृथ्वी पर आने की प्रक्रिया क्या है?", options:["Evaporation / वाष्पीकरण","Condensation / संघनन","Precipitation / वर्षण","Transpiration / वाष्पोत्सर्जन"], answer:2}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

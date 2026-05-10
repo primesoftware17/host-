@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Mughal Period)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who was the founder of the Mughal Empire? / मुगल साम्राज्य का संस्थापक कौन था?", options:["Babur / बाबर","Humayun / हुमायूँ","Akbar / अकबर","Sher Shah Suri / शेरशाह सूरी"], answer:0},
+
+{q:"In which year was the First Battle of Panipat fought? / पानीपत का प्रथम युद्ध किस वर्ष लड़ा गया था?", options:["1526 CE / 1526 ई.","1556 CE / 1556 ई.","1761 CE / 1761 ई.","1576 CE / 1576 ई."], answer:0},
+
+{q:"Who defeated Ibrahim Lodi in the First Battle of Panipat? / पानीपत के प्रथम युद्ध में इब्राहिम लोदी को किसने हराया?", options:["Akbar / अकबर","Babur / बाबर","Humayun / हुमायूँ","Sher Shah Suri / शेरशाह सूरी"], answer:1},
+
+{q:"Who wrote the autobiography 'Tuzuk-i-Baburi'? / 'तुजुक-ए-बाबरी' किसने लिखी?", options:["Babur / बाबर","Akbar / अकबर","Jahangir / जहाँगीर","Humayun / हुमायूँ"], answer:0},
+
+{q:"Who was the father of Akbar? / अकबर के पिता कौन थे?", options:["Babur / बाबर","Humayun / हुमायूँ","Jahangir / जहाँगीर","Sher Shah Suri / शेरशाह सूरी"], answer:1},
+
+{q:"Who was Akbar's guardian during his early reign? / अकबर के प्रारंभिक शासनकाल में उसका संरक्षक कौन था?", options:["Todar Mal / टोडरमल","Birbal / बीरबल","Bairam Khan / बैरम खाँ","Abul Fazl / अबुल फज़ल"], answer:2},
+
+{q:"Which Mughal ruler introduced the Din-i-Ilahi? / दीन-ए-इलाही की शुरुआत किस मुगल शासक ने की?", options:["Babur / बाबर","Akbar / अकबर","Jahangir / जहाँगीर","Shah Jahan / शाहजहाँ"], answer:1},
+
+{q:"Who wrote the book 'Akbarnama'? / 'अकबरनामा' पुस्तक किसने लिखी?", options:["Birbal / बीरबल","Todar Mal / टोडरमल","Abul Fazl / अबुल फज़ल","Faizi / फैजी"], answer:2},
+
+{q:"Which Mughal ruler built Fatehpur Sikri? / फतेहपुर सीकरी का निर्माण किस मुगल शासक ने करवाया?", options:["Humayun / हुमायूँ","Akbar / अकबर","Jahangir / जहाँगीर","Aurangzeb / औरंगजेब"], answer:1},
+
+{q:"Who was known as 'Zinda Pir'? / 'जिंदा पीर' के नाम से कौन प्रसिद्ध था?", options:["Akbar / अकबर","Shah Jahan / शाहजहाँ","Aurangzeb / औरंगजेब","Jahangir / जहाँगीर"], answer:2},
+
+{q:"Who built the Taj Mahal? / ताजमहल किसने बनवाया?", options:["Akbar / अकबर","Jahangir / जहाँगीर","Shah Jahan / शाहजहाँ","Aurangzeb / औरंगजेब"], answer:2},
+
+{q:"The Taj Mahal is located in which city? / ताजमहल किस शहर में स्थित है?", options:["Delhi / दिल्ली","Agra / आगरा","Lahore / लाहौर","Jaipur / जयपुर"], answer:1},
+
+{q:"Who was the wife of Shah Jahan for whom the Taj Mahal was built? / शाहजहाँ की किस पत्नी की याद में ताजमहल बनाया गया?", options:["Noor Jahan / नूरजहाँ","Mumtaz Mahal / मुमताज़ महल","Jahanara / जहाँआरा","Roshanara / रोशनआरा"], answer:1},
+
+{q:"Who introduced the Mansabdari system? / मनसबदारी प्रथा किसने शुरू की?", options:["Babur / बाबर","Akbar / अकबर","Aurangzeb / औरंगजेब","Humayun / हुमायूँ"], answer:1},
+
+{q:"Which Mughal emperor was famous for justice and installed the 'Chain of Justice'? / कौन-सा मुगल सम्राट न्यायप्रिय था और उसने 'न्याय की जंजीर' लगवाई?", options:["Akbar / अकबर","Jahangir / जहाँगीर","Shah Jahan / शाहजहाँ","Aurangzeb / औरंगजेब"], answer:1},
+
+{q:"Who was the last powerful Mughal emperor? / अंतिम शक्तिशाली मुगल सम्राट कौन था?", options:["Bahadur Shah II / बहादुर शाह द्वितीय","Aurangzeb / औरंगजेब","Shah Alam II / शाह आलम द्वितीय","Muhammad Shah / मुहम्मद शाह"], answer:1},
+
+{q:"Which Mughal ruler banned music in his court? / किस मुगल शासक ने अपने दरबार में संगीत पर प्रतिबंध लगाया?", options:["Akbar / अकबर","Jahangir / जहाँगीर","Aurangzeb / औरंगजेब","Babur / बाबर"], answer:2},
+
+{q:"Who succeeded Babur after his death? / बाबर की मृत्यु के बाद उसका उत्तराधिकारी कौन बना?", options:["Humayun / हुमायूँ","Akbar / अकबर","Jahangir / जहाँगीर","Sher Shah Suri / शेरशाह सूरी"], answer:0},
+
+{q:"Which battle established Mughal rule firmly in India? / किस युद्ध ने भारत में मुगल शासन को मजबूत आधार दिया?", options:["Battle of Khanwa / खानवा का युद्ध","Second Battle of Panipat / पानीपत का द्वितीय युद्ध","Battle of Haldighati / हल्दीघाटी का युद्ध","Battle of Plassey / प्लासी का युद्ध"], answer:1},
+
+{q:"Who was the last Mughal emperor of India? / भारत का अंतिम मुगल सम्राट कौन था?", options:["Bahadur Shah II / बहादुर शाह द्वितीय","Aurangzeb / औरंगजेब","Akbar II / अकबर द्वितीय","Shah Alam II / शाह आलम द्वितीय"], answer:0}
+];
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>

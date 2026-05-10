@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History MCQ Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .correct {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .wrong {
+        background-color: #f44336;
+        color: white;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>History Quiz (30 Questions - Maurya Empire)</h2>
+    <div id="quiz"></div>
+    <button onclick="showScore()">Submit</button>
+    <h3 id="score"></h3>
+</div>
+
+<script>
+const questions = [
+{q:"Who founded the Maurya Empire?", options:["Dhanananda","Chandragupta Maurya","Ashoka","Bindusara"], answer:1},
+{q:"Chanakya is also known as:", options:["Kautilya","Megasthenes","Banabhatta","Ashvaghosha"], answer:0},
+{q:"What was the capital of the Maurya Empire?", options:["Ujjain","Taxila","Pataliputra","Kashi"], answer:2},
+{q:"The Kalinga War took place in:", options:["261 BCE","200 BCE","273 BCE","185 BCE"], answer:0},
+{q:"Ashoka’s inscriptions are mainly known as:", options:["Puranas","Edicts","Vedas","Sangam literature"], answer:1},
+{q:"Megasthenes was a:", options:["Greek ambassador","Chinese monk","Persian king","Indian emperor"], answer:0},
+{q:"Arthashastra was written by:", options:["Kalidasa","Ashoka","Chanakya","Harsha"], answer:2},
+{q:"Ashoka adopted Buddhism after the:", options:["Taxila War","Hydaspes War","Kalinga War","Panipat War"], answer:2},
+{q:"The greatest ruler of the Maurya Empire was:", options:["Bindusara","Dasharatha Maurya","Ashoka","Chandragupta Maurya"], answer:2},
+{q:"Bindusara was the son of:", options:["Chandragupta Maurya","Ashoka","Kautilya","Bimbisara"], answer:0},
+
+{q:"The Lion Capital is located at:", options:["Bodh Gaya","Sarnath","Sanchi","Lumbini"], answer:1},
+{q:"The Mauryan administration was:", options:["Centralized","Tribal","Feudal","Decentralized"], answer:0},
+{q:"Dhamma refers to:", options:["Taxation system","War policy","Moral code","Trade law"], answer:2},
+{q:"Ashoka sent missionaries to:", options:["Rome","Sri Lanka","China","Egypt"], answer:1},
+{q:"The last ruler of the Maurya dynasty was:", options:["Brihadratha","Ashoka","Bindusara","Chandragupta Maurya"], answer:0},
+{q:"The Maurya Empire was ended by:", options:["Pushyamitra Shunga","Ashoka","Chandragupta Maurya","Harsha"], answer:0},
+{q:"Taxila was famous as a:", options:["Naval base","Religious capital","Trade center","Desert city"], answer:2},
+{q:"Mauryan pillars were mainly made of:", options:["Stone","Wood","Gold","Iron"], answer:0},
+{q:"The Mauryan army was maintained by the:", options:["Farmers only","State","Merchants","Foreigners"], answer:1},
+{q:"Chanakya acted as:", options:["Ambassador","King","Advisor","Soldier"], answer:2},
+
+{q:"Ashoka’s edicts were written in:", options:["Sanskrit","Prakrit","Tamil","Persian"], answer:1},
+{q:"The Maurya Empire covered:", options:["Only South India","Most of India","Only coastal regions","Only North-East"], answer:1},
+{q:"The Stupa at Sanchi was built under:", options:["Akbar","Ashoka","Harsha","Chandragupta Maurya"], answer:1},
+{q:"Mauryan coins were mostly:", options:["Gold bars","Punch-marked coins","Paper currency","Shells"], answer:1},
+{q:"Ashoka’s policy of non-violence is called:", options:["Mansabdari","Dhamma policy","Rajdharma","Zamindari"], answer:1},
+{q:"Greek influence in Maurya Empire came due to:", options:["British rule","Alexander invasion","Arab invasion","Gupta rule"], answer:1},
+{q:"The Mauryan spy system was called:", options:["Espionage network","Feudal system","Tribal council","Gupta system"], answer:0},
+{q:"Ashoka’s national emblem is inspired by:", options:["Horse","Lion capital","Peacock","Elephant"], answer:1},
+{q:"Pataliputra was located near the:", options:["Yamuna river","Godavari river","Ganga river","Narmada river"], answer:2},
+{q:"Mauryan art is famous for:", options:["Bronze weapons","Polished stone pillars","Silk paintings","Rock-cut caves"], answer:1}
+];
+
+let score = 0;
+
+function loadQuiz(){
+    const quiz = document.getElementById("quiz");
+    questions.forEach((item, index)=>{
+        let div = document.createElement("div");
+        div.classList.add("question");
+
+        let q = document.createElement("h4");
+        q.innerText = (index+1)+". "+item.q;
+        div.appendChild(q);
+
+        item.options.forEach((opt, i)=>{
+            let btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = opt;
+
+            btn.onclick = function(){
+                if(div.classList.contains("answered")) return;
+                div.classList.add("answered");
+
+                if(i === item.answer){
+                    btn.classList.add("correct");
+                    score++;
+                } else {
+                    btn.classList.add("wrong");
+                }
+
+                div.querySelectorAll(".option")[item.answer].classList.add("correct");
+            };
+
+            div.appendChild(btn);
+        });
+
+        quiz.appendChild(div);
+    });
+}
+
+function showScore(){
+    document.getElementById("score").innerText = 
+        "Your Score: " + score + " / " + questions.length;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>
